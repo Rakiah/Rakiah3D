@@ -39,7 +39,7 @@ void			tex_clear(t_texture *tex)
 
 void			tex_draw_pixel_index(t_texture *tex, int index, int pixel)
 {
-	*((unsigned int *)(tex->pixels + index)) = pixel;
+	*((unsigned int *)(tex->pixels + (index * tex->bytes_per_pixel))) = pixel;
 }
 
 void			tex_draw_pixel(t_texture *tex, int x, int y, int pixel)
