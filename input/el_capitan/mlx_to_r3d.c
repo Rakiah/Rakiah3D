@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 18:58:43 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/21 17:59:51 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ t_keycode	mlx_to_r3d_key(int keycode)
 	return (NONE);
 }
 
-int		mlx_to_r3d_mbutton(int keycode)
+int			mlx_to_r3d_mbutton(int keycode)
 {
 	(void)keycode;
 	return (0);
