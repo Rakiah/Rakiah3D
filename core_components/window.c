@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 18:32:28 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 18:32:57 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 12:04:31 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_window	*window_new(t_env *env, int x, int y, char *title)
 	mlx_hook(ret->win, 3, (1L << 1), &internal_key_up_hook, env);
 	mlx_hook(ret->win, 4, (1L << 2), &internal_mouse_down_hook, env);
 	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, env);
+	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, env);
 	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, env);
 	ret->cancel_render = FALSE;
 	ret->width = x;

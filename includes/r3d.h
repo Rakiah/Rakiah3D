@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:10:22 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 21:20:29 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 12:07:50 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,5 +271,6 @@ int				internal_key_down_hook(int code, void *mlx);
 int				internal_key_up_hook(int code, void *mlx);
 int				internal_mouse_down_hook(int code, int x, int y, void *mlx);
 int				internal_mouse_up_hook(int code, int x, int y, void *mlx);
+int				internal_mouse_pos_hook(int x, int y, void *mlx);
 int				internal_expose_hook(void *mlx);
 #endif

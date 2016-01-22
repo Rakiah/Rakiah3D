@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:54:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/13 17:12:15 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 14:46:41 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int		internal_mouse_up_hook(int keycode, int x, int y, void *mlx)
 	keycode = mlx_to_r3d_mbutton(keycode);
 	if (keycode < 0 || keycode > MOUSEBUTTON_COUNT)
 		return (0);
-	mouse_pos(x, y, CMD_SET);
 	mouse_up(keycode, CMD_SET, TRUE);
+	mouse_pos(x, y, CMD_SET);
 	return (0);
 }
 
@@ -52,6 +52,7 @@ int		mouse_up(int mousebutton, t_input_cmd cmd, t_bool value)
 	else if (cmd == CMD_SET)
 	{
 		last_button = mousebutton;
+		mouse_down(mousebutton, CMD_SET, FALSE);
 		button[mousebutton] = value;
 	}
 	else if (cmd == CMD_GET)

@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:01:48 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 19:02:23 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 12:05:32 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_bool			get_mouse_button_up(int code);
 t_bool			get_mouse_button_down(int code);
 t_bool			get_key_up(t_keycode code);
 t_bool			get_key_down(t_keycode code);
-t_vector2f		*get_mouse_pos(void);
+t_vector2f		get_mouse_pos(void);
 
 t_keycode		get_last_key_down(void);
 t_keycode		get_last_key_up(void);
@@ -29,7 +29,7 @@ t_keycode		key_up(t_keycode code, t_input_cmd cmd, t_bool value);
 t_keycode		key_down(t_keycode code, t_input_cmd cmd, t_bool value);
 int				mouse_up(int code, t_input_cmd cmd, t_bool value);
 int				mouse_down(int mousebutton, t_input_cmd cmd, t_bool value);
-t_vector2f		*mouse_pos(int x, int y, t_input_cmd cmd);
+t_vector2f		mouse_pos(int x, int y, t_input_cmd cmd);
 t_bool			focus_event(t_input_cmd cmd, t_bool value);
 
 t_keycode		mlx_to_r3d_key(int keycode);

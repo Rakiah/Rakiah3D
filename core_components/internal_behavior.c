@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:14:15 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/13 16:30:48 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 15:34:35 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	reset_inputs(void)
 	key_up(-1, CMD_SET_ALL, FALSE);
 	key_down(-1, CMD_SET_ALL, FALSE);
 	mouse_up(-1, CMD_SET_ALL, FALSE);
-	mouse_down(-1, CMD_SET_ALL, FALSE);
 	focus_event(CMD_SET, FALSE);
 }
 

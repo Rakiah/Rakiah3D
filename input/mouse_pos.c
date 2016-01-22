@@ -6,29 +6,39 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:55:55 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/13 17:07:25 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 13:30:56 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-t_vector2f	*get_mouse_pos(void)
+
+int		internal_mouse_pos_hook(int x, int y, void *mlx)
+{
+	(void)mlx;
+	/*ft_putnbr(x);*/
+	/*ft_putchar('\n');*/
+	/*ft_putnbr(y);*/
+	/*ft_putchar('\n');*/
+	mouse_pos(x, y, CMD_SET);
+	return (0);
+}
+
+t_vector2f	get_mouse_pos(void)
 {
 	return (mouse_pos(0, 0, CMD_GET));
 }
 
-t_vector2f	*mouse_pos(int x, int y, t_input_cmd cmd)
+t_vector2f	mouse_pos(int x, int y, t_input_cmd cmd)
 {
-	static int last_x = 0;
-	static int last_y = 0;
+	static t_vector2f ret;
 
 	if (cmd == CMD_SET)
 	{
-		last_x = x;
-		last_y = y;
-		return (NULL);
+		ret.x = x;
+		ret.y = y;
 	}
 	else if (cmd == CMD_GET)
-		return (v2f_new(last_x, last_y));
-	return (NULL);
+		return (ret);
+	return (ret);
 }
