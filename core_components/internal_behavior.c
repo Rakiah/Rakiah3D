@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:14:15 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 15:34:35 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/22 23:07:13 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,14 @@ void	internal_render(t_env *mlx)
 
 void	reset_inputs(void)
 {
+	int i;
+
+	i = 3;
 	key_up(-1, CMD_SET_ALL, FALSE);
 	key_down(-1, CMD_SET_ALL, FALSE);
 	mouse_up(-1, CMD_SET_ALL, FALSE);
+	while (++i < 7)
+		mouse_down(i, CMD_SET, FALSE);
 	focus_event(CMD_SET, FALSE);
 }
 
