@@ -118,6 +118,5 @@ t_keycode	mlx_to_r3d_key(int keycode)
 
 int			mlx_to_r3d_mbutton(int keycode)
 {
-	(void)keycode;
-	return (0);
+	return (keycode);
 }
