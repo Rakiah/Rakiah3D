@@ -34,11 +34,11 @@ t_window	*window_new(t_env *env, int x, int y, char *title)
 	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, env);
 	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, env);
 	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, env);
+	ft_pushback_array(env->wins, &ret, sizeof(t_window *));
 	ret->cancel_render = FALSE;
 	ret->width = x;
 	ret->height = y;
 	clear_z_buffer(ret);
-	ft_pushback_array(env->wins, &ret, sizeof(t_window *));
 	return (ret);
 }
 
