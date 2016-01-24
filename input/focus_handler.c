@@ -23,9 +23,9 @@ t_bool		focus_event(t_input_cmd cmd, t_bool value)
 	return (focus);
 }
 
-int			internal_expose_hook(void *window)
+int			internal_expose_hook(t_window *window)
 {
-	core_select_window(((t_window *)window)->id);
+	core_select_window(window->id);
 	focus_event(CMD_SET, TRUE);
 	return (0);
 }

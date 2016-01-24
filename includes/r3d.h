@@ -270,5 +270,5 @@ int				internal_key_up_hook(int code, void *core);
 int				internal_mouse_down_hook(int code, int x, int y, void *core);
 int				internal_mouse_up_hook(int code, int x, int y, void *core);
 int				internal_mouse_pos_hook(int x, int y, void *core);
-int				internal_expose_hook(void *core);
+int				internal_expose_hook(t_window *core);
 #endif
