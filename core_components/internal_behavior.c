@@ -13,33 +13,35 @@
 #include "r3d.h"
 #include <time.h>
 
-void	internal_render(t_env *mlx)
+void	internal_render(t_core *core)
 {
-	size_t i;
+	size_t		i;
+	int		selected;
 
+	if ((selected = core->window_id) == -1)
+		return ;
 	i = 0;
-	while (i < mlx->wins->count)
+	while (i < core->wins->count)
 	{
-		mlx->selected = ((t_window **)mlx->wins->array)[i];
-		if (!mlx->selected->cancel_render)
+		core_select_window(i);
+		if (!core->window->cancel_render)
 		{
-			if (mlx->selected->cams->count > 0)
+			if (core->window->cams->count > 0)
 			{
-				tex_clear(mlx->selected->screen_tex);
-				clear_z_buffer(mlx->selected);
-				env_render(mlx);
-				mlx_put_image_to_window(mlx->mlx,
-						mlx->selected->win,
-						mlx->selected->screen_tex->img,
+				tex_clear(core->window->screen_tex);
+				clear_z_buffer(core->window);
+				core_render(core);
+				mlx_put_image_to_window(core->mlx,
+						core->window->win,
+						core->window->screen_tex->img,
 						0, 0);
 			}
 		}
 		else
-			mlx->selected->cancel_render = FALSE;
+			core->window->cancel_render = FALSE;
 		i++;
 	}
-	if (mlx->wins->count > 0)
-		mlx->selected = ((t_window **)mlx->wins->array)[0];
+	core_select_window(selected);
 }
 
 void	reset_inputs(void)
@@ -55,35 +57,35 @@ void	reset_inputs(void)
 	focus_event(CMD_SET, FALSE);
 }
 
-void	calculate_delta_time(t_env *mlx, clock_t start)
+void	calculate_delta_time(t_core *core, clock_t start)
 {
 	long		sleep_time;
 	double		render_time;
 
 	render_time = (double)(clock() - start) / CLOCKS_PER_SEC;
-	sleep_time = ((((double)1 / mlx->target_framerate)
+	sleep_time = ((((double)1 / core->target_framerate)
 				- render_time) * 1000000);
 	if (sleep_time >= 0)
 	{
-		mlx->delta_time = (double)sleep_time / 1000000;
+		core->delta_time = (double)sleep_time / 1000000;
 		usleep(sleep_time);
 	}
 	else
-		mlx->delta_time = 0;
-	mlx->delta_time += (double)(clock() - start) / CLOCKS_PER_SEC;
+		core->delta_time = 0;
+	core->delta_time += (double)(clock() - start) / CLOCKS_PER_SEC;
 }
 
-int		internal_update(t_env *mlx)
+int		internal_update(t_core *core)
 {
 	clock_t		start;
 
 	start = clock();
-	if (mlx->update != NULL)
-		mlx->update(mlx);
-	internal_render(mlx);
-	if (mlx->postrender != NULL)
-		mlx->postrender(mlx);
+	if (core->update != NULL)
+		core->update();
+	internal_render(core);
+	if (core->postrender != NULL)
+		core->postrender();
 	reset_inputs();
-	calculate_delta_time(mlx, start);
+	calculate_delta_time(core, start);
 	return (0);
 }

@@ -51,10 +51,8 @@ t_object	*obj_new(t_window *win, t_mesh *mesh, t_transform *trs)
 	return (ret);
 }
 
-void		obj_draw(t_env *mlx, t_object *obj)
+void		obj_draw(t_object *obj)
 {
 	if (obj->mesh != NULL)
-	{
-		mesh_draw(mlx, obj->mesh, obj->transform);
-	}
+		mesh_draw(obj->mesh, obj->transform);
 }

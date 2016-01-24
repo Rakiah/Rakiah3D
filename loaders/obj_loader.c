@@ -65,14 +65,13 @@ int		arrange_vertices_obj(t_obj_model *model,
 	return (count);
 }
 
-void	*load_obj(t_env *core, char *path)
+void	*load_obj(char *path)
 {
 	int			fd;
 	t_obj_model	*model;
 	t_list		*start[2];
 	t_mesh		*mesh;
 
-	(void)core;
 	mesh = mesh_new_init();
 	start[0] = ft_lstnew(NULL, 0);
 	start[1] = ft_lstnew(NULL, 0);

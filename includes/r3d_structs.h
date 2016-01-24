@@ -104,25 +104,27 @@ struct					s_window
 	void				*win;
 	t_array				*objs;
 	t_array				*cams;
-	t_camera			*selected;
+	t_camera			*camera;
 	t_texture			*screen_tex;
 	t_matrix4f			screen_matrix;
 	float				**z_buffer;
 	int					width;
 	int					height;
+	int					id;
 	t_bool				cancel_render;
 };
-struct					s_env
+struct					s_core
 {
 	void				*mlx;
-	t_window			*selected;
+	t_window			*window;
 	t_array				*wins;
-	void				(*update)(t_env *);
-	void				(*postrender)(t_env *);
-	int					target_framerate;
+	t_array				*loaders;
+	void				(*update)();
+	void				(*postrender)();
+	int				target_framerate;
+	int				window_id;
 	double				delta_time;
 	void				*data;
-	t_array				*loaders;
 };
 struct					s_mesh
 {

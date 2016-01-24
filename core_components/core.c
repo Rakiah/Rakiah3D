@@ -12,60 +12,71 @@
 
 #include "r3d.h"
 
-t_env		*env_init(void (*update)(t_env *),
-			void (*postrender)(t_env *),
-			int frame_rate)
-{
-	t_env	*env;
 
-	if ((env = (t_env *)malloc(sizeof(t_env))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
-	if ((env->mlx = mlx_init()) == NULL)
-		error_exit("MLX INIT FAILED");
-	if ((env->wins = ft_create_array(sizeof(t_window *))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
-	if ((env->loaders = ft_create_array(sizeof(t_loader *))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
-	env_add_loader(env, &load_obj, ft_strdup("obj"));
-	env_add_loader(env, &load_ro, ft_strdup("ro"));
-	env_add_loader(env, &load_bitmap, ft_strdup("bmp"));
-	env_add_loader(env, &load_rs, ft_strdup("rs"));
-	env->selected = NULL;
-	env->target_framerate = frame_rate;
-	env->update = update;
-	env->postrender = postrender;
-	env->data = NULL;
-	env->delta_time = 1.0f;
-	mlx_loop_hook(env->mlx, &internal_update, env);
-	return (env);
+t_core		*get_core(void)
+{
+	static t_core	core;
+
+	return (&core);
 }
 
-void		env_add_loader(t_env *env, t_floader loader, char *extension)
+void		core_init(void (*update)(),
+			void (*postrender)(),
+			int frame_rate)
 {
-	t_loader *to_push;
+	t_core	*core;
 
+	core = get_core();
+	if ((core->mlx = mlx_init()) == NULL)
+		error_exit("MLX INIT FAILED");
+	if ((core->wins = ft_create_array(sizeof(t_window *))) == NULL)
+		error_exit("MEMORY ALLOCATION FAILED");
+	if ((core->loaders = ft_create_array(sizeof(t_loader *))) == NULL)
+		error_exit("MEMORY ALLOCATION FAILED");
+	core_add_loader(&load_obj, ft_strdup("obj"));
+	core_add_loader(&load_ro, ft_strdup("ro"));
+	core_add_loader(&load_bitmap, ft_strdup("bmp"));
+	core_add_loader(&load_rs, ft_strdup("rs"));
+	core->window = NULL;
+	core->data = NULL;
+	core->window_id = -1;
+	core->target_framerate = frame_rate;
+	core->update = update;
+	core->postrender = postrender;
+	core->delta_time = 1.0f;
+	mlx_loop_hook(core->mlx, &internal_update, core);
+}
+
+void		core_add_loader(t_floader loader, char *extension)
+{
+	t_loader	*to_push;
+	t_core		*core;
+
+	core = get_core();
 	if ((to_push = malloc(sizeof(t_loader))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
 	to_push->extension = extension;
 	to_push->method = loader;
-	ft_pushback_array(env->loaders, &to_push, sizeof(t_loader *));
+	ft_pushback_array(core->loaders, &to_push, sizeof(t_loader *));
 }
 
-void		env_start(t_env *mlx)
+void		core_start(void)
 {
-	mlx_loop(mlx->mlx);
+	mlx_loop(get_core()->mlx);
 }
 
-void		env_render(t_env *core)
+void		core_render()
 {
 	size_t		i;
 	t_object	*obj;
+	t_core		*core;
 
+	core = get_core();
 	i = 0;
-	while (i < core->selected->objs->count)
+	while (i < core->window->objs->count)
 	{
-		obj = ((t_object **)core->selected->objs->array)[i];
-		obj_draw(core, obj);
+		obj = ((t_object **)core->window->objs->array)[i];
+		obj_draw(obj);
 		i++;
 	}
 }

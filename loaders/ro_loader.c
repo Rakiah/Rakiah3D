@@ -14,7 +14,7 @@
 #include <get_next_line.h>
 #include <fcntl.h>
 
-static t_object		*parse_object(t_env *core,
+static t_object		*parse_object(t_core *core,
 									char *path,
 									t_bool path_type,
 									char *split)
@@ -23,13 +23,12 @@ static t_object		*parse_object(t_env *core,
 	char		*tmp;
 
 	tmp = path_type ? split : ft_strjoin(path, split);
-	object = obj_new_init_mesh(core->selected, (t_mesh *)load(core, tmp));
+	object = obj_new_init_mesh(core->window, (t_mesh *)load(tmp));
 	free(tmp);
 	return (object);
 }
 
-static t_texture	*parse_texture(t_env *core,
-									char *path,
+static t_texture	*parse_texture(char *path,
 									t_bool path_type,
 									char *split)
 {
@@ -37,12 +36,12 @@ static t_texture	*parse_texture(t_env *core,
 	char		*tmp;
 
 	tmp = path_type ? split : ft_strjoin(path, split);
-	texture = (t_texture *)load(core, tmp);
+	texture = (t_texture *)load(tmp);
 	free(tmp);
 	return (texture);
 }
 
-static t_object		*parse_file(t_env *core, char *path, int fd)
+static t_object		*parse_file(t_core *core, char *path, int fd)
 {
 	t_object	*object;
 	t_material	*material;
@@ -57,7 +56,7 @@ static t_object		*parse_file(t_env *core, char *path, int fd)
 		if (ft_strcmp(split[0], "paths-type:") == 0)
 			path_type = ft_strcmp(split[1], "absolute") == 0 ? TRUE : FALSE;
 		else if (ft_strcmp(split[0], "path-texture:") == 0)
-			material->texture = parse_texture(core, path, path_type, split[1]);
+			material->texture = parse_texture(path, path_type, split[1]);
 		else if (ft_strcmp(split[0], "path-object:") == 0)
 			object = parse_object(core, path, path_type, split[1]);
 		else if (ft_strcmp(split[0], "mat-color:") == 0)
@@ -71,10 +70,12 @@ static t_object		*parse_file(t_env *core, char *path, int fd)
 	return (object);
 }
 
-void				*load_ro(t_env *core, char *path)
+void				*load_ro(char *path)
 {
 	int	fd;
+	t_core	*core;
 
+	core = get_core();
 	if ((fd = open(path, O_RDONLY)) < 0)
 		error_exit(ft_strjoin("COULDN'T FIND FILE AT : ", path));
 	return (parse_file(core, path, fd));

@@ -12,32 +12,32 @@
 
 #include "r3d.h"
 
-static void	draw_scan_line_inner(t_env *core,
-								float value[INTERPOLANTS_COUNT],
+static void	draw_scan_line_inner(float value[INTERPOLANTS_COUNT],
 								t_material *mat,
 								int pos[2])
 {
 	float	tex_coords[2];
 	int		pixel;
+	t_core		*core;
 
-	if (value[2] < core->selected->z_buffer[pos[0]][pos[1]])
+	core = get_core();
+	if (value[2] < core->window->z_buffer[pos[0]][pos[1]])
 	{
 		pixel = mat->color;
 		if (mat->texture != NULL)
 		{
 			tex_coords[0] = ft_clampf01((value[0] * (1.0f / value[3])));
 			tex_coords[1] = ft_clampf01((value[1] * (1.0f / value[3])));
-			core->selected->z_buffer[pos[0]][pos[1]] = value[2];
+			core->window->z_buffer[pos[0]][pos[1]] = value[2];
 			pixel = tex_get_pixel(mat->texture,
 					(int)(tex_coords[0] * (mat->texture->width - 1)),
 					(int)(tex_coords[1] * (mat->texture->height - 1)));
 		}
-		tex_draw_pixel(core->selected->screen_tex, pos[0], pos[1], pixel);
+		tex_draw_pixel(core->window->screen_tex, pos[0], pos[1], pixel);
 	}
 }
 
-void		draw_scan_line(t_env *core,
-							t_line *lines[2],
+void		draw_scan_line(t_line *lines[2],
 							int y,
 							t_material *mat)
 {
@@ -56,7 +56,7 @@ void		draw_scan_line(t_env *core,
 	pos[1] = y;
 	while (pos[0] < (int)lines[1]->x_curr)
 	{
-		draw_scan_line_inner(core, value, mat, pos);
+		draw_scan_line_inner(value, mat, pos);
 		pos[0]++;
 		i = -1;
 		while (++i < INTERPOLANTS_COUNT)
@@ -64,10 +64,9 @@ void		draw_scan_line(t_env *core,
 	}
 }
 
-void		draw_between_line(t_env *core,
-								t_line *lines[2],
-								t_bool swap,
-								t_material *mat)
+void		draw_between_line(t_line *lines[2],
+				t_bool swap,
+				t_material *mat)
 {
 	t_line	*tmp;
 	int		y_start;
@@ -83,7 +82,7 @@ void		draw_between_line(t_env *core,
 	}
 	while (y_start < y_end)
 	{
-		draw_scan_line(core, lines, y_start++, mat);
+		draw_scan_line(lines, y_start++, mat);
 		line_do_step(lines[0]);
 		line_do_step(lines[1]);
 	}

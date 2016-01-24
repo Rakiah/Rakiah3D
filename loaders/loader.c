@@ -12,10 +12,12 @@
 
 #include "r3d.h"
 
-t_loader	*find_loader(t_env *core, char *ext)
+t_loader	*find_loader(char *ext)
 {
 	size_t	i;
+	t_core	*core;
 
+	core = get_core();
 	if (ext == NULL)
 		error_exit("TRYING TO LOAD A FILE WITHOUT EXTENSION");
 	i = 0;
@@ -30,10 +32,10 @@ t_loader	*find_loader(t_env *core, char *ext)
 	return (NULL);
 }
 
-void		*load(t_env *core, char *path)
+void		*load(char *path)
 {
 	t_loader *loader;
 
-	loader = find_loader(core, ft_strchr(path, '.'));
-	return (loader->method(core, path));
+	loader = find_loader(ft_strchr(path, '.'));
+	return (loader->method(path));
 }

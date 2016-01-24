@@ -30,12 +30,11 @@ struct			s_obj_index
 	int i[3];
 };
 t_obj_model		*obj_model_new(int fd);
-t_loader		*find_loader(t_env *core, char *ext);
-
-void			*load_obj(t_env *core, char *path);
-void			*load_ro(t_env *core, char *path);
-void			*load_bitmap(t_env *core, char *path);
-void			*load_rs(t_env *core, char *path);
-void			*load(t_env *core, char *path);
+t_loader		*find_loader(char *ext);
+void			*load_obj(char *path);
+void			*load_ro(char *path);
+void			*load_bitmap(char *path);
+void			*load_rs(char *path);
+void			*load(char *path);
 
 #endif

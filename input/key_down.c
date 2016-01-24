@@ -12,9 +12,9 @@
 
 #include "r3d.h"
 
-int			internal_key_down_hook(int keycode, void *mlx)
+int			internal_key_down_hook(int keycode, void *core)
 {
-	(void)mlx;
+	(void)core;
 	keycode = mlx_to_r3d_key(keycode);
 	if (keycode < 1 || keycode > KEYCODES_COUNT)
 		return (0);

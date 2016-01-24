@@ -35,9 +35,9 @@ static unsigned short int	endian_read_short(FILE *file)
 	return (s);
 }
 
-static t_texture			*create_image(t_env *core, FILE *file)
+static t_texture			*create_image(FILE *file)
 {
-	int bounds[2];
+	int	bounds[2];
 
 	fseek(file, 18, SEEK_CUR);
 	if (!(bounds[0] = endian_read_int(file)))
@@ -49,10 +49,10 @@ static t_texture			*create_image(t_env *core, FILE *file)
 	if (endian_read_short(file) != 24)
 		error_exit("BITMAP FILE NOT FORMATTED CORRECTLY");
 	fseek(file, 24, SEEK_CUR);
-	return (tex_new(core, bounds[0], bounds[1]));
+	return (tex_new(bounds[0], bounds[1]));
 }
 
-void						*load_bitmap(t_env *core, char *path)
+void						*load_bitmap(char *path)
 {
 	FILE			*file;
 	unsigned long	size;
@@ -62,7 +62,7 @@ void						*load_bitmap(t_env *core, char *path)
 
 	if ((file = fopen(path, "rb")) == NULL)
 		error_exit(ft_strjoin("COULDN'T FIND FILE AT : ", path));
-	image = create_image(core, file);
+	image = create_image(file);
 	size = image->width * image->height * 3;
 	tmp = (char *)malloc(size);
 	if ((i = fread(tmp, size, 1, file)) != 1)

@@ -12,13 +12,13 @@
 
 #include "r3d.h"
 
-t_texture		*tex_new(t_env *env, int width, int height)
+t_texture		*tex_new(int width, int height)
 {
 	t_texture *ret;
 
 	if ((ret = (t_texture *)malloc(sizeof(t_texture))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
-	if ((ret->img = mlx_new_image(env->mlx, width, height)) == NULL)
+	if ((ret->img = mlx_new_image(get_core()->mlx, width, height)) == NULL)
 		error_exit("MLX NEW IMAGE FAILED");
 	if ((ret->pixels = mlx_get_data_addr(ret->img,
 					&ret->bytes_per_pixel,

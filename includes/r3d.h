@@ -14,12 +14,12 @@
 # define R3D_H
 
 # include "libft.h"
-# include "typedefs.h"
-# include "defines.h"
-# include "enums.h"
-# include "structs.h"
-# include "input.h"
-# include "loader.h"
+# include "r3d_typedefs.h"
+# include "r3d_defines.h"
+# include "r3d_enums.h"
+# include "r3d_structs.h"
+# include "r3d_input.h"
+# include "r3d_loader.h"
 # include <mlx.h>
 # include <math.h>
 
@@ -145,16 +145,18 @@ void			trs_scale(t_transform *trs, t_vector3f *new_scale);
 **	ENV METHODS
 */
 
-t_env			*env_init(void (*update)(t_env *),
-							void (*postrender)(t_env *),
-							int framerate);
-void			env_add_loader(t_env *core, t_floader loader, char *extension);
-void			env_start(t_env *core);
-void			env_render(t_env *core);
+t_core			*get_core(void);
+t_window		*core_select_window(int win);
+void			core_init(void (*update)(),
+				void (*postrender)(),
+				int framerate);
+void			core_add_loader(t_floader loader, char *extension);
+void			core_start();
+void			core_render();
 /*
 **	WINDOW METHODS
 */
-t_window		*window_new(t_env *core, int x, int y, char *title);
+t_window		*window_new(int x, int y, char *title);
 void			clear_z_buffer(t_window *win);
 /*
 **	CAMERA METHODS
@@ -165,28 +167,25 @@ t_camera		*camera_new(t_window *win,
 							t_transform *transform);
 t_matrix4f		*camera_get_matrix(t_camera *camera);
 void			camera_set_projection(t_camera *camera,
-										t_projection_type project);
+						t_projection_type project);
 void			camera_recalculate_matrix(t_camera *camera);
 /*
 **	MESH METHODS
 */
 t_mesh			*mesh_new_init();
-void			mesh_draw(t_env *core, t_mesh *mesh, t_transform *trs);
+void			mesh_draw(t_mesh *mesh, t_transform *trs);
 void			mesh_print(t_mesh *mesh);
 /*
 **	RENDERING METHODS
 */
-void			normalise_point(t_env *mlx, t_vector4f *vector);
-void			draw_triangle(t_env *core, t_vertex *verts[3], t_material *mat);
-void			draw_scan_line(t_env *core,
-								t_line *lines[2],
-								int y,
-								t_material *mat);
-void			clip_triangle(t_env *core,
-								t_vertex *verts[3],
-								t_material *mat);
-void			triangle_to_lines(t_env *core,
-									t_vertex *verts[3],
+void			normalise_point(t_vector4f *vector);
+void			draw_triangle(t_vertex *verts[3], t_material *mat);
+void			draw_scan_line(t_line *lines[2],
+					int y,
+					t_material *mat);
+void			clip_triangle(t_vertex *verts[3],
+					t_material *mat);
+void			triangle_to_lines(t_vertex *verts[3],
 									t_material *mat);
 t_bool			calculate_triangle_side(t_vector4f *a,
 										t_vector4f *b,
@@ -194,9 +193,8 @@ t_bool			calculate_triangle_side(t_vector4f *a,
 /*
 **	LINE RENDERING METHODS
 */
-void			draw_line(t_env *core, t_vector4f *a, t_vector4f *b);
-void			draw_between_line(t_env *core,
-									t_line *lines[2],
+void			draw_line(t_vector4f *a, t_vector4f *b);
+void			draw_between_line(t_line *lines[2],
 									t_bool swap,
 									t_material *mat);
 void			line_setup(t_line *l,
@@ -210,7 +208,7 @@ void			line_do_step(t_line *l);
 t_object		*obj_new_init(t_window *win);
 t_object		*obj_new_init_mesh(t_window *win, t_mesh *mesh);
 t_object		*obj_new(t_window *win, t_mesh *mesh, t_transform *trs);
-void			obj_draw(t_env *core, t_object *obj);
+void			obj_draw(t_object *obj);
 /*
 **	VERTEX METHODS
 */
@@ -244,11 +242,11 @@ t_interpolant	*ipl_new(float values[3],
 /*
 **	TEXTURE METHODS
 */
-t_texture		*tex_new(t_env *env, int width, int height);
+t_texture		*tex_new(int width, int height);
 void			tex_clear(t_texture *tex);
 void			tex_draw_pixel(t_texture *tex, int x, int y, int pixel);
 void			tex_draw_pixel_index(t_texture *tex, int index, int pixel);
-void			tex_to_screen(t_texture *tex, t_env *core);
+void			tex_to_screen(t_texture *tex, t_core *core);
 int				tex_get_pixel(t_texture *tex, int x, int y);
 unsigned char	get_pixel_component(int pixel, int index);
 int				create_pixel(unsigned char a,
@@ -266,11 +264,11 @@ void			error_exit(char *error);
 /*
 **	INTERNAL METHODS
 */
-int				internal_update(t_env *mlx);
-int				internal_key_down_hook(int code, void *mlx);
-int				internal_key_up_hook(int code, void *mlx);
-int				internal_mouse_down_hook(int code, int x, int y, void *mlx);
-int				internal_mouse_up_hook(int code, int x, int y, void *mlx);
-int				internal_mouse_pos_hook(int x, int y, void *mlx);
-int				internal_expose_hook(void *mlx);
+int				internal_update(t_core *core);
+int				internal_key_down_hook(int code, void *core);
+int				internal_key_up_hook(int code, void *core);
+int				internal_mouse_down_hook(int code, int x, int y, void *core);
+int				internal_mouse_up_hook(int code, int x, int y, void *core);
+int				internal_mouse_pos_hook(int x, int y, void *core);
+int				internal_expose_hook(void *core);
 #endif

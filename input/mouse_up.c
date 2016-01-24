@@ -12,9 +12,9 @@
 
 #include "r3d.h"
 
-int		internal_mouse_up_hook(int keycode, int x, int y, void *mlx)
+int		internal_mouse_up_hook(int keycode, int x, int y, void *core)
 {
-	(void)mlx;
+	(void)core;
 	keycode = mlx_to_r3d_mbutton(keycode);
 	if (keycode < 0 || keycode > MOUSEBUTTON_COUNT)
 		return (0);

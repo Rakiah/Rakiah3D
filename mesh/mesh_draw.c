@@ -12,10 +12,9 @@
 
 #include "r3d.h"
 
-void	mesh_draw_wireframe_inner(t_env *mlx,
-									t_mesh *mesh,
-									t_matrix4f *model_projection,
-									unsigned int *index)
+void	mesh_draw_wireframe_inner(t_mesh *mesh,
+				t_matrix4f *model_projection,
+				unsigned int *index)
 {
 	int				j;
 	t_vertex		verts[2];
@@ -32,17 +31,16 @@ void	mesh_draw_wireframe_inner(t_env *mlx,
 		if (vertex_inside_frustum(&verts[0]) &&
 			vertex_inside_frustum(&verts[1]))
 		{
-			normalise_point(mlx, verts[0].pos);
-			normalise_point(mlx, verts[1].pos);
-			draw_line(mlx, verts[0].pos, verts[1].pos);
+			normalise_point(verts[0].pos);
+			normalise_point(verts[1].pos);
+			draw_line(verts[0].pos, verts[1].pos);
 		}
 		free(verts[0].pos);
 		free(verts[1].pos);
 	}
 }
 
-void	mesh_draw_filled_inner(t_env *mlx,
-								t_mesh *mesh,
+void	mesh_draw_filled_inner(t_mesh *mesh,
 								t_matrix4f *model_projection,
 								unsigned int *index)
 {
@@ -60,33 +58,33 @@ void	mesh_draw_filled_inner(t_env *mlx,
 		send_vertex[j] = &verts[j];
 		j++;
 	}
-	clip_triangle(mlx, send_vertex, mesh->material);
+	clip_triangle(send_vertex, mesh->material);
 	free(verts[0].pos);
 	free(verts[1].pos);
 	free(verts[2].pos);
 }
 
-void	mesh_draw(t_env *mlx, t_mesh *mesh, t_transform *trs)
+void	mesh_draw(t_mesh *mesh, t_transform *trs)
 {
 	size_t			i;
 	t_matrix4f		model_projection;
+	t_core			*core;
 
-	m4f_cpy(&model_projection, camera_get_matrix(mlx->selected->selected));
+	core = get_core();
+	m4f_cpy(&model_projection, camera_get_matrix(core->window->camera));
 	m4f_mul(&model_projection, trs_get_matrix(trs));
 	i = 0;
 	if (mesh->wireframe_mode)
 	{
 		while (i < mesh->v_count)
-			mesh_draw_wireframe_inner(mlx,
-										mesh,
+			mesh_draw_wireframe_inner(mesh,
 										&model_projection,
 										(unsigned int *)mesh->indexs[i++]);
 	}
 	else
 	{
 		while (i < mesh->v_count)
-			mesh_draw_filled_inner(mlx,
-									mesh,
+			mesh_draw_filled_inner(mesh,
 									&model_projection,
 									(unsigned int *)mesh->indexs[i++]);
 	}

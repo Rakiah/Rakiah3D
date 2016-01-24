@@ -12,13 +12,15 @@
 
 #include "r3d.h"
 
-t_window	*window_new(t_env *env, int x, int y, char *title)
+t_window	*window_new(int x, int y, char *title)
 {
-	t_window *ret;
+	t_window	*ret;
+	t_core		*core;
 
+	core = get_core();
 	if ((ret = (t_window *)malloc(sizeof(t_window))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
-	if ((ret->win = mlx_new_window(env->mlx, x, y, title)) == NULL)
+	if ((ret->win = mlx_new_window(core->mlx, x, y, title)) == NULL)
 		error_exit("MLX NEW WINDOW FAILED");
 	if ((ret->objs = ft_create_array(sizeof(t_object *))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
@@ -26,20 +28,34 @@ t_window	*window_new(t_env *env, int x, int y, char *title)
 		error_exit("MEMORY ALLOCATION FAILED");
 	if ((ret->z_buffer = (float **)ft_create_tab(x, y, sizeof(float))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
-	ret->screen_tex = tex_new(env, x, y);
+	ret->screen_tex = tex_new(x, y);
 	m4f_screen_space(&ret->screen_matrix, (float)x, (float)y);
-	mlx_hook(ret->win, 2, (1L << 0), &internal_key_down_hook, env);
-	mlx_hook(ret->win, 3, (1L << 1), &internal_key_up_hook, env);
-	mlx_hook(ret->win, 4, (1L << 2), &internal_mouse_down_hook, env);
-	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, env);
-	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, env);
-	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, env);
-	ft_pushback_array(env->wins, &ret, sizeof(t_window *));
+	mlx_hook(ret->win, 2, (1L << 0), &internal_key_down_hook, core);
+	mlx_hook(ret->win, 3, (1L << 1), &internal_key_up_hook, core);
+	mlx_hook(ret->win, 4, (1L << 2), &internal_mouse_down_hook, core);
+	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, core);
+	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, core);
+	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, ret);
+	ft_pushback_array(core->wins, &ret, sizeof(t_window *));
+	ret->id = core->wins->count - 1;
+	core_select_window(ret->id);
 	ret->cancel_render = FALSE;
 	ret->width = x;
 	ret->height = y;
 	clear_z_buffer(ret);
 	return (ret);
+}
+
+t_window	*core_select_window(int id)
+{
+	t_window	*selected;
+	t_core		*core;
+
+	core = get_core();
+	selected = ((t_window **)core->wins->array)[id];
+	core->window = selected;
+	core->window_id = id;
+	return (selected);
 }
 
 void		clear_z_buffer(t_window *win)

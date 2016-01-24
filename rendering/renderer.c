@@ -12,22 +12,22 @@
 
 #include "r3d.h"
 
-void		clip_triangle(t_env *core, t_vertex *verts[3], t_material *mat)
+void		clip_triangle(t_vertex *verts[3], t_material *mat)
 {
 	if (vertex_inside_frustum(verts[0]) &&
 		vertex_inside_frustum(verts[1]) &&
 		vertex_inside_frustum(verts[2]))
-		draw_triangle(core, verts, mat);
+		draw_triangle(verts, mat);
 }
 
-void		draw_triangle(t_env *core, t_vertex *verts[3], t_material *mat)
+void		draw_triangle(t_vertex *verts[3], t_material *mat)
 {
 	int				i;
 	t_vertex		*swap;
 
-	normalise_point(core, verts[0]->pos);
-	normalise_point(core, verts[1]->pos);
-	normalise_point(core, verts[2]->pos);
+	normalise_point(verts[0]->pos);
+	normalise_point(verts[1]->pos);
+	normalise_point(verts[2]->pos);
 	i = 0;
 	while (i < 2)
 	{
@@ -40,10 +40,10 @@ void		draw_triangle(t_env *core, t_vertex *verts[3], t_material *mat)
 		}
 		i++;
 	}
-	triangle_to_lines(core, verts, mat);
+	triangle_to_lines(verts, mat);
 }
 
-void		triangle_to_lines(t_env *core, t_vertex *verts[3], t_material *mat)
+void		triangle_to_lines(t_vertex *verts[3], t_material *mat)
 {
 	t_bool			side;
 	t_line			lines[3];
@@ -64,10 +64,10 @@ void		triangle_to_lines(t_env *core, t_vertex *verts[3], t_material *mat)
 	line_setup(&lines[2], send_verts, ipls, 1);
 	send_lines[0] = &lines[0];
 	send_lines[1] = &lines[1];
-	draw_between_line(core, send_lines, side, mat);
+	draw_between_line(send_lines, side, mat);
 	send_lines[0] = &lines[0];
 	send_lines[1] = &lines[2];
-	draw_between_line(core, send_lines, side, mat);
+	draw_between_line(send_lines, side, mat);
 }
 
 t_bool		calculate_triangle_side(t_vector4f *a, t_vector4f *b, t_vector4f *c)
@@ -76,11 +76,11 @@ t_bool		calculate_triangle_side(t_vector4f *a, t_vector4f *b, t_vector4f *c)
 			(c->x - a->x) * (b->y - a->y)) >= 0 ? 1 : 0);
 }
 
-void		normalise_point(t_env *mlx, t_vector4f *vector)
+void		normalise_point(t_vector4f *vector)
 {
 	t_vector4f	*tmp;
 
-	tmp = trs_transform_point(&mlx->selected->screen_matrix, vector);
+	tmp = trs_transform_point(&get_core()->window->screen_matrix, vector);
 	vector->x = tmp->x / tmp->w;
 	vector->y = tmp->y / tmp->w;
 	vector->z = tmp->z / tmp->w;

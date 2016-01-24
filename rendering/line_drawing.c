@@ -50,7 +50,7 @@ void	calculate_errors(int increment[2],
 	}
 }
 
-void	draw_line(t_env *mlx, t_vector4f *a, t_vector4f *b)
+void	draw_line(t_vector4f *a, t_vector4f *b)
 {
 	int bounds[2];
 	int err[2];
@@ -66,7 +66,7 @@ void	draw_line(t_env *mlx, t_vector4f *a, t_vector4f *b)
 	pos[1] = (int)a->y;
 	while (++bounds[0] < bounds[1])
 	{
-		tex_draw_pixel(mlx->selected->screen_tex, pos[0], pos[1], 0xFFFFFF);
+		tex_draw_pixel(get_core()->window->screen_tex, pos[0], pos[1], 0xFFFFFF);
 		err[0] += diff[0];
 		err[1] += diff[1];
 		calculate_errors(increment, err, bounds, pos);

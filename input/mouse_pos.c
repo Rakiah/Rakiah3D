@@ -13,13 +13,9 @@
 #include "r3d.h"
 
 
-int		internal_mouse_pos_hook(int x, int y, void *mlx)
+int		internal_mouse_pos_hook(int x, int y, void *core)
 {
-	(void)mlx;
-	/*ft_putnbr(x);*/
-	/*ft_putchar('\n');*/
-	/*ft_putnbr(y);*/
-	/*ft_putchar('\n');*/
+	(void)core;
 	mouse_pos(x, y, CMD_SET);
 	return (0);
 }
