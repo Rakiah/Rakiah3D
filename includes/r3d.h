@@ -148,6 +148,7 @@ void			trs_scale(t_transform *trs, t_vector3f *new_scale);
 t_core			*get_core(void);
 t_window		*core_select_window(int win);
 void			core_init(void (*update)(),
+				void (*expose)(t_window *),
 				void (*postrender)(),
 				int framerate);
 void			core_add_loader(t_floader loader, char *extension);
@@ -270,5 +271,6 @@ int				internal_key_up_hook(int code, void *core);
 int				internal_mouse_down_hook(int code, int x, int y, void *core);
 int				internal_mouse_up_hook(int code, int x, int y, void *core);
 int				internal_mouse_pos_hook(int x, int y, void *core);
-int				internal_expose_hook(t_window *core);
+int				internal_expose_hook(t_window *win);
+int				internal_focus_in_hook(t_window *win);
 #endif

@@ -12,25 +12,8 @@
 
 #include "r3d.h"
 
-t_bool		focus_event(t_input_cmd cmd, t_bool value)
-{
-	static t_bool	focus;
-
-	if (cmd == CMD_SET)
-		focus = value;
-	else if (cmd == CMD_GET)
-		return (focus);
-	return (focus);
-}
-
-int			internal_expose_hook(t_window *window)
+int	internal_focus_in_hook(t_window *window)
 {
 	core_select_window(window->id);
-	focus_event(CMD_SET, TRUE);
 	return (0);
-}
-
-t_bool		get_focus_event(void)
-{
-	return (focus_event(CMD_GET, FALSE));
 }

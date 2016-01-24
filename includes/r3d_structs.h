@@ -121,6 +121,7 @@ struct					s_core
 	t_array				*loaders;
 	void				(*update)();
 	void				(*postrender)();
+	void				(*expose)(t_window *);
 	int				target_framerate;
 	int				window_id;
 	double				delta_time;

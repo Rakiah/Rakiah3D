@@ -36,6 +36,7 @@ t_window	*window_new(int x, int y, char *title)
 	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, core);
 	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, core);
 	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, ret);
+	mlx_hook(ret->win, 9, (1L << 21), &internal_focus_in_hook, ret);
 	ft_pushback_array(core->wins, &ret, sizeof(t_window *));
 	ret->id = core->wins->count - 1;
 	core_select_window(ret->id);

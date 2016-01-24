@@ -54,7 +54,6 @@ void	reset_inputs(void)
 	mouse_up(-1, CMD_SET_ALL, FALSE);
 	while (++i < 7)
 		mouse_down(i, CMD_SET, FALSE);
-	focus_event(CMD_SET, FALSE);
 }
 
 void	calculate_delta_time(t_core *core, clock_t start)
@@ -73,6 +72,16 @@ void	calculate_delta_time(t_core *core, clock_t start)
 	else
 		core->delta_time = 0;
 	core->delta_time += (double)(clock() - start) / CLOCKS_PER_SEC;
+}
+
+int		internal_expose_hook(t_window *window)
+{
+	t_core *core;
+
+	core = get_core();
+	if(core->expose != NULL)
+		core->expose(window);
+	return (0);
 }
 
 int		internal_update(t_core *core)

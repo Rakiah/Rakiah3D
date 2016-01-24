@@ -21,6 +21,7 @@ t_core		*get_core(void)
 }
 
 void		core_init(void (*update)(),
+			void (*expose)(t_window *),
 			void (*postrender)(),
 			int frame_rate)
 {
@@ -37,12 +38,13 @@ void		core_init(void (*update)(),
 	core_add_loader(&load_ro, ft_strdup("ro"));
 	core_add_loader(&load_bitmap, ft_strdup("bmp"));
 	core_add_loader(&load_rs, ft_strdup("rs"));
+	core->update = update;
+	core->postrender = postrender;
+	core->expose = expose;
 	core->window = NULL;
 	core->data = NULL;
 	core->window_id = -1;
 	core->target_framerate = frame_rate;
-	core->update = update;
-	core->postrender = postrender;
 	core->delta_time = 1.0f;
 	mlx_loop_hook(core->mlx, &internal_update, core);
 }
