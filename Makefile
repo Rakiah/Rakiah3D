@@ -6,14 +6,14 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/01/18 23:33:36 by bkabbas          ###   ########.fr        #
+#    Updated: 2016/01/25 13:12:04 by bkabbas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libr3d.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-PLATFORM = Linux
+PLATFORM = El_capitan
 
 PATH_HEADERS = -I includes/
 PATH_R3D = ./

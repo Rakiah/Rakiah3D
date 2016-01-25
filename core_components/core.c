@@ -6,12 +6,11 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 18:33:33 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:21:44 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
-
 
 t_core		*get_core(void)
 {
@@ -21,9 +20,9 @@ t_core		*get_core(void)
 }
 
 void		core_init(void (*update)(),
-			void (*expose)(t_window *),
-			void (*postrender)(),
-			int frame_rate)
+					void (*expose)(t_window *),
+					void (*postrender)(),
+					int frame_rate)
 {
 	t_core	*core;
 
@@ -67,7 +66,7 @@ void		core_start(void)
 	mlx_loop(get_core()->mlx);
 }
 
-void		core_render()
+void		core_render(void)
 {
 	size_t		i;
 	t_object	*obj;

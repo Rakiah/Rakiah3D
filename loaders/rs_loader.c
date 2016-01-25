@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:01:35 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 18:12:12 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:16:41 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	*parse_item(char *path, char *split, t_bool path_type)
 
 void		*load_rs(char *path)
 {
-	int		fd;
+	int			fd;
 	char		*line;
 	char		**splitted;
 	t_bool		path_type;

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   r3d_structs.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:30:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 17:35:18 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:20:38 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#ifndef R3D_STRUCTS_H
+# define R3D_STRUCTS_H
 
 struct					s_vector3f
 {
@@ -122,8 +122,8 @@ struct					s_core
 	void				(*update)();
 	void				(*postrender)();
 	void				(*expose)(t_window *);
-	int				target_framerate;
-	int				window_id;
+	int					target_framerate;
+	int					window_id;
 	double				delta_time;
 	void				*data;
 };

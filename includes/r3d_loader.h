@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loader.h                                           :+:      :+:    :+:   */
+/*   r3d_loader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:30:11 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 17:30:45 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:19:24 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOADER_H
-# define LOADER_H
+#ifndef R3D_LOADER_H
+# define R3D_LOADER_H
 
 typedef	struct s_obj_model	t_obj_model;
 typedef struct s_obj_index	t_obj_index;

@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 21:03:38 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 21:21:15 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:14:24 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	draw_line(t_vector4f *a, t_vector4f *b)
 	pos[1] = (int)a->y;
 	while (++bounds[0] < bounds[1])
 	{
-		tex_draw_pixel(get_core()->window->screen_tex, pos[0], pos[1], 0xFFFFFF);
+		tex_draw_pixel(get_core()->window->screen_tex,
+						pos[0], pos[1], 0xFFFFFF);
 		err[0] += diff[0];
 		err[1] += diff[1];
 		calculate_errors(increment, err, bounds, pos);

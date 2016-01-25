@@ -6,15 +6,15 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:50:08 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/13 17:11:55 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 14:09:05 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-int			internal_key_up_hook(int keycode, void *core)
+int			internal_key_up_hook(int keycode, t_window *win)
 {
-	(void)core;
+	core_select_window(win->id);
 	keycode = mlx_to_r3d_key(keycode);
 	if (keycode < 1 || keycode > KEYCODES_COUNT)
 		return (0);

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   r3d_input.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:01:48 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 12:05:32 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:18:21 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#ifndef R3D_INPUT_H
+# define R3D_INPUT_H
 
 t_bool			get_focus_event(void);
 t_bool			get_mouse_button_up(int code);

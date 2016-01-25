@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:01:35 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 18:16:01 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:15:45 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static t_object		*parse_file(t_core *core, char *path, int fd)
 
 void				*load_ro(char *path)
 {
-	int	fd;
+	int		fd;
 	t_core	*core;
 
 	core = get_core();

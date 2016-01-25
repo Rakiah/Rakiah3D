@@ -6,15 +6,15 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:54:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 23:08:36 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 14:09:49 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-int		internal_mouse_up_hook(int keycode, int x, int y, void *core)
+int		internal_mouse_up_hook(int keycode, int x, int y, t_window *win)
 {
-	(void)core;
+	core_select_window(win->id);
 	keycode = mlx_to_r3d_mbutton(keycode);
 	if (keycode < 0 || keycode > MOUSEBUTTON_COUNT)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:10:22 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 12:07:50 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 14:10:56 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,11 +266,11 @@ void			error_exit(char *error);
 **	INTERNAL METHODS
 */
 int				internal_update(t_core *core);
-int				internal_key_down_hook(int code, void *core);
-int				internal_key_up_hook(int code, void *core);
-int				internal_mouse_down_hook(int code, int x, int y, void *core);
-int				internal_mouse_up_hook(int code, int x, int y, void *core);
-int				internal_mouse_pos_hook(int x, int y, void *core);
+int				internal_key_down_hook(int code, t_window *win);
+int				internal_key_up_hook(int code, t_window *win);
+int				internal_mouse_down_hook(int code, int x, int y, t_window *win);
+int				internal_mouse_up_hook(int code, int x, int y, t_window *win);
+int				internal_mouse_pos_hook(int x, int y, t_window *win);
 int				internal_expose_hook(t_window *win);
 int				internal_focus_in_hook(t_window *win);
 #endif

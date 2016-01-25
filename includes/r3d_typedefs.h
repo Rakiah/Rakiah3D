@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   typedefs.h                                         :+:      :+:    :+:   */
+/*   r3d_typedefs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:35:46 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 17:35:46 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:19:59 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TYPEDEFS_H
-# define TYPEDEFS_H
+#ifndef R3D_TYPEDEFS_H
+# define R3D_TYPEDEFS_H
 
 typedef char				t_bool;
 typedef enum e_keycode			t_keycode;

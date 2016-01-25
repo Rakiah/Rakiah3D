@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 19:05:26 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/18 21:23:55 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:14:58 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	draw_scan_line_inner(float value[INTERPOLANTS_COUNT],
 								t_material *mat,
 								int pos[2])
 {
-	float	tex_coords[2];
-	int		pixel;
+	float		tex_coords[2];
+	int			pixel;
 	t_core		*core;
 
 	core = get_core();

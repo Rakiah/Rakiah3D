@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:14:15 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 23:07:13 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:24:26 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	internal_render(t_core *core)
 {
 	size_t		i;
-	int		selected;
+	int			selected;
 
 	if ((selected = core->window_id) == -1)
 		return ;
@@ -31,10 +31,8 @@ void	internal_render(t_core *core)
 				tex_clear(core->window->screen_tex);
 				clear_z_buffer(core->window);
 				core_render(core);
-				mlx_put_image_to_window(core->mlx,
-						core->window->win,
-						core->window->screen_tex->img,
-						0, 0);
+				mlx_put_image_to_window(core->mlx, core->window->win,
+										core->window->screen_tex->img, 0, 0);
 			}
 		}
 		else
@@ -79,7 +77,7 @@ int		internal_expose_hook(t_window *window)
 	t_core *core;
 
 	core = get_core();
-	if(core->expose != NULL)
+	if (core->expose != NULL)
 		core->expose(window);
 	return (0);
 }

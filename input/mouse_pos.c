@@ -6,16 +6,15 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:55:55 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 13:30:56 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:17:02 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-
-int		internal_mouse_pos_hook(int x, int y, void *core)
+int			internal_mouse_pos_hook(int x, int y, t_window *win)
 {
-	(void)core;
+	core_select_window(win->id);
 	mouse_pos(x, y, CMD_SET);
 	return (0);
 }

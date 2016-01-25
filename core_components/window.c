@@ -6,11 +6,22 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 18:32:28 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/22 12:04:31 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/01/25 15:23:30 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
+
+static void	setup_hooks(t_window *ret)
+{
+	mlx_hook(ret->win, 2, (1L << 0), &internal_key_down_hook, ret);
+	mlx_hook(ret->win, 3, (1L << 1), &internal_key_up_hook, ret);
+	mlx_hook(ret->win, 4, (1L << 2), &internal_mouse_down_hook, ret);
+	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, ret);
+	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, ret);
+	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, ret);
+	mlx_hook(ret->win, 7, (1L << 4), &internal_focus_in_hook, ret);
+}
 
 t_window	*window_new(int x, int y, char *title)
 {
@@ -30,13 +41,7 @@ t_window	*window_new(int x, int y, char *title)
 		error_exit("MEMORY ALLOCATION FAILED");
 	ret->screen_tex = tex_new(x, y);
 	m4f_screen_space(&ret->screen_matrix, (float)x, (float)y);
-	mlx_hook(ret->win, 2, (1L << 0), &internal_key_down_hook, core);
-	mlx_hook(ret->win, 3, (1L << 1), &internal_key_up_hook, core);
-	mlx_hook(ret->win, 4, (1L << 2), &internal_mouse_down_hook, core);
-	mlx_hook(ret->win, 5, (1L << 3), &internal_mouse_up_hook, core);
-	mlx_hook(ret->win, 6, (1L << 6), &internal_mouse_pos_hook, core);
-	mlx_hook(ret->win, 12, (1L << 15), &internal_expose_hook, ret);
-	mlx_hook(ret->win, 9, (1L << 21), &internal_focus_in_hook, ret);
+	setup_hooks(ret);
 	ft_pushback_array(core->wins, &ret, sizeof(t_window *));
 	ret->id = core->wins->count - 1;
 	core_select_window(ret->id);
