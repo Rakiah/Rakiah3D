@@ -14,6 +14,7 @@
 # define R3D_H
 
 # include "libft.h"
+# include "ft_lists.h"
 # include "r3d_typedefs.h"
 # include "r3d_defines.h"
 # include "r3d_enums.h"

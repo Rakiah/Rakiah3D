@@ -12,8 +12,8 @@
 
 NAME = libr3d.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-PLATFORM = El_capitan
+CFLAGS = -Wall -Wextra -Werror -g
+PLATFORM = Linux
 
 PATH_HEADERS = -I includes/
 PATH_R3D = ./

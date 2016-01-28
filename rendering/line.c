@@ -68,7 +68,7 @@ void		draw_between_line(t_line *lines[2],
 				t_bool swap,
 				t_material *mat)
 {
-	t_line	*tmp;
+	t_line		*tmp;
 	int		y_start;
 	int		y_end;
 

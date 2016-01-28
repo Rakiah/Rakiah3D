@@ -32,7 +32,7 @@ void	internal_render(t_core *core)
 				clear_z_buffer(core->window);
 				core_render(core);
 				mlx_put_image_to_window(core->mlx, core->window->win,
-										core->window->screen_tex->img, 0, 0);
+							core->window->screen_tex->img, 0, 0);
 			}
 		}
 		else
@@ -62,7 +62,7 @@ void	calculate_delta_time(t_core *core, clock_t start)
 	render_time = (double)(clock() - start) / CLOCKS_PER_SEC;
 	sleep_time = ((((double)1 / core->target_framerate)
 				- render_time) * 1000000);
-	if (sleep_time >= 0)
+	if (sleep_time > 0)
 	{
 		core->delta_time = (double)sleep_time / 1000000;
 		usleep(sleep_time);

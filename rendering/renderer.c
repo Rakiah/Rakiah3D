@@ -12,13 +12,91 @@
 
 #include "r3d.h"
 
-void		clip_triangle(t_vertex *verts[3], t_material *mat)
+void	clip_polygon_index(t_list *vertices, t_list *result, int index, float side)
 {
+	t_vertex	*pre_next_verts[2];
+	float		pre_next_component[2];
+	t_bool		pre_next_inside[2];
+
+	pre_next_verts[0] = vertices->end->data;
+	pre_next_component[0] = ((float *)pre_next_verts[0]->pos)[index] * side;
+	pre_next_inside[0] = pre_next_component[0] <= pre_next_verts[0]->pos->w;
+
+	while (vertices->iterator->next != NULL)
+	{
+		list_next(vertices);
+		pre_next_verts[1] = vertices->iterator->data;
+		pre_next_component[1] = ((float *)pre_next_verts[1]->pos)[index] * side;
+		pre_next_inside[1] = pre_next_component[1] <= pre_next_verts[1]->pos->w;
+
+		if (pre_next_inside[1] ^ pre_next_inside[0])
+			list_push_back(result, vertex_lerp(pre_next_verts[0],
+					pre_next_verts[1],
+					vertex_new(v4f_new(0, 0, 0, 0),
+						v2f_new(0, 0),
+						v3f_new(0, 0, 0)),
+					(pre_next_verts[0]->pos->w - pre_next_component[0]) /
+					((pre_next_verts[0]->pos->w - pre_next_component[0]) -
+					(pre_next_verts[1]->pos->w - pre_next_component[1]))));
+		if (pre_next_inside[1])
+			list_push_back(result, pre_next_verts[1]);
+		pre_next_verts[0] = pre_next_verts[1];
+		pre_next_component[0] = pre_next_component[1];
+		pre_next_inside[0] = pre_next_inside[1];
+	}
+}
+
+t_bool	clip_axis(t_list *vertices, t_list *tmp, int index)
+{
+	clip_polygon_index(vertices, tmp, index, 1.0f);
+	list_clear(vertices);
+	if (tmp->count == 0)
+		return (FALSE);
+	clip_polygon_index(tmp, vertices, index, -1.0f);
+	list_clear(tmp);
+	return (vertices->count != 0);
+}
+
+void	clip_triangle(t_vertex *verts[3], t_material *mat)
+{
+	t_list		*remapped;
+	t_list		*temporary;
+	int		i;
+
 	if (vertex_inside_frustum(verts[0]) &&
 		vertex_inside_frustum(verts[1]) &&
 		vertex_inside_frustum(verts[2]))
+	{
 		draw_triangle(verts, mat);
+		return ;
+	}
+	remapped = list_new(sizeof(t_vertex *));
+	temporary = list_new(sizeof(t_vertex *));
+	list_push_back(remapped, verts[0]);
+	list_push_back(remapped, verts[1]);
+	list_push_back(remapped, verts[2]);
+	if (clip_axis(remapped, temporary, 0) && clip_axis(remapped, temporary, 1) && clip_axis(remapped, temporary, 2))
+	{
+		ft_putstr("clipped");
+		verts[0] = remapped->start->data;
+		i = 1;
+		while (i < (int)remapped->count - 1)
+		{
+			verts[1] = list_get_data_at(remapped, i);
+			verts[2] = list_get_data_at(remapped, i + 1);
+			draw_triangle(verts, mat);
+			i++;
+		}
+	}
 }
+
+/*void		clip_triangle(t_vertex *verts[3], t_material *mat)*/
+/*{*/
+	/*if (vertex_inside_frustum(verts[0]) &&*/
+		/*vertex_inside_frustum(verts[1]) &&*/
+		/*vertex_inside_frustum(verts[2]))*/
+		/*draw_triangle(verts, mat);*/
+/*}*/
 
 void		draw_triangle(t_vertex *verts[3], t_material *mat)
 {
@@ -73,7 +151,7 @@ void		triangle_to_lines(t_vertex *verts[3], t_material *mat)
 t_bool		calculate_triangle_side(t_vector4f *a, t_vector4f *b, t_vector4f *c)
 {
 	return (((b->x - a->x) * (c->y - a->y) -
-			(c->x - a->x) * (b->y - a->y)) >= 0 ? 1 : 0);
+		(c->x - a->x) * (b->y - a->y)) >= 0 ? 1 : 0);
 }
 
 void		normalise_point(t_vector4f *vector)

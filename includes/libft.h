@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include <ft_typedefs.h>
+# include <ft_structs.h>
 
 /*
 **	START STANDARD LIB
@@ -87,32 +89,31 @@ void				ft_putnbr_fd(int n, int fd);
 **	END CUSTOM LIB
 **	START LIST LIB
 */
-typedef struct		s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
-t_list				*ft_lstnew(void const *content, size_t content_size);
-t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-t_list				*ft_lst_get_end(t_list *list);
-void				ft_lstdel_nothing(void *p, size_t s);
-void				ft_lstdel_content(void *p, size_t s);
-void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstadd(t_list **alst, t_list *new);
-void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+//typedef struct		s_list
+//{
+	//void			*content;
+	//size_t			content_size;
+	//struct s_list	*next;
+//}					t_list;
+//t_list				*ft_lstnew(void const *content, size_t content_size);
+//t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+//t_list				*ft_lst_get_end(t_list *list);
+//void				ft_lstdel_nothing(void *p, size_t s);
+//void				ft_lstdel_content(void *p, size_t s);
+//void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+//void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+//void				ft_lstadd(t_list **alst, t_list *new);
+//void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+//size_t				ft_lstcount(t_list *lst);
+//t_list				*ft_lstfindbyindex(t_list *list, int index);
+//t_list				*ft_lstfindbyvalue(t_list *list, t_list *to_find);
+//t_array				*ft_lst_to_t_array(t_list *lst, size_t size);
+//void				**ft_lst_to_array(t_list *lst, size_t size);
 /*
 **  END LIST LIB
-**	START SELF LIB
+**  START SELF LIB
 */
-typedef struct		s_array
-{
-	void			*array;
-	size_t			element_size;
-	size_t			bytes_size;
-	size_t			count;
-}					t_array;
+
 t_array				*ft_create_array(size_t element_size);
 void				ft_pushback_array(t_array *array,
 										void *value,
@@ -123,11 +124,6 @@ void				ft_pushfront_array(t_array *array,
 void				ft_del_at_array(t_array *array, int index);
 void				ft_delrange_at_array(t_array *array, int start, int end);
 void				ft_delete_array(t_array *array);
-size_t				ft_lstcount(t_list *lst);
-t_list				*ft_lstfindbyindex(t_list *list, int index);
-t_list				*ft_lstfindbyvalue(t_list *list, t_list *to_find);
-t_array				*ft_lst_to_t_array(t_list *lst, size_t size);
-void				**ft_lst_to_array(t_list *lst, size_t size);
 void				ft_memswap(void *swpf, void *swps);
 void				*ft_memjoin(void *c1,
 								void *c2,

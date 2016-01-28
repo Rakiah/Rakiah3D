@@ -25,6 +25,7 @@ t_camera	*camera_new_init(t_window *win)
 	ret->size.x = win->width;
 	ret->size.y = win->height;
 	ret->is_dirty = TRUE;
+	win->camera = ret;
 	m4f_perspective(ret);
 	ft_pushback_array(win->cams, &ret, sizeof(t_camera *));
 	return (ret);
@@ -45,6 +46,7 @@ t_camera	*camera_new(t_window *win,
 	ret->size.x = win->width;
 	ret->size.y = win->height;
 	ret->is_dirty = TRUE;
+	win->camera = ret;
 	if (project == PERSPECTIVE)
 		m4f_perspective(ret);
 	else

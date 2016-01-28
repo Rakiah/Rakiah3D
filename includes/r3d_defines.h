@@ -13,7 +13,7 @@
 #ifndef R3D_DEFINES_H
 # define R3D_DEFINES_H
 
-# define KEYCODES_COUNT 137
+# define KEYCODES_COUNT 132
 # define MOUSEBUTTON_COUNT 7
 # define INTERPOLANTS_COUNT 4
 # define TRUE 1

@@ -55,6 +55,7 @@ void	mesh_draw_filled_inner(t_mesh *mesh,
 		tmp = (t_vertex *)mesh->vertices[index[j]];
 		verts[j].pos = trs_transform_point(model_projection, tmp->pos);
 		verts[j].tex_coords = tmp->tex_coords;
+		verts[j].normals = tmp->normals;
 		send_vertex[j] = &verts[j];
 		j++;
 	}
