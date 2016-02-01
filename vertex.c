@@ -54,6 +54,6 @@ t_vertex	*vertex_new_cpy(t_vertex *src)
 t_bool		vertex_inside_frustum(t_vertex *v)
 {
 	return ((fabs(v->pos->x) <= fabs(v->pos->w)) &&
-			(fabs(v->pos->y) <= fabs(v->pos->w)) &&
-			(fabs(v->pos->z) <= fabs(v->pos->w)));
+		(fabs(v->pos->y) <= fabs(v->pos->w)) &&
+		(fabs(v->pos->z) <= fabs(v->pos->w)));
 }

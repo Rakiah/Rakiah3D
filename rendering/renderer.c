@@ -21,15 +21,15 @@ void	clip_polygon_index(t_list *vertices, t_list *result, int index, float side)
 	pre_next_verts[0] = vertices->end->data;
 	pre_next_component[0] = ((float *)pre_next_verts[0]->pos)[index] * side;
 	pre_next_inside[0] = pre_next_component[0] <= pre_next_verts[0]->pos->w;
-
-	while (vertices->iterator->next != NULL)
+	list_set_start(vertices);
+	while ((pre_next_verts[1] = list_next(vertices)) != NULL)
 	{
-		list_next(vertices);
-		pre_next_verts[1] = vertices->iterator->data;
+		/*list_next(vertices);*/
+		/*pre_next_verts[1] = list_next(vertices);*/
 		pre_next_component[1] = ((float *)pre_next_verts[1]->pos)[index] * side;
 		pre_next_inside[1] = pre_next_component[1] <= pre_next_verts[1]->pos->w;
-
 		if (pre_next_inside[1] ^ pre_next_inside[0])
+		{
 			list_push_back(result, vertex_lerp(pre_next_verts[0],
 					pre_next_verts[1],
 					vertex_new(v4f_new(0, 0, 0, 0),
@@ -38,8 +38,13 @@ void	clip_polygon_index(t_list *vertices, t_list *result, int index, float side)
 					(pre_next_verts[0]->pos->w - pre_next_component[0]) /
 					((pre_next_verts[0]->pos->w - pre_next_component[0]) -
 					(pre_next_verts[1]->pos->w - pre_next_component[1]))));
+			/*ft_putstr("correct\n");*/
+		}
 		if (pre_next_inside[1])
+		{
+			/*ft_putstr("bite\n");*/
 			list_push_back(result, pre_next_verts[1]);
+		}
 		pre_next_verts[0] = pre_next_verts[1];
 		pre_next_component[0] = pre_next_component[1];
 		pre_next_inside[0] = pre_next_inside[1];
@@ -52,30 +57,69 @@ t_bool	clip_axis(t_list *vertices, t_list *tmp, int index)
 	list_clear(vertices);
 	if (tmp->count == 0)
 		return (FALSE);
+	ft_putnbr(tmp->count);
+	ft_putchar('\n');
 	clip_polygon_index(tmp, vertices, index, -1.0f);
 	list_clear(tmp);
-	return (vertices->count != 0);
+	if (vertices->count == 0)
+		return (FALSE);
+	/*ft_putstr("vertices count ");*/
+	/*ft_putnbr(vertices->count);*/
+	/*ft_putchar('\n');*/
+	/*ft_putstr("index ");*/
+	/*ft_putnbr(index);*/
+	/*ft_putchar('\n');*/
+	return (TRUE);
+}
+
+void	print_list(t_list *list)
+{
+	ft_putnbr(list->count);
+	ft_putchar('\n');
 }
 
 void	clip_triangle(t_vertex *verts[3], t_material *mat)
 {
 	t_list		*remapped;
 	t_list		*temporary;
+	t_bool		visible[3];
+	t_bool		clipped[3];
 	int		i;
 
-	if (vertex_inside_frustum(verts[0]) &&
-		vertex_inside_frustum(verts[1]) &&
-		vertex_inside_frustum(verts[2]))
+	visible[0] = vertex_inside_frustum(verts[0]);
+	visible[1] = vertex_inside_frustum(verts[1]);
+	visible[2] = vertex_inside_frustum(verts[2]);
+	clipped[0] = FALSE;
+	clipped[1] = FALSE;
+	clipped[2] = FALSE;
+	if (visible[0] && visible[1] && visible[2])
 	{
 		draw_triangle(verts, mat);
 		return ;
 	}
+	if (!visible[0] && !visible[1] && !visible[2])
+		return ;
 	remapped = list_new(sizeof(t_vertex *));
 	temporary = list_new(sizeof(t_vertex *));
 	list_push_back(remapped, verts[0]);
 	list_push_back(remapped, verts[1]);
 	list_push_back(remapped, verts[2]);
-	if (clip_axis(remapped, temporary, 0) && clip_axis(remapped, temporary, 1) && clip_axis(remapped, temporary, 2))
+	/*ft_putstr("have to remap\n");*/
+	/*ft_putstr("start clip triangle ");*/
+	/*print_list(remapped);*/
+
+	if ((clipped[0] = clip_axis(remapped, temporary, 0)))
+	{
+		/*ft_putstr("remapped ");*/
+		/*print_list(remapped);*/
+		/*ft_putstr("temporary ");*/
+		/*print_list(temporary);*/
+		if ((clipped[1] = clip_axis(remapped, temporary, 1)))
+		{
+			clipped[2] = clip_axis(remapped, temporary, 2);
+		}
+	}
+	if (clipped[0] && clipped[1] && clipped[2])
 	{
 		ft_putstr("clipped");
 		verts[0] = remapped->start->data;
@@ -88,6 +132,16 @@ void	clip_triangle(t_vertex *verts[3], t_material *mat)
 			i++;
 		}
 	}
+	/*else*/
+	/*{*/
+		/*ft_putstr("clipped triangles : ");*/
+		/*ft_putnbr(clipped[0]);*/
+		/*ft_putstr(" ");*/
+		/*ft_putnbr(clipped[1]);*/
+		/*ft_putstr(" ");*/
+		/*ft_putnbr(clipped[2]);*/
+		/*ft_putstr("\n");*/
+	/*}*/
 }
 
 /*void		clip_triangle(t_vertex *verts[3], t_material *mat)*/
