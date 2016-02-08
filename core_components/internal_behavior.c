@@ -123,6 +123,10 @@ int		internal_update(t_core *core)
 	internal_render(core);
 	if (core->postrender != NULL)
 		core->postrender();
+	if (core->locked_cursor)
+		SDL_WarpMouseInWindow(core->window->win,
+				core->window->width / 2,
+				core->window->height / 2);
 	reset_inputs();
 	calculate_delta_time(core, start);
 	return (0);

@@ -163,6 +163,8 @@ void			core_init(void (*update)(),
 				void (*postrender)(),
 				int framerate);
 void			core_add_loader(t_floader loader, char *extension);
+void			core_show_cursor(t_bool state);
+void			core_lock_cursor(t_bool state);
 void			core_start();
 void			core_render();
 /*

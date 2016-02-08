@@ -126,6 +126,8 @@ struct					s_core
 	int				window_id;
 	double				delta_time;
 	void				*data;
+	t_bool				shown_cursor;
+	t_bool				locked_cursor;
 };
 struct					s_mesh
 {

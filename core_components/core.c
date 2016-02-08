@@ -36,6 +36,8 @@ void		core_init(void (*update)(),
 	core_add_loader(&load_ro, ft_strdup("ro"));
 	core_add_loader(&load_bitmap, ft_strdup("bmp"));
 	core_add_loader(&load_rs, ft_strdup("rs"));
+	core->shown_cursor = FALSE;
+	core->locked_cursor = FALSE;
 	core->update = update;
 	core->postrender = postrender;
 	core->expose = expose;
@@ -44,6 +46,17 @@ void		core_init(void (*update)(),
 	core->window_id = -1;
 	core->target_framerate = frame_rate;
 	core->delta_time = 1.0f;
+}
+
+void		core_show_cursor(t_bool state)
+{
+	get_core()->shown_cursor = state;
+	SDL_ShowCursor(state);
+}
+
+void		core_lock_cursor(t_bool state)
+{
+	get_core()->locked_cursor = state;
 }
 
 void		core_add_loader(t_floader loader, char *extension)
