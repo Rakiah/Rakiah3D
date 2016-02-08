@@ -13,11 +13,10 @@
 #ifndef R3D_H
 # define R3D_H
 
-# include <libft.h>
-# include <ft_lists.h>
-# include <SDL.h>
-# include <CL/opencl.h>
 # include <math.h>
+# include <libft.h>
+# include <rlists.h>
+# include <SDL.h>
 # include "r3d_typedefs.h"
 # include "r3d_defines.h"
 # include "r3d_enums.h"

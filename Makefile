@@ -12,10 +12,17 @@
 
 NAME = libr3d.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O3 -pg
+CFLAGS = -Wall -Wextra -Werror
 PLATFORM = Linux
+OPTIMIZE = yes
+PROF = no
+DEBUG = no
 
-PATH_HEADERS = -I includes/
+# Paths
+PATH_SDL2 = -I ../SDL2/includes/
+PATH_LIBFT = -I ../libft/includes/
+PATH_RLISTS = -I ../rlists/includes/
+PATH_HEADERS = -I includes/ $(PATH_SDL2) $(PATH_LIBFT) $(PATH_RLISTS)
 PATH_R3D = ./
 PATH_M4F = $(PATH_R3D)m4f/
 PATH_V4F = $(PATH_R3D)v4f/
@@ -31,11 +38,30 @@ PATH_RENDERING = $(PATH_R3D)rendering/
 PATH_LINUX = linux/
 PATH_ELCAPITAN = el_capitan/
 PATH_KEYCODES = $(PATH_INPUT)
+
+# Debug
+ifeq ($(DEBUG), yes)
+	CFLAGS += -g -O0
+endif
+
+# Prof
+ifeq ($(PROF), yes)
+	CFLAGS += -pg
+endif
+
+# Optimization
+ifeq ($(OPTIMIZE), yes)
+	CFLAGS += -O3
+endif
+
+# Platform
 ifeq ($(PLATFORM), Linux)
 	PATH_KEYCODES = $(PATH_INPUT)$(PATH_LINUX)
 else
 	PATH_KEYCODES = $(PATH_INPUT)$(PATH_ELCAPITAN)
 endif
+
+# Sources
 SRC_M4F = $(PATH_M4F)m4f_manipulations.c $(PATH_M4F)m4f_operators.c $(PATH_M4F)m4f_adjugate.c $(PATH_M4F)m4f_initializers.c
 SRC_V4F = $(PATH_V4F)v4f_manipulations.c $(PATH_V4F)v4f_operators.c $(PATH_V4F)v4f_operators_new.c $(PATH_V4F)v4f_utils.c
 SRC_V3F = $(PATH_V3F)v3f_manipulations.c $(PATH_V3F)v3f_operators.c $(PATH_V3F)v3f_operators_new.c $(PATH_V3F)v3f_utils.c

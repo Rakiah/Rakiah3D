@@ -149,14 +149,4 @@ struct					s_loader
 	t_floader			method;
 };
 
-struct					s_task_dispatcher
-{
-	cl_program			program;
-	cl_device_id			device;
-	cl_platform_id			platform_id;
-	cl_context			context;
-	cl_command_queue		queue;
-	cl_kernel			kernel;
-};
-
 #endif
