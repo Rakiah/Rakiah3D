@@ -12,13 +12,13 @@
 
 #include "r3d.h"
 
-int		internal_mouse_up_hook(int keycode, int x, int y, t_window *win)
+int		internal_mouse_up_hook(int keycode, int x, int y)
 {
-	core_select_window(win->id);
 	keycode = mlx_to_r3d_mbutton(keycode);
 	if (keycode < 0 || keycode > MOUSEBUTTON_COUNT)
 		return (0);
 	mouse_up(keycode, CMD_SET, TRUE);
+	mouse_down(keycode, CMD_SET, FALSE);
 	mouse_pos(x, y, CMD_SET);
 	return (0);
 }

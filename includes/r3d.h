@@ -13,16 +13,17 @@
 #ifndef R3D_H
 # define R3D_H
 
-# include "libft.h"
-# include "ft_lists.h"
+# include <libft.h>
+# include <ft_lists.h>
+# include <SDL.h>
+# include <CL/opencl.h>
+# include <math.h>
 # include "r3d_typedefs.h"
 # include "r3d_defines.h"
 # include "r3d_enums.h"
 # include "r3d_structs.h"
 # include "r3d_input.h"
 # include "r3d_loader.h"
-# include <mlx.h>
-# include <math.h>
 
 /*
 **	MATRIX4F METHODS
@@ -133,12 +134,22 @@ t_transform		*trs_new_init();
 t_transform		*trs_new(t_vector3f *translation,
 							t_vector3f *rotation,
 							t_vector3f *scale);
-t_vector4f		*trs_transform_point(t_matrix4f *m, t_vector4f *v);
+t_vector4f		trs_transform_point(t_matrix4f *m, t_vector4f *v);
+t_vector3f		trs_transform_direction(t_transform *trs, t_vector3f *v);
 t_matrix4f		*trs_get_matrix(t_transform *trs);
 void			trs_recalculate_matrix(t_transform *trs);
 void			trs_set_pos(t_transform *trs, t_vector3f *new_pos);
+void			trs_set_pos_x(t_transform *trs, float x);
+void			trs_set_pos_y(t_transform *trs, float y);
+void			trs_set_pos_z(t_transform *trs, float z);
 void			trs_set_rot(t_transform *trs, t_vector3f *new_rot);
+void			trs_set_rot_x(t_transform *trs, float x);
+void			trs_set_rot_y(t_transform *trs, float y);
+void			trs_set_rot_z(t_transform *trs, float z);
 void			trs_set_scale(t_transform *trs, t_vector3f *new_scale);
+void			trs_set_scale_x(t_transform *trs, float x);
+void			trs_set_scale_y(t_transform *trs, float y);
+void			trs_set_scale_z(t_transform *trs, float z);
 void			trs_translate(t_transform *trs, t_vector3f *new_pos);
 void			trs_rotate(t_transform *trs, t_vector3f *new_rot);
 void			trs_scale(t_transform *trs, t_vector3f *new_scale);
@@ -180,18 +191,19 @@ void			mesh_print(t_mesh *mesh);
 /*
 **	RENDERING METHODS
 */
-void			normalise_point(t_vector4f *vector);
+t_vector4f		normalise_point(t_vector4f *vector);
 void			draw_triangle(t_vertex *verts[3], t_material *mat);
 void			draw_scan_line(t_line *lines[2],
 					int y,
 					t_material *mat);
-void			clip_triangle(t_vertex *verts[3],
-					t_material *mat);
+t_list			*clip_triangle(t_vertex *v1, t_vertex *v2, t_vertex *v3);
 void			triangle_to_lines(t_vertex *verts[3],
 									t_material *mat);
 t_bool			calculate_triangle_side(t_vector4f *a,
 										t_vector4f *b,
 										t_vector4f *c);
+void			process_polygon(t_vertex *v1, t_vertex *v2, t_vertex *v3, t_material *mat);
+void			process_triangle(t_vertex v1, t_vertex v2, t_vertex v3, t_material *mat);
 /*
 **	LINE RENDERING METHODS
 */
@@ -214,9 +226,10 @@ void			obj_draw(t_object *obj);
 /*
 **	VERTEX METHODS
 */
-t_vertex		*vertex_new(t_vector4f *pos,
-							t_vector2f *tex_coords,
-							t_vector3f *normals);
+t_vertex		*vertex_new(t_vector4f pos,
+							t_vector2f tex_coords,
+							t_vector3f normals);
+t_vertex		*vertex_new_init(void);
 t_vertex		*vertex_new_cpy(t_vertex *vertex);
 t_vertex		*vertex_lerp(t_vertex *v1,
 								t_vertex *v2,
@@ -245,6 +258,7 @@ t_interpolant	*ipl_new(float values[3],
 **	TEXTURE METHODS
 */
 t_texture		*tex_new(int width, int height);
+t_texture		*tex_new_surface(int width, int height, SDL_Surface *s);
 void			tex_clear(t_texture *tex);
 void			tex_draw_pixel(t_texture *tex, int x, int y, int pixel);
 void			tex_draw_pixel_index(t_texture *tex, int index, int pixel);
@@ -267,11 +281,12 @@ void			error_exit(char *error);
 **	INTERNAL METHODS
 */
 int				internal_update(t_core *core);
-int				internal_key_down_hook(int code, t_window *win);
-int				internal_key_up_hook(int code, t_window *win);
-int				internal_mouse_down_hook(int code, int x, int y, t_window *win);
-int				internal_mouse_up_hook(int code, int x, int y, t_window *win);
-int				internal_mouse_pos_hook(int x, int y, t_window *win);
+int				internal_key_down_hook(int code);
+int				internal_key_up_hook(int code);
+int				internal_mouse_down_hook(int code, int x, int y);
+int				internal_mouse_up_hook(int code, int x, int y);
+int				internal_mouse_pos_hook(int x, int y);
+int				internal_mouse_motion_hook(int x, int y);
 int				internal_expose_hook(t_window *win);
 int				internal_focus_in_hook(t_window *win);
 #endif

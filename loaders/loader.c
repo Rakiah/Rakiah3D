@@ -17,11 +17,11 @@ t_loader	*find_loader(char *ext)
 	size_t	i;
 	t_core	*core;
 
-	core = get_core();
 	if (ext == NULL)
 		error_exit("TRYING TO LOAD A FILE WITHOUT EXTENSION");
 	i = 0;
 	ext++;
+	core = get_core();
 	while (i < core->loaders->count)
 	{
 		if (ft_strequ(ext, ((t_loader **)core->loaders->array)[i]->extension))

@@ -17,19 +17,21 @@ void	create_vertex(t_obj_index *index, t_list *vertices, t_obj_model *model)
 {
 	t_vertex	*v_tmp;
 
-	v_tmp = vertex_new(NULL, NULL, NULL);
-	v_tmp->pos = list_get_data_at(model->pos,
+	v_tmp = vertex_new_init();
+	v_tmp->pos = *(t_vector4f *)list_get_data_at(model->pos,
 					index->i[0]);
 	if (index->i[1] >= 0)
-		v_tmp->tex_coords = list_get_data_at(model->tex_coords,
+		v_tmp->tex_coords =
+			*(t_vector2f *)list_get_data_at(model->tex_coords,
 							index->i[1]);
 	else
-		v_tmp->tex_coords = v2f_new(0, 0);
+		v2f_set(&v_tmp->tex_coords, 0, 0);
 	if (index->i[2] >= 0)
-		v_tmp->normals = list_get_data_at(model->normals,
+		v_tmp->normals =
+			*(t_vector3f *)list_get_data_at(model->normals,
 						index->i[2]);
 	else
-		v_tmp->normals = v3f_new(0, 0, 0);
+		v3f_set(&v_tmp->normals, 0, 0, 0);
 	list_push_back(vertices, v_tmp);
 }
 
@@ -43,6 +45,7 @@ void		arrange_vertices_obj(t_obj_model *model,
 	t_obj_index			*indexes;
 
 	indexes = list_next(model->index);
+	index = 0;
 	while (indexes != NULL)
 	{
 		if ((tri = malloc(sizeof(int) * 3)) == NULL)

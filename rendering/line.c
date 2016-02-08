@@ -12,15 +12,14 @@
 
 #include "r3d.h"
 
-static void	draw_scan_line_inner(float value[INTERPOLANTS_COUNT],
-								t_material *mat,
-								int pos[2])
+void		draw_scan_line_inner(float value[INTERPOLANTS_COUNT],
+					t_material *mat,
+					t_core *core,
+					int pos[2])
 {
 	float		tex_coords[2];
 	int			pixel;
-	t_core		*core;
 
-	core = get_core();
 	if (value[2] < core->window->z_buffer[pos[0]][pos[1]])
 	{
 		pixel = mat->color;
@@ -29,9 +28,9 @@ static void	draw_scan_line_inner(float value[INTERPOLANTS_COUNT],
 			tex_coords[0] = ft_clampf01((value[0] * (1.0f / value[3])));
 			tex_coords[1] = ft_clampf01((value[1] * (1.0f / value[3])));
 			core->window->z_buffer[pos[0]][pos[1]] = value[2];
-			pixel = tex_get_pixel(mat->texture,
-					(int)(tex_coords[0] * (mat->texture->width - 1)),
-					(int)(tex_coords[1] * (mat->texture->height - 1)));
+			pixel = mat->texture->fast_pixel_access
+			[(int)(tex_coords[0] * (mat->texture->width - 1))]
+			[(int)(tex_coords[1] * (mat->texture->height - 1))];
 		}
 		tex_draw_pixel(core->window->screen_tex, pos[0], pos[1], pixel);
 	}
@@ -45,8 +44,10 @@ void		draw_scan_line(t_line *lines[2],
 	float	step[INTERPOLANTS_COUNT];
 	int		pos[2];
 	int		i;
+	t_core		*core;
 
 	i = -1;
+	core = get_core();
 	while (++i < INTERPOLANTS_COUNT)
 	{
 		value[i] = lines[0]->ipls_curr[i];
@@ -56,7 +57,7 @@ void		draw_scan_line(t_line *lines[2],
 	pos[1] = y;
 	while (pos[0] < (int)lines[1]->x_curr)
 	{
-		draw_scan_line_inner(value, mat, pos);
+		draw_scan_line_inner(value, mat, core, pos);
 		pos[0]++;
 		i = -1;
 		while (++i < INTERPOLANTS_COUNT)
@@ -96,11 +97,11 @@ void		line_setup(t_line *l,
 	int	i;
 
 	i = -1;
-	l->y_start = (int)pts[0]->pos->y;
-	l->y_end = (int)pts[1]->pos->y;
-	l->x_curr = pts[0]->pos->x;
-	l->x_step = (float)(pts[1]->pos->x - pts[0]->pos->x) /
-						(pts[1]->pos->y - pts[0]->pos->y);
+	l->y_start = (int)pts[0]->pos.y;
+	l->y_end = (int)pts[1]->pos.y;
+	l->x_curr = pts[0]->pos.x;
+	l->x_step = (float)(pts[1]->pos.x - pts[0]->pos.x) /
+						(pts[1]->pos.y - pts[0]->pos.y);
 	while (++i < INTERPOLANTS_COUNT)
 	{
 		l->ipls[i] = &ipls[i];

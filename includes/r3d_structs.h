@@ -58,13 +58,14 @@ struct					s_transform
 };
 struct					s_texture
 {
-	void				*img;
+	SDL_Surface			*img;
 	char				*pixels;
-	int					bytes_per_pixel;
-	int					l_size;
-	int					size;
-	int					width;
-	int					height;
+	int				**fast_pixel_access;
+	int				bytes_per_pixel;
+	int				l_size;
+	int				size;
+	int				width;
+	int				height;
 	t_bool				endian;
 };
 struct					s_camera
@@ -75,14 +76,14 @@ struct					s_camera
 	t_matrix4f			projection;
 	t_matrix4f			projected_view;
 	t_transform			*transform;
-	t_projection_type	project_type;
+	t_projection_type		project_type;
 	t_bool				is_dirty;
 };
 struct					s_vertex
 {
-	t_vector4f			*pos;
-	t_vector2f			*tex_coords;
-	t_vector3f			*normals;
+	t_vector4f			pos;
+	t_vector2f			tex_coords;
+	t_vector3f			normals;
 };
 struct					s_line
 {
@@ -101,7 +102,7 @@ struct					s_material
 };
 struct					s_window
 {
-	void				*win;
+	SDL_Window			*win;
 	t_array				*objs;
 	t_array				*cams;
 	t_camera			*camera;
@@ -115,15 +116,14 @@ struct					s_window
 };
 struct					s_core
 {
-	void				*mlx;
 	t_window			*window;
 	t_array				*wins;
 	t_array				*loaders;
 	void				(*update)();
 	void				(*postrender)();
 	void				(*expose)(t_window *);
-	int					target_framerate;
-	int					window_id;
+	int				target_framerate;
+	int				window_id;
 	double				delta_time;
 	void				*data;
 };
@@ -136,15 +136,27 @@ struct					s_mesh
 	t_bool				draw_hypotenuses;
 	t_bool				wireframe_mode;
 };
+
 struct					s_object
 {
 	t_transform			*transform;
 	t_mesh				*mesh;
 };
+
 struct					s_loader
 {
 	char				*extension;
 	t_floader			method;
+};
+
+struct					s_task_dispatcher
+{
+	cl_program			program;
+	cl_device_id			device;
+	cl_platform_id			platform_id;
+	cl_context			context;
+	cl_command_queue		queue;
+	cl_kernel			kernel;
 };
 
 #endif

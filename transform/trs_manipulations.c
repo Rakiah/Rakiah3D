@@ -72,18 +72,32 @@ void		trs_recalculate_matrix(t_transform *trs)
 	trs->is_dirty = FALSE;
 }
 
-t_vector4f	*trs_transform_point(t_matrix4f *m, t_vector4f *v)
+t_vector4f	trs_transform_point(t_matrix4f *m, t_vector4f *v)
 {
-	t_vector4f *ret;
+	t_vector4f ret;
 
-	ret = v4f_new(0.0f, 0.0f, 0.0f, 0.0f);
-	ret->x = m->m[0][0] * v->x + m->m[0][1] *
+	ret.x = m->m[0][0] * v->x + m->m[0][1] *
 	v->y + m->m[0][2] * v->z + m->m[0][3] * v->w;
-	ret->y = m->m[1][0] * v->x + m->m[1][1] *
+	ret.y = m->m[1][0] * v->x + m->m[1][1] *
 	v->y + m->m[1][2] * v->z + m->m[1][3] * v->w;
-	ret->z = m->m[2][0] * v->x + m->m[2][1] *
+	ret.z = m->m[2][0] * v->x + m->m[2][1] *
 	v->y + m->m[2][2] * v->z + m->m[2][3] * v->w;
-	ret->w = m->m[3][0] * v->x + m->m[3][1] *
+	ret.w = m->m[3][0] * v->x + m->m[3][1] *
 	v->y + m->m[3][2] * v->z + m->m[3][3] * v->w;
+	return (ret);
+}
+
+t_vector3f	trs_transform_direction(t_transform *trs, t_vector3f *v)
+{
+	t_vector3f	ret;
+	t_vector4f	temp;
+	t_matrix4f	rotation_matrix;
+
+	v4f_set(&temp, v->x, v->y, v->z);
+	m4f_rotate(&rotation_matrix, trs->rotation.x,
+					trs->rotation.y,
+					trs->rotation.z);
+	temp = trs_transform_point(&rotation_matrix, &temp);
+	v3f_set(&ret, temp.x, temp.y, temp.z);
 	return (ret);
 }

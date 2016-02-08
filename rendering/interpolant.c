@@ -24,29 +24,29 @@ void			ipl_set_rendering(t_interpolant ipls[INTERPOLANTS_COUNT],
 {
 	float	w[3];
 
-	w[0] = 1.0f / verts[0]->pos->w;
-	w[1] = 1.0f / verts[1]->pos->w;
-	w[2] = 1.0f / verts[2]->pos->w;
+	w[0] = 1.0f / verts[0]->pos.w;
+	w[1] = 1.0f / verts[1]->pos.w;
+	w[2] = 1.0f / verts[2]->pos.w;
 	ipl_calculate_steps(ipl_set_values(&ipls[0],
-										verts[0]->tex_coords->x * w[0],
-										verts[1]->tex_coords->x * w[1],
-										verts[2]->tex_coords->x * w[2]),
-						verts[0]->pos, verts[1]->pos, verts[2]->pos);
+										verts[0]->tex_coords.x * w[0],
+										verts[1]->tex_coords.x * w[1],
+										verts[2]->tex_coords.x * w[2]),
+						&verts[0]->pos, &verts[1]->pos, &verts[2]->pos);
 	ipl_calculate_steps(ipl_set_values(&ipls[1],
-										verts[0]->tex_coords->y * w[0],
-										verts[1]->tex_coords->y * w[1],
-										verts[2]->tex_coords->y * w[2]),
-						verts[0]->pos, verts[1]->pos, verts[2]->pos);
+										verts[0]->tex_coords.y * w[0],
+										verts[1]->tex_coords.y * w[1],
+										verts[2]->tex_coords.y * w[2]),
+						&verts[0]->pos, &verts[1]->pos, &verts[2]->pos);
 	ipl_calculate_steps(ipl_set_values(&ipls[2],
-										verts[0]->pos->z,
-										verts[1]->pos->z,
-										verts[2]->pos->z),
-						verts[0]->pos, verts[1]->pos, verts[2]->pos);
+										verts[0]->pos.z,
+										verts[1]->pos.z,
+										verts[2]->pos.z),
+						&verts[0]->pos, &verts[1]->pos, &verts[2]->pos);
 	ipl_calculate_steps(ipl_set_values(&ipls[3],
 										w[0],
 										w[1],
 										w[2]),
-						verts[0]->pos, verts[1]->pos, verts[2]->pos);
+						&verts[0]->pos, &verts[1]->pos, &verts[2]->pos);
 }
 
 void			ipl_calculate_steps(t_interpolant *ipl,

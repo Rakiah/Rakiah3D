@@ -20,15 +20,14 @@ t_core		*get_core(void)
 }
 
 void		core_init(void (*update)(),
-					void (*expose)(t_window *),
-					void (*postrender)(),
-					int frame_rate)
+			void (*expose)(t_window *),
+			void (*postrender)(),
+			int frame_rate)
 {
 	t_core	*core;
 
 	core = get_core();
-	if ((core->mlx = mlx_init()) == NULL)
-		error_exit("MLX INIT FAILED");
+	SDL_Init(SDL_INIT_VIDEO);
 	if ((core->wins = ft_create_array(sizeof(t_window *))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
 	if ((core->loaders = ft_create_array(sizeof(t_loader *))) == NULL)
@@ -45,7 +44,6 @@ void		core_init(void (*update)(),
 	core->window_id = -1;
 	core->target_framerate = frame_rate;
 	core->delta_time = 1.0f;
-	mlx_loop_hook(core->mlx, &internal_update, core);
 }
 
 void		core_add_loader(t_floader loader, char *extension)
@@ -63,7 +61,8 @@ void		core_add_loader(t_floader loader, char *extension)
 
 void		core_start(void)
 {
-	mlx_loop(get_core()->mlx);
+	while (42)
+		internal_update(get_core());
 }
 
 void		core_render(void)

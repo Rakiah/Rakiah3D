@@ -49,6 +49,8 @@ static t_object		*parse_file(t_core *core, char *path, int fd)
 	char		**split;
 	char		*line;
 
+	path_type = FALSE;
+	object = NULL;
 	material = mat_new(NULL);
 	while (get_next_line(fd, &line) == 1)
 	{

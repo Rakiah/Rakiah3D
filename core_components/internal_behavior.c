@@ -13,10 +13,27 @@
 #include "r3d.h"
 #include <time.h>
 
+static void	draw(t_window *win)
+{
+	if (win->cancel_render)
+	{
+		win->cancel_render = FALSE;
+		return ;
+	}
+	if (win->cams->count == 0)
+		return ;
+	tex_clear(win->screen_tex);
+	clear_z_buffer(win);
+	core_render(get_core());
+	SDL_BlitSurface(win->screen_tex->img, NULL,
+			SDL_GetWindowSurface(win->win), NULL);
+	SDL_UpdateWindowSurface(win->win);
+}
+
 void	internal_render(t_core *core)
 {
 	size_t		i;
-	int			selected;
+	int		selected;
 
 	if ((selected = core->window_id) == -1)
 		return ;
@@ -24,34 +41,47 @@ void	internal_render(t_core *core)
 	while (i < core->wins->count)
 	{
 		core_select_window(i);
-		if (!core->window->cancel_render)
-		{
-			if (core->window->cams->count > 0)
-			{
-				tex_clear(core->window->screen_tex);
-				clear_z_buffer(core->window);
-				core_render(core);
-				mlx_put_image_to_window(core->mlx, core->window->win,
-							core->window->screen_tex->img, 0, 0);
-			}
-		}
-		else
-			core->window->cancel_render = FALSE;
+		draw(core->window);
 		i++;
 	}
 	core_select_window(selected);
 }
 
+void	internal_inputs(void)
+{
+	SDL_Event event;
+	while (SDL_PollEvent(&event))
+	{
+		if (event.type == SDL_QUIT)
+			exit(0);
+		else if (event.type == SDL_KEYDOWN)
+			internal_key_down_hook(event.key.keysym.sym);
+		else if (event.type == SDL_KEYUP)
+			internal_key_up_hook(event.key.keysym.sym);
+		else if (event.type == SDL_MOUSEMOTION)
+		{
+			internal_mouse_pos_hook(event.motion.x, event.motion.y);
+			internal_mouse_motion_hook(event.motion.xrel,
+						event.motion.yrel);
+		}
+		else if (event.type == SDL_MOUSEBUTTONDOWN)
+			internal_mouse_down_hook(event.button.button,
+						event.button.x,
+						event.button.y);
+		else if (event.type == SDL_MOUSEBUTTONUP)
+			internal_mouse_up_hook(event.button.button,
+						event.button.x,
+						event.button.y);
+		else if (event.type == SDL_WINDOWEVENT)
+			if (event.window.event == SDL_WINDOWEVENT_CLOSE)
+				exit(0);
+	}
+}
+
 void	reset_inputs(void)
 {
-	int i;
-
-	i = 3;
 	key_up(-1, CMD_SET_ALL, FALSE);
-	key_down(-1, CMD_SET_ALL, FALSE);
 	mouse_up(-1, CMD_SET_ALL, FALSE);
-	while (++i < 7)
-		mouse_down(i, CMD_SET, FALSE);
 }
 
 void	calculate_delta_time(t_core *core, clock_t start)
@@ -87,6 +117,7 @@ int		internal_update(t_core *core)
 	clock_t		start;
 
 	start = clock();
+	internal_inputs();
 	if (core->update != NULL)
 		core->update();
 	internal_render(core);

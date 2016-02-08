@@ -19,8 +19,8 @@ t_camera	*camera_new_init(t_window *win)
 	if ((ret = (t_camera *)malloc(sizeof(t_camera))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
 	ret->transform = trs_new_init();
-	ret->fov = 70;
-	ret->z_bounds.x = 0.01f;
+	ret->fov = 65;
+	ret->z_bounds.x = 0.1f;
 	ret->z_bounds.y = 1000.0f;
 	ret->size.x = win->width;
 	ret->size.y = win->height;
@@ -40,7 +40,7 @@ t_camera	*camera_new(t_window *win,
 	if ((ret = (t_camera *)malloc(sizeof(t_camera))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
 	ret->transform = transform;
-	ret->fov = 70;
+	ret->fov = 60;
 	ret->z_bounds.x = 0.01f;
 	ret->z_bounds.y = 1000.0f;
 	ret->size.x = win->width;

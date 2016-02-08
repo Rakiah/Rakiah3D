@@ -64,6 +64,36 @@ static void	*parse_item(char *path, char *split, t_bool path_type)
 	return (object);
 }
 
+static void	parse_multiply(char **splitted, t_object *obj)
+{
+	int		i;
+	int		j;
+	char		**splits[3];
+	t_vector3f	vectmp;
+	t_object	*tmp;
+
+	i = 1;
+	splits[0] = ft_strsplit(splitted[2], '/', NULL);
+	splits[1] = ft_strsplit(splitted[3], '/', NULL);
+	splits[2] = ft_strsplit(splitted[4], '/', NULL);
+	while (i < ft_atoi(splitted[1]) + 1)
+	{
+		tmp = obj_new_init_mesh(get_core()->window, obj->mesh);
+		j = 0;
+		while (j < 3)
+		{
+			((t_vector3f *)tmp->transform)[j] = ((t_vector3f *)obj->transform)[j];
+			v3f_set(&vectmp,
+				strtod(splits[j][0], NULL) * i,
+				strtod(splits[j][1], NULL) * i,
+				strtod(splits[j][2], NULL) * i);
+			v3f_add(((t_vector3f *)tmp->transform) + j, &vectmp);
+			j++;
+		}
+		i++;
+	}
+}
+
 void		*load_rs(char *path)
 {
 	int			fd;
@@ -72,6 +102,8 @@ void		*load_rs(char *path)
 	t_bool		path_type;
 	t_object	*obj;
 
+	obj = NULL;
+	path_type = FALSE;
 	if ((fd = open(path, O_RDONLY)) < 0)
 		error_exit(ft_strjoin("COULDN'T FIND FILE AT : ", path));
 	while (get_next_line(fd, &line) == 1)
@@ -87,6 +119,8 @@ void		*load_rs(char *path)
 			parse_rotation(obj, splitted);
 		else if (ft_strequ(splitted[0], "scale:"))
 			parse_scale(obj, splitted);
+		else if (ft_strequ(splitted[0], "multiply:"))
+			parse_multiply(splitted, obj);
 		free(line);
 	}
 	close(fd);

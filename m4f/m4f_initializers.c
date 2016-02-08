@@ -81,8 +81,8 @@ void		m4f_screen_space(t_matrix4f *m, float width, float height)
 {
 	m4f_identity(m);
 	m->m[0][0] = width / 2;
-	m->m[0][3] = (width / 2) - 0.5f;
+	m->m[0][3] = (width / 2);
 	m->m[1][1] = -(height / 2);
-	m->m[1][3] = (height / 2) - 0.5f;
+	m->m[1][3] = (height / 2);
 	m->m[3][3] = 1;
 }

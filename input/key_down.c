@@ -12,9 +12,8 @@
 
 #include "r3d.h"
 
-int			internal_key_down_hook(int keycode, t_window *win)
+int			internal_key_down_hook(int keycode)
 {
-	core_select_window(win->id);
 	keycode = mlx_to_r3d_key(keycode);
 	if (keycode < 1 || keycode > KEYCODES_COUNT)
 		return (0);
