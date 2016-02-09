@@ -67,8 +67,6 @@ void	process_polygon(t_vertex *v1, t_vertex *v2, t_vertex *v3, t_material *mat)
 		process_triangle(*v1, *v2, *v3, mat);
 		return ;
 	}
-	/*if (!visible[0] && !visible[1] && !visible[2])*/
-		/*return ;*/
 	clipped_triangle = clip_triangle(v1, v2, v3);
 	if (clipped_triangle == NULL || clipped_triangle->count == 0)
 		return ;

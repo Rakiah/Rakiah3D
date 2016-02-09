@@ -82,13 +82,8 @@
 void			*load_bitmap(char *path)
 {
 	SDL_Surface	*s;
-	/*SDL_Surface	*optimized;*/
 
 	if ((s = SDL_LoadBMP(path)) == NULL)
 		error_exit(ft_strjoin("COULDN'T OPEN FILE AT : ", path));
-	/*optimized = SDL_CreateRGBSurface(SDL_SWSURFACE, s->w, s->h, 32, 0, 0, 0, 0);*/
-	/*SDL_SetSurfaceAlphaMod(optimized, 0);*/
-	/*SDL_BlitSurface(s, NULL, optimized, NULL);*/
-	/*SDL_FreeSurface(s);*/
 	return (tex_new_surface(s->w, s->h, s));
 }

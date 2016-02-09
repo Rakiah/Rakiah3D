@@ -17,18 +17,9 @@ int			**copy_pixels(SDL_Surface *s)
 	int	**pixels;
 	int	x;
 	int	y;
-	/*int	i;*/
 
-	/*i = 0;*/
 	x = 0;
-	/*pixels = NULL;*/
-	/*ft_putnbr(s->w);*/
-	/*ft_putchar('\n');*/
-	/*ft_putnbr(s->h);*/
-	/*ft_putchar('\n');*/
-
 	pixels = (int **)ft_create_tab(s->w, s->h, sizeof(int));
-	/*while (i < s->*/
 	while (x < s->w)
 	{
 		y = 0;
@@ -36,12 +27,9 @@ int			**copy_pixels(SDL_Surface *s)
 		{
 			pixels[x][y] = *((unsigned int *)(s->pixels + ((y * s->pitch)
 					+ (x * s->format->BytesPerPixel))));
-	/*return (*((unsigned int *)(tex->pixels +*/
-		/*((y * tex->l_size) + (x * tex->bytes_per_pixel)))));*/
 			y++;
 		}
 		x++;
-		/*i++;*/
 	}
 	return (pixels);
 }
