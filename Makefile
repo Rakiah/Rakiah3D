@@ -28,6 +28,7 @@ PATH_M4F = $(PATH_R3D)m4f/
 PATH_V4F = $(PATH_R3D)v4f/
 PATH_V3F = $(PATH_R3D)v3f/
 PATH_V2F = $(PATH_R3D)v2f/
+PATH_GUI = $(PATH_R3D)gui/
 PATH_QUAT = $(PATH_R3D)quat/
 PATH_INPUT = $(PATH_R3D)input/
 PATH_TRANSFORM = $(PATH_R3D)transform/
@@ -68,6 +69,7 @@ SRC_V3F = $(PATH_V3F)v3f_manipulations.c $(PATH_V3F)v3f_operators.c $(PATH_V3F)v
 SRC_V2F = $(PATH_V2F)v2f_manipulations.c $(PATH_V2F)v2f_operators.c $(PATH_V2F)v2f_operators_new.c $(PATH_V2F)v2f_utils.c
 SRC_QUAT = $(PATH_QUAT)quat_manipulations.c $(PATH_QUAT)quat_operators_new.c
 SRC_MESH = $(PATH_MESH)mesh_draw.c $(PATH_MESH)mesh_inits.c
+SRC_GUI = $(PATH_GUI)rects.c $(PATH_GUI)ui_elements.c $(PATH_GUI)buttons.c $(PATH_GUI)gui_renderer.c
 SRC_LOADERS = $(PATH_LOADERS)loader.c $(PATH_LOADERS)obj_loader.c $(PATH_LOADERS)obj_model.c $(PATH_LOADERS)rs_loader.c $(PATH_LOADERS)ro_loader.c $(PATH_LOADERS)bmp_loader.c
 SRC_TRANSFORM = $(PATH_TRANSFORM)trs_manipulations.c $(PATH_TRANSFORM)trs_operators_pos.c $(PATH_TRANSFORM)trs_operators_rot.c $(PATH_TRANSFORM)trs_operators_scale.c
 SRC_CORECOMPONENT = $(PATH_CORECOMPONENT)core.c $(PATH_CORECOMPONENT)window.c $(PATH_CORECOMPONENT)internal_behavior.c $(PATH_CORECOMPONENT)error.c
@@ -81,6 +83,7 @@ OBJ_V3F = $(SRC_V3F:.c=.o)
 OBJ_V2F = $(SRC_V2F:.c=.o)
 OBJ_QUAT = $(SRC_QUAT:.c=.o)
 OBJ_MESH = $(SRC_MESH:.c=.o)
+OBJ_GUI = $(SRC_GUI:.c=.o)
 OBJ_INPUT = $(SRC_INPUT:.c=.o)
 OBJ_KEYCODES = $(SRC_KEYCODES:.c=.o)
 OBJ_OTHER = $(SRC_OTHER:.c=.o)
@@ -101,6 +104,7 @@ OBJ +=	$(OBJ_KEYCODES)
 OBJ +=	$(OBJ_TRANSFORM)
 OBJ +=	$(OBJ_RENDERING)
 OBJ +=	$(OBJ_CORECOMPONENT)
+OBJ +=	$(OBJ_GUI)
 
 all: $(NAME)
 

@@ -34,6 +34,11 @@ typedef struct s_interpolant	t_interpolant;
 typedef struct s_texture		t_texture;
 typedef struct s_material		t_material;
 typedef struct s_loader			t_loader;
+typedef struct s_rect			t_rect;
+typedef struct s_button			t_button;
+typedef struct s_ui_element		t_ui_element;
+typedef struct s_interface_renderer	t_interface_renderer;
 typedef void *(*t_floader)(char *path);
+typedef void (*t_button_callback)(t_button *b, void *data);
 
 #endif

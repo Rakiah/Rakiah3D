@@ -116,6 +116,7 @@ struct					s_window
 };
 struct					s_core
 {
+	t_interface_renderer		*ui_renderer;
 	t_window			*window;
 	t_array				*wins;
 	t_array				*loaders;
@@ -129,10 +130,16 @@ struct					s_core
 	t_bool				shown_cursor;
 	t_bool				locked_cursor;
 };
+struct					s_interface_renderer
+{
+	t_list				*buttons;
+	t_list				*elements;
+	TTF_Font			*font;
+};
 struct					s_mesh
 {
 	t_vertex			**vertices;
-	unsigned int		**indexs;
+	unsigned int			**indexs;
 	t_material			*material;
 	size_t				v_count;
 	t_bool				draw_hypotenuses;
@@ -149,6 +156,34 @@ struct					s_loader
 {
 	char				*extension;
 	t_floader			method;
+};
+
+struct					s_rect
+{
+	int				x;
+	int				y;
+	int				w;
+	int				h;
+};
+
+struct					s_button
+{
+	SDL_Surface			*font;
+	t_ui_element			*drawable;
+	t_button_callback		on_click_up;
+	t_button_callback		on_click_down;
+	t_button_callback		on_mouse_hover;
+	void				*on_click_up_data;
+	void				*on_click_down_data;
+	void				*on_mouse_hover_data;
+	t_bool				active;
+};
+
+struct					s_ui_element
+{
+	t_texture			*texture;
+	t_rect				rect;
+	t_bool				active;
 };
 
 #endif

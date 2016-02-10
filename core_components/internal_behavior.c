@@ -27,7 +27,6 @@ static void	draw(t_window *win)
 	core_render(get_core());
 	SDL_BlitSurface(win->screen_tex->img, NULL,
 			SDL_GetWindowSurface(win->win), NULL);
-	SDL_UpdateWindowSurface(win->win);
 }
 
 void	internal_render(t_core *core)
@@ -42,6 +41,8 @@ void	internal_render(t_core *core)
 	{
 		core_select_window(i);
 		draw(core->window);
+		gui_draw(core, core->window);
+		SDL_UpdateWindowSurface(core->window->win);
 		i++;
 	}
 	core_select_window(selected);
@@ -118,6 +119,7 @@ int		internal_update(t_core *core)
 
 	start = clock();
 	internal_inputs();
+	gui_poll_events(core->ui_renderer);
 	if (core->update != NULL)
 		core->update();
 	if (core->locked_cursor)

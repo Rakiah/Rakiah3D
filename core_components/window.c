@@ -24,7 +24,7 @@ t_window	*window_new(int x, int y, char *title)
 					SDL_WINDOWPOS_CENTERED,
 					SDL_WINDOWPOS_CENTERED,
 					x, y,
-					SDL_WINDOW_RESIZABLE)) == NULL)
+					SDL_WINDOW_SHOWN)) == NULL)
 		error_exit(ft_strjoin("SDL NEW WINDOW FAILED ", SDL_GetError()));
 	if ((ret->objs = ft_create_array(sizeof(t_object *))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");

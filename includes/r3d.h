@@ -17,12 +17,14 @@
 # include <libft.h>
 # include <rlists.h>
 # include <SDL.h>
+# include <SDL_ttf.h>
 # include "r3d_typedefs.h"
 # include "r3d_defines.h"
 # include "r3d_enums.h"
 # include "r3d_structs.h"
 # include "r3d_input.h"
 # include "r3d_loader.h"
+# include "r3d_gui.h"
 
 /*
 **	MATRIX4F METHODS

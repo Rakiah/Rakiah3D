@@ -36,6 +36,7 @@ void		core_init(void (*update)(),
 	core_add_loader(&load_ro, ft_strdup("ro"));
 	core_add_loader(&load_bitmap, ft_strdup("bmp"));
 	core_add_loader(&load_rs, ft_strdup("rs"));
+	core->ui_renderer = gui_init();
 	core->shown_cursor = FALSE;
 	core->locked_cursor = FALSE;
 	core->update = update;
