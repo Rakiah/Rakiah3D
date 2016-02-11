@@ -28,14 +28,12 @@ void		core_init(void (*update)(),
 
 	core = get_core();
 	SDL_Init(SDL_INIT_VIDEO);
-	if ((core->wins = ft_create_array(sizeof(t_window *))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
-	if ((core->loaders = ft_create_array(sizeof(t_loader *))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
-	core_add_loader(&load_obj, ft_strdup("obj"));
-	core_add_loader(&load_ro, ft_strdup("ro"));
-	core_add_loader(&load_bitmap, ft_strdup("bmp"));
-	core_add_loader(&load_rs, ft_strdup("rs"));
+	core->wins = list_new(sizeof(t_window *));
+	core->loaders = list_new(sizeof(t_loader *));
+	core_add_loader(load_obj, ft_strdup("obj"));
+	core_add_loader(load_ro, ft_strdup("ro"));
+	core_add_loader(load_bitmap, ft_strdup("bmp"));
+	core_add_loader(load_rs, ft_strdup("rs"));
 	core->ui_renderer = gui_init();
 	core->shown_cursor = FALSE;
 	core->locked_cursor = FALSE;
@@ -63,14 +61,12 @@ void		core_lock_cursor(t_bool state)
 void		core_add_loader(t_floader loader, char *extension)
 {
 	t_loader	*to_push;
-	t_core		*core;
 
-	core = get_core();
 	if ((to_push = malloc(sizeof(t_loader))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
 	to_push->extension = extension;
 	to_push->method = loader;
-	ft_pushback_array(core->loaders, &to_push, sizeof(t_loader *));
+	list_push_back(get_core()->loaders, to_push);
 }
 
 void		core_start(void)
@@ -81,16 +77,9 @@ void		core_start(void)
 
 void		core_render(void)
 {
-	size_t		i;
-	t_object	*obj;
 	t_core		*core;
 
 	core = get_core();
-	i = 0;
-	while (i < core->window->objs->count)
-	{
-		obj = ((t_object **)core->window->objs->array)[i];
-		obj_draw(obj);
-		i++;
-	}
+	list_process_inner(core->window->objs, (void (*)(void *))obj_draw);
+	list_process_inner(core->ui_renderer->elements, (void (*)(void *))ui_elem_draw);
 }

@@ -14,20 +14,17 @@
 
 t_loader	*find_loader(char *ext)
 {
-	size_t	i;
-	t_core	*core;
+	t_list		*loaders;
+	t_loader	*iterator;
 
 	if (ext == NULL)
 		error_exit("TRYING TO LOAD A FILE WITHOUT EXTENSION");
-	i = 0;
 	ext++;
-	core = get_core();
-	while (i < core->loaders->count)
-	{
-		if (ft_strequ(ext, ((t_loader **)core->loaders->array)[i]->extension))
-			return (((t_loader **)core->loaders->array)[i]);
-		i++;
-	}
+	loaders = get_core()->loaders;
+	list_set_start(loaders);
+	while ((iterator = list_next(loaders)) != NULL)
+		if (ft_strequ(ext, iterator->extension))
+			return (iterator);
 	error_exit(ft_strjoin("NO LOADER FOUND FOR EXTENSION : ", ext));
 	return (NULL);
 }

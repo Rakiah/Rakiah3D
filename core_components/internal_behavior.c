@@ -41,7 +41,6 @@ void	internal_render(t_core *core)
 	{
 		core_select_window(i);
 		draw(core->window);
-		gui_draw(core, core->window);
 		SDL_UpdateWindowSurface(core->window->win);
 		i++;
 	}
@@ -122,6 +121,7 @@ int		internal_update(t_core *core)
 	gui_poll_events(core->ui_renderer);
 	if (core->update != NULL)
 		core->update();
+	behaviour_update(core->window->objs);
 	if (core->locked_cursor)
 		SDL_WarpMouseInWindow(core->window->win,
 				core->window->width / 2,

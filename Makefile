@@ -69,12 +69,12 @@ SRC_V3F = $(PATH_V3F)v3f_manipulations.c $(PATH_V3F)v3f_operators.c $(PATH_V3F)v
 SRC_V2F = $(PATH_V2F)v2f_manipulations.c $(PATH_V2F)v2f_operators.c $(PATH_V2F)v2f_operators_new.c $(PATH_V2F)v2f_utils.c
 SRC_QUAT = $(PATH_QUAT)quat_manipulations.c $(PATH_QUAT)quat_operators_new.c
 SRC_MESH = $(PATH_MESH)mesh_draw.c $(PATH_MESH)mesh_inits.c
-SRC_GUI = $(PATH_GUI)rects.c $(PATH_GUI)ui_elements.c $(PATH_GUI)buttons.c $(PATH_GUI)gui_renderer.c
+SRC_GUI = $(PATH_GUI)rects.c $(PATH_GUI)ui_elements.c $(PATH_GUI)buttons.c $(PATH_GUI)gui_handler.c
 SRC_LOADERS = $(PATH_LOADERS)loader.c $(PATH_LOADERS)obj_loader.c $(PATH_LOADERS)obj_model.c $(PATH_LOADERS)rs_loader.c $(PATH_LOADERS)ro_loader.c $(PATH_LOADERS)bmp_loader.c
 SRC_TRANSFORM = $(PATH_TRANSFORM)trs_manipulations.c $(PATH_TRANSFORM)trs_operators_pos.c $(PATH_TRANSFORM)trs_operators_rot.c $(PATH_TRANSFORM)trs_operators_scale.c
 SRC_CORECOMPONENT = $(PATH_CORECOMPONENT)core.c $(PATH_CORECOMPONENT)window.c $(PATH_CORECOMPONENT)internal_behavior.c $(PATH_CORECOMPONENT)error.c
 SRC_RENDERING = $(PATH_RENDERING)renderer.c $(PATH_RENDERING)pixel_handler.c $(PATH_RENDERING)interpolant.c $(PATH_RENDERING)line.c $(PATH_RENDERING)line_drawing.c
-SRC_OTHER = $(PATH_R3D)texture.c $(PATH_R3D)material.c $(PATH_R3D)vertex.c $(PATH_R3D)object.c $(PATH_R3D)camera.c
+SRC_OTHER = $(PATH_R3D)behaviour.c $(PATH_R3D)texture.c $(PATH_R3D)material.c $(PATH_R3D)vertex.c $(PATH_R3D)object.c $(PATH_R3D)camera.c
 SRC_INPUT = $(PATH_INPUT)mouse_motion.c $(PATH_INPUT)focus_handler.c $(PATH_INPUT)key_down.c $(PATH_INPUT)key_up.c $(PATH_INPUT)mouse_down.c $(PATH_INPUT)mouse_up.c $(PATH_INPUT)mouse_pos.c
 SRC_KEYCODES = $(PATH_KEYCODES)mlx_to_r3d.c $(PATH_KEYCODES)mlx_to_r3d_keypad.c $(PATH_KEYCODES)mlx_to_r3d_alphabet.c $(PATH_KEYCODES)mlx_to_r3d_special.c
 OBJ_M4F = $(SRC_M4F:.c=.o)

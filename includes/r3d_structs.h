@@ -50,6 +50,8 @@ struct					s_quaternion
 };
 struct					s_transform
 {
+	t_transform			*parent;
+	t_list				*childs;
 	t_vector3f			position;
 	t_vector3f			rotation;
 	t_vector3f			scale;
@@ -103,23 +105,23 @@ struct					s_material
 struct					s_window
 {
 	SDL_Window			*win;
-	t_array				*objs;
-	t_array				*cams;
+	t_list				*objs;
+	t_list				*cams;
 	t_camera			*camera;
 	t_texture			*screen_tex;
 	t_matrix4f			screen_matrix;
 	float				**z_buffer;
-	int					width;
-	int					height;
-	int					id;
+	int				width;
+	int				height;
+	int				id;
 	t_bool				cancel_render;
 };
 struct					s_core
 {
 	t_interface_renderer		*ui_renderer;
 	t_window			*window;
-	t_array				*wins;
-	t_array				*loaders;
+	t_list				*wins;
+	t_list				*loaders;
 	void				(*update)();
 	void				(*postrender)();
 	void				(*expose)(t_window *);
@@ -148,8 +150,19 @@ struct					s_mesh
 
 struct					s_object
 {
-	t_transform			*transform;
+	t_bool				active;
 	t_mesh				*mesh;
+	t_list				*behaviours;
+	t_transform			*transform;
+};
+
+struct					s_behaviour
+{
+	t_bool				active;
+	void				*data;
+	void				(*init)(t_object *, void **);
+	void				(*start)(t_object *, void *);
+	void				(*update)(t_object *, void *);
 };
 
 struct					s_loader

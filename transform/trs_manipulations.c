@@ -21,6 +21,8 @@ t_transform	*trs_new_init(void)
 	v3f_set(&ret->position, 0.0f, 0.0f, 0.0f);
 	v3f_set(&ret->rotation, 0.0f, 0.0f, 0.0f);
 	v3f_set(&ret->scale, 1.0f, 1.0f, 1.0f);
+	ret->childs = list_new(sizeof(t_transform *));
+	ret->parent = NULL;
 	ret->is_dirty = TRUE;
 	return (ret);
 }
@@ -36,8 +38,16 @@ t_transform	*trs_new(t_vector3f *position,
 	v3f_set(&ret->position, position->x, position->y, position->z);
 	v3f_set(&ret->rotation, rotation->x, rotation->y, rotation->z);
 	v3f_set(&ret->scale, scale->x, scale->y, scale->z);
+	ret->childs = list_new(sizeof(t_transform *));
+	ret->parent = NULL;
 	ret->is_dirty = TRUE;
 	return (ret);
+}
+
+void		trs_set_dirty(t_transform *trs)
+{
+	trs->is_dirty = TRUE;
+	list_process_inner(trs->childs, (void (*)(void *))trs_set_dirty);
 }
 
 t_matrix4f	*trs_get_matrix(t_transform *trs)
@@ -47,28 +57,31 @@ t_matrix4f	*trs_get_matrix(t_transform *trs)
 	return (&trs->model_world_matrix);
 }
 
+void		trs_set_child(t_transform *parent, t_transform *child)
+{
+	list_push_back(parent->childs, child);
+	child->parent = parent;
+	trs_set_dirty(child);
+}
+
 void		trs_recalculate_matrix(t_transform *trs)
 {
 	t_matrix4f translation_matrix;
 	t_matrix4f rotation_matrix;
 	t_matrix4f scale_matrix;
+	t_matrix4f parent_matrix;
 
-	m4f_translate(&translation_matrix,
-		trs->position.x,
-		trs->position.y,
-		trs->position.z);
-	m4f_rotate(&rotation_matrix,
-		trs->rotation.x,
-		trs->rotation.y,
-		trs->rotation.z);
-	m4f_scale(&scale_matrix,
-		trs->scale.x,
-		trs->scale.y,
-		trs->scale.z);
-	m4f_cpy(&trs->model_world_matrix,
-		m4f_mul(&translation_matrix,
-			m4f_mul(&rotation_matrix,
-				&scale_matrix)));
+	m4f_translate(&translation_matrix, trs->position);
+	m4f_rotate(&rotation_matrix, trs->rotation);
+	m4f_scale(&scale_matrix, trs->scale);
+	m4f_mul(&translation_matrix, m4f_mul(&rotation_matrix, &scale_matrix));
+	if (trs->parent != NULL)
+	{
+		m4f_cpy(&parent_matrix, trs_get_matrix(trs->parent));
+		m4f_mul(&parent_matrix, &translation_matrix);
+		translation_matrix = parent_matrix;
+	}
+	trs->model_world_matrix = translation_matrix;
 	trs->is_dirty = FALSE;
 }
 
@@ -94,9 +107,7 @@ t_vector3f	trs_transform_direction(t_transform *trs, t_vector3f *v)
 	t_matrix4f	rotation_matrix;
 
 	v4f_set(&temp, v->x, v->y, v->z);
-	m4f_rotate(&rotation_matrix, trs->rotation.x,
-					trs->rotation.y,
-					trs->rotation.z);
+	m4f_rotate(&rotation_matrix, trs->rotation);
 	temp = trs_transform_point(&rotation_matrix, &temp);
 	v3f_set(&ret, temp.x, temp.y, temp.z);
 	return (ret);

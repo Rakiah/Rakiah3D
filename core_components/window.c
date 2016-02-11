@@ -26,15 +26,13 @@ t_window	*window_new(int x, int y, char *title)
 					x, y,
 					SDL_WINDOW_SHOWN)) == NULL)
 		error_exit(ft_strjoin("SDL NEW WINDOW FAILED ", SDL_GetError()));
-	if ((ret->objs = ft_create_array(sizeof(t_object *))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
-	if ((ret->cams = ft_create_array(sizeof(t_camera *))) == NULL)
-		error_exit("MEMORY ALLOCATION FAILED");
+	ret->objs = list_new(sizeof(t_object *));
+	ret->cams = list_new(sizeof(t_window *));
 	if ((ret->z_buffer = (float **)ft_create_tab(x, y, sizeof(float))) == NULL)
 		error_exit("MEMORY ALLOCATION FAILED");
 	ret->screen_tex = tex_new(x, y);
 	m4f_screen_space(&ret->screen_matrix, x, y);
-	ft_pushback_array(core->wins, &ret, sizeof(t_window *));
+	list_push_back(core->wins, ret);
 	ret->id = core->wins->count - 1;
 	core_select_window(ret->id);
 	ret->cancel_render = FALSE;
@@ -50,7 +48,7 @@ t_window	*core_select_window(int id)
 	t_core		*core;
 
 	core = get_core();
-	selected = ((t_window **)core->wins->array)[id];
+	selected = list_get_data_at(core->wins, id);
 	core->window = selected;
 	core->window_id = id;
 	return (selected);

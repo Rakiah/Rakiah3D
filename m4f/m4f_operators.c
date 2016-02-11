@@ -23,10 +23,12 @@ t_matrix4f	*m4f_new(void)
 
 t_matrix4f	*m4f_mul(t_matrix4f *m1, t_matrix4f *m2)
 {
-	t_matrix4f	tmp;
+	t_matrix4f		tmp;
 	int			x;
 	int			y;
 
+	if (m1 == NULL)
+		return (m2);
 	m4f_cpy(&tmp, m1);
 	x = 0;
 	while (x < 4)

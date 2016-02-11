@@ -36,9 +36,9 @@ t_bool			rect_contains(t_rect *rect, int x, int y);
 t_bool			rect_intersects(t_rect *r1, t_rect *r2);
 t_ui_element		*ui_elem_new(t_texture *tex, t_rect *rect);
 t_ui_element		*ui_elem_new_color(int color, t_rect *rect);
+void			ui_elem_draw(t_ui_element *elem);
 t_interface_renderer	*gui_init(void);
 void			gui_poll_events(t_interface_renderer *interface);
-void			gui_draw(t_core *core, t_window *win);
 
 
 #endif

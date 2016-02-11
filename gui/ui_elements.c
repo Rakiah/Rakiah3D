@@ -26,7 +26,7 @@ t_ui_element	*ui_elem_new(t_texture *tex, t_rect *rect)
 	return (ret);
 }
 
-t_ui_element *ui_elem_new_color(int color, t_rect *rect)
+t_ui_element	*ui_elem_new_color(int color, t_rect *rect)
 {
 	t_ui_element	*ret;
 	int		i;
@@ -46,4 +46,13 @@ t_ui_element *ui_elem_new_color(int color, t_rect *rect)
 	}
 	list_push_back(get_core()->ui_renderer->elements, ret);
 	return (ret);
+}
+
+void		ui_elem_draw(t_ui_element *elem)
+{
+	if (!elem->active)
+		return ;
+	SDL_BlitSurface(elem->texture->img, NULL,
+			get_core()->window->screen_tex->img,
+			(SDL_Rect *)&elem->rect);
 }

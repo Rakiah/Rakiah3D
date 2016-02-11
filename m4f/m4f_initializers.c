@@ -12,46 +12,46 @@
 
 #include "r3d.h"
 
-void		m4f_translate(t_matrix4f *matrix, float x, float y, float z)
+void		m4f_translate(t_matrix4f *matrix, t_vector3f t)
 {
 	m4f_identity(matrix);
-	matrix->m[0][3] = x;
-	matrix->m[1][3] = y;
-	matrix->m[2][3] = z;
+	matrix->m[0][3] = t.x;
+	matrix->m[1][3] = t.y;
+	matrix->m[2][3] = t.z;
 }
 
-void		m4f_scale(t_matrix4f *matrix, float x, float y, float z)
+void		m4f_scale(t_matrix4f *matrix, t_vector3f s)
 {
 	m4f_identity(matrix);
-	matrix->m[0][0] = x;
-	matrix->m[1][1] = y;
-	matrix->m[2][2] = z;
+	matrix->m[0][0] = s.x;
+	matrix->m[1][1] = s.y;
+	matrix->m[2][2] = s.z;
 }
 
-void		m4f_rotate(t_matrix4f *matrix, float x, float y, float z)
+void		m4f_rotate(t_matrix4f *matrix, t_vector3f r)
 {
 	t_matrix4f rx;
 	t_matrix4f ry;
 	t_matrix4f rz;
 
-	x = x * ft_pi() / 180.0f;
-	y = y * ft_pi() / 180.0f;
-	z = z * ft_pi() / 180.0f;
+	r.x = r.x * ft_pi() / 180.0f;
+	r.y = r.y * ft_pi() / 180.0f;
+	r.z = r.z * ft_pi() / 180.0f;
 	m4f_identity(&rx);
 	m4f_identity(&ry);
 	m4f_identity(&rz);
-	rx.m[1][1] = (float)cos(x);
-	rx.m[1][2] = -(float)sin(x);
-	rx.m[2][1] = (float)sin(x);
-	rx.m[2][2] = (float)cos(x);
-	ry.m[0][0] = (float)cos(y);
-	ry.m[0][2] = (float)sin(y);
-	ry.m[2][0] = -(float)sin(y);
-	ry.m[2][2] = (float)cos(y);
-	rz.m[0][0] = (float)cos(z);
-	rz.m[0][1] = -(float)sin(z);
-	rz.m[1][0] = (float)sin(z);
-	rz.m[1][1] = (float)cos(z);
+	rx.m[1][1] = (float)cos(r.x);
+	rx.m[1][2] = -(float)sin(r.x);
+	rx.m[2][1] = (float)sin(r.x);
+	rx.m[2][2] = (float)cos(r.x);
+	ry.m[0][0] = (float)cos(r.y);
+	ry.m[0][2] = (float)sin(r.y);
+	ry.m[2][0] = -(float)sin(r.y);
+	ry.m[2][2] = (float)cos(r.y);
+	rz.m[0][0] = (float)cos(r.z);
+	rz.m[0][1] = -(float)sin(r.z);
+	rz.m[1][0] = (float)sin(r.z);
+	rz.m[1][1] = (float)cos(r.z);
 	m4f_cpy(matrix, m4f_mul(&rz, m4f_mul(&ry, &rx)));
 }
 

@@ -27,7 +27,7 @@ t_camera	*camera_new_init(t_window *win)
 	ret->is_dirty = TRUE;
 	win->camera = ret;
 	m4f_perspective(ret);
-	ft_pushback_array(win->cams, &ret, sizeof(t_camera *));
+	list_push_back(win->cams, ret);
 	return (ret);
 }
 
@@ -51,7 +51,7 @@ t_camera	*camera_new(t_window *win,
 		m4f_perspective(ret);
 	else
 		m4f_identity(&ret->projection);
-	ft_pushback_array(win->cams, &ret, sizeof(t_camera *));
+	list_push_back(win->cams, ret);
 	return (ret);
 }
 

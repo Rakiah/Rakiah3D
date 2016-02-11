@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gui_renderer.c                                     :+:      :+:    :+:   */
+/*   gui_handler.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -67,21 +67,4 @@ void			gui_poll_events(t_interface_renderer *interface)
 	list_set_start(buttons);
 	while ((iterator = list_next(buttons)) != NULL)
 		gui_poll_events_inner(iterator, mouse_pos);
-}
-
-void			gui_draw(t_core *core, t_window *win)
-{
-	t_list		*elements;
-	t_ui_element	*iterator;
-
-	elements = core->ui_renderer->elements;
-	list_set_start(elements);
-	while ((iterator = list_next(elements)) != NULL)
-	{
-		if (!iterator->active)
-			continue ;
-		SDL_BlitSurface(iterator->texture->img, NULL,
-				SDL_GetWindowSurface(win->win),
-				(SDL_Rect *)&iterator->rect);
-	}
 }

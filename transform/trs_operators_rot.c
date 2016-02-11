@@ -15,31 +15,34 @@
 void		trs_rotate(t_transform *trs, t_vector3f *new_rot)
 {
 	v3f_add(&trs->rotation, new_rot);
-	trs->is_dirty = TRUE;
+	trs->rotation.x = lroundf(trs->rotation.x) % 360;
+	trs->rotation.y = lroundf(trs->rotation.y) % 360;
+	trs->rotation.z = lroundf(trs->rotation.z) % 360;
+	trs_set_dirty(trs);
 }
 
 void		trs_set_rot(t_transform *trs, t_vector3f *new_rot)
 {
-	trs->rotation.x = new_rot->x;
-	trs->rotation.y = new_rot->y;
-	trs->rotation.z = new_rot->z;
-	trs->is_dirty = TRUE;
+	trs->rotation.x = lroundf(new_rot->x) % 360;
+	trs->rotation.y = lroundf(new_rot->y) % 360;
+	trs->rotation.z = lroundf(new_rot->z) % 360;
+	trs_set_dirty(trs);
 }
 
 void		trs_set_rot_x(t_transform *trs, float x)
 {
-	trs->rotation.x = x;
-	trs->is_dirty = TRUE;
+	trs->rotation.x = lroundf(x) % 360;
+	trs_set_dirty(trs);
 }
 
 void		trs_set_rot_y(t_transform *trs, float y)
 {
-	trs->rotation.y = y;
-	trs->is_dirty = TRUE;
+	trs->rotation.y = lroundf(y) % 360;
+	trs_set_dirty(trs);
 }
 
 void		trs_set_rot_z(t_transform *trs, float z)
 {
-	trs->rotation.z = z;
-	trs->is_dirty = TRUE;
+	trs->rotation.z = lroundf(z) % 360;
+	trs_set_dirty(trs);
 }

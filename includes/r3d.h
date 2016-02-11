@@ -31,9 +31,9 @@
 */
 void			m4f_print(t_matrix4f *matrix);
 void			m4f_identity(t_matrix4f *matrix);
-void			m4f_translate(t_matrix4f *matrix, float x, float y, float z);
-void			m4f_rotate(t_matrix4f *matrix, float x, float y, float z);
-void			m4f_scale(t_matrix4f *matrix, float x, float y, float z);
+void			m4f_translate(t_matrix4f *matrix, t_vector3f t);
+void			m4f_rotate(t_matrix4f *matrix, t_vector3f r);
+void			m4f_scale(t_matrix4f *matrix, t_vector3f s);
 void			m4f_screen_space(t_matrix4f *m, float width, float height);
 void			m4f_perspective(t_camera *camera);
 float			m4f_get_determinant(t_matrix4f *m);
@@ -139,6 +139,8 @@ t_vector4f		trs_transform_point(t_matrix4f *m, t_vector4f *v);
 t_vector3f		trs_transform_direction(t_transform *trs, t_vector3f *v);
 t_matrix4f		*trs_get_matrix(t_transform *trs);
 void			trs_recalculate_matrix(t_transform *trs);
+void			trs_set_dirty(t_transform *trs);
+void			trs_set_child(t_transform *parent, t_transform *child);
 void			trs_set_pos(t_transform *trs, t_vector3f *new_pos);
 void			trs_set_pos_x(t_transform *trs, float x);
 void			trs_set_pos_y(t_transform *trs, float y);
@@ -225,7 +227,12 @@ void			line_do_step(t_line *l);
 t_object		*obj_new_init(t_window *win);
 t_object		*obj_new_init_mesh(t_window *win, t_mesh *mesh);
 t_object		*obj_new(t_window *win, t_mesh *mesh, t_transform *trs);
+void			obj_attach_behaviour(t_object *obj, t_behaviour *behav);
 void			obj_draw(t_object *obj);
+t_behaviour		*behaviour_new(void (*init)(t_object *, void **),
+					void (*start)(t_object *, void *),
+					void (*update)(t_object *, void *));
+void			behaviour_update(t_list *obj);
 /*
 **	VERTEX METHODS
 */
