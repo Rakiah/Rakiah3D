@@ -109,7 +109,11 @@ t_list	*clip_triangle(t_vertex *v1, t_vertex *v2, t_vertex *v3)
 	if (!clip_axis(remapped, temporary, 0) ||
 		!clip_axis(remapped, temporary, 1) ||
 		!clip_axis(remapped, temporary, 2))
+	{
+		free(temporary);
+		free(remapped);
 		return (NULL);
+	}
 	free(temporary);
 	return (remapped);
 }

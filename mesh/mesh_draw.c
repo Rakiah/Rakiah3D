@@ -41,13 +41,14 @@
 /*}*/
 
 void	mesh_draw_filled_inner(t_mesh *mesh,
-								t_matrix4f *model_projection,
-								unsigned int *index)
+				t_matrix4f *model_projection,
+				unsigned int *index)
 {
 	t_vertex	v1;
 	t_vertex	v2;
 	t_vertex	v3;
 
+	(void)model_projection;
 	v1 = *(t_vertex *)mesh->vertices[index[0]];
 	v2 = *(t_vertex *)mesh->vertices[index[1]];
 	v3 = *(t_vertex *)mesh->vertices[index[2]];
@@ -60,44 +61,28 @@ void	mesh_draw_filled_inner(t_mesh *mesh,
 void	mesh_draw(t_mesh *mesh, t_transform *trs)
 {
 	size_t			i;
-	t_matrix4f		model_projection;
-	t_core			*core;
+	t_matrix4f			model_projection;
+	t_core				*core;
 
 	core = get_core();
 	m4f_cpy(&model_projection, camera_get_matrix(core->window->camera));
 	m4f_mul(&model_projection, trs_get_matrix(trs));
 	i = 0;
-	/*if (mesh->wireframe_mode)*/
-	/*{*/
-		/*while (i < mesh->v_count)*/
-			/*mesh_draw_wireframe_inner(mesh,*/
-										/*&model_projection,*/
-										/*(unsigned int *)mesh->indexs[i++]);*/
-	/*}*/
-	/*else*/
-	/*{*/
-		while (i < mesh->v_count)
-			mesh_draw_filled_inner(mesh,
-									&model_projection,
-									(unsigned int *)mesh->indexs[i++]);
-	/*}*/
+	while (i < mesh->v_count)
+		mesh_draw_filled_inner(mesh, &model_projection,
+					(unsigned int *)mesh->indexs[i++]);
 }
 
 void	mesh_print(t_mesh *mesh)
 {
-	size_t					i;
-	/*unsigned int			*tri;*/
+	size_t	i;
 
 	i = 0;
 	while (i < mesh->v_count)
 	{
-		/*tri = ((unsigned int **)mesh->indexs)[i];*/
 		ft_putstr("TRI NUMBER ");
 		ft_putnbr(i);
 		ft_putchar('\n');
-		/*v4f_print(((t_vertex **)mesh->vertices)[tri[0]]->pos);*/
-		/*v4f_print(((t_vertex **)mesh->vertices)[tri[1]]->pos);*/
-		/*v4f_print(((t_vertex **)mesh->vertices)[tri[2]]->pos);*/
 		ft_putstr("END TRI\n");
 		i++;
 	}
