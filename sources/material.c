@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r3d_defines.h                                      :+:      :+:    :+:   */
+/*   material.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/13 16:17:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/25 15:17:41 by bkabbas          ###   ########.fr       */
+/*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
+/*   Updated: 2016/07/05 15:42:46 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef R3D_DEFINES_H
-# define R3D_DEFINES_H
+#include "r3d.h"
 
-# define KEYCODES_COUNT 132
-# define MOUSEBUTTON_COUNT 7
-# define INTERPOLANTS_COUNT 4
-# define TRUE 1
-# define FALSE 0
-# define RESOURCES_PATH "resources/resources.r3d"
+t_material	*mat_new(t_texture *tex, t_vs_callback vs, t_fs_callback fs)
+{
+	t_material *ret;
 
-#endif
+	ret = (t_material *)malloc(sizeof(t_material));
+	ret->texture = tex;
+	ret->vs = vs;
+	ret->fs = fs;
+	return (ret);
+}

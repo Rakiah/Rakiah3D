@@ -13,137 +13,85 @@
 #ifndef R3D_STRUCTS_H
 # define R3D_STRUCTS_H
 
-struct					s_vector3f
+struct						s_vertex
 {
-	float				x;
-	float				y;
-	float				z;
+	t_vector3f				p;
+	t_vector2f				t;
+	t_vector3f				n;
 };
-struct					s_vector4f
+
+struct						s_transform
 {
-	float				x;
-	float				y;
-	float				z;
-	float				w;
+	t_transform				*parent;
+	t_list					*childs;
+	t_vector3f				position;
+	t_vector3f				rotation;
+	t_vector3f				scale;
+	t_matrix4f				model_world_matrix;
+	t_bool					is_dirty;
 };
-struct					s_vector2f
+
+struct						s_texture
 {
-	float				x;
-	float				y;
+	unsigned int			tbo;
+	SDL_Surface				*img;
+	char					*pixels;
+	int						width;
+	int						height;
 };
-struct					s_interpolant
+
+struct						s_camera
 {
-	float				values[3];
-	float				x_step;
-	float				y_step;
-};
-struct					s_matrix4f
-{
-	float				m[4][4];
-};
-struct					s_quaternion
-{
-	float				x;
-	float				y;
-	float				z;
-	float				w;
-};
-struct					s_transform
-{
-	t_transform			*parent;
-	t_list				*childs;
-	t_vector3f			position;
-	t_vector3f			rotation;
-	t_vector3f			scale;
-	t_matrix4f			model_world_matrix;
-	t_bool				is_dirty;
-};
-struct					s_texture
-{
-	SDL_Surface			*img;
-	char				*pixels;
-	int				**fast_pixel_access;
-	int				bytes_per_pixel;
-	int				l_size;
-	int				size;
-	int				width;
-	int				height;
-	t_bool				endian;
-};
-struct					s_camera
-{
-	float				fov;
-	t_vector2f			size;
-	t_vector2f			z_bounds;
-	t_matrix4f			projection;
-	t_matrix4f			projected_view;
-	t_transform			*transform;
+	float					fov;
+	t_bool					is_dirty;
+	t_vector2f				size;
+	t_vector2f				z_bounds;
+	t_matrix4f				projection;
+	t_matrix4f				projected_view;
 	t_projection_type		project_type;
-	t_bool				is_dirty;
+	t_transform				*transform;
 };
-struct					s_vertex
+
+struct						s_material
 {
-	t_vector4f			pos;
-	t_vector2f			tex_coords;
-	t_vector3f			normals;
+	t_texture				*texture;
+	t_vs_callback			vs;
+	t_fs_callback			fs;
 };
-struct					s_line
+
+struct						s_resource
 {
-	float				x_curr;
-	float				x_step;
-	t_interpolant		*ipls[INTERPOLANTS_COUNT];
-	int					y_start;
-	int					y_end;
-	float				ipls_curr[INTERPOLANTS_COUNT];
-	float				ipls_step[INTERPOLANTS_COUNT];
+	char					*name;
+	void					*data;
 };
-struct					s_material
+
+struct						s_core
 {
-	t_texture			*texture;
-	int					color;
+	t_list					*loaders;
+	t_list					*objects;
+	t_list					*cams;
+	t_list					*resources;
+	t_camera				*camera;
+	void					(*update)();
+	void					(*postrender)();
+	int						target_framerate;
+	double					delta_time;
+	void					*data;
+	int						width;
+	int						height;
+	t_bool					shown_cursor;
+	t_bool					locked_cursor;
 };
-struct					s_window
-{
-	SDL_Window			*win;
-	t_list				*objs;
-	t_list				*cams;
-	t_camera			*camera;
-	t_texture			*screen_tex;
-	t_matrix4f			screen_matrix;
-	float				**z_buffer;
-	int				width;
-	int				height;
-	int				id;
-	t_bool				cancel_render;
-};
-struct					s_core
-{
-	t_interface_renderer		*ui_renderer;
-	t_window			*window;
-	t_list				*wins;
-	t_list				*loaders;
-	void				(*update)();
-	void				(*postrender)();
-	void				(*expose)(t_window *);
-	int				target_framerate;
-	int				window_id;
-	double				delta_time;
-	void				*data;
-	t_bool				shown_cursor;
-	t_bool				locked_cursor;
-};
-struct					s_interface_renderer
-{
-	t_list				*buttons;
-	t_list				*elements;
-	TTF_Font			*font;
-};
+
 struct					s_mesh
 {
+	unsigned int		vbo;
+	unsigned int		ibo;
 	t_vertex			**vertices;
-	unsigned int			**indexs;
-	t_material			*material;
+	unsigned int		**indices;
 	size_t				v_count;
+	size_t				i_count;
+	t_material			*material;
 	t_bool				draw_hypotenuses;
 	t_bool				wireframe_mode;
 };
@@ -169,34 +117,6 @@ struct					s_loader
 {
 	char				*extension;
 	t_floader			method;
-};
-
-struct					s_rect
-{
-	int				x;
-	int				y;
-	int				w;
-	int				h;
-};
-
-struct					s_button
-{
-	SDL_Surface			*font;
-	t_ui_element			*drawable;
-	t_button_callback		on_click_up;
-	t_button_callback		on_click_down;
-	t_button_callback		on_mouse_hover;
-	void				*on_click_up_data;
-	void				*on_click_down_data;
-	void				*on_mouse_hover_data;
-	t_bool				active;
-};
-
-struct					s_ui_element
-{
-	t_texture			*texture;
-	t_rect				rect;
-	t_bool				active;
 };
 
 #endif

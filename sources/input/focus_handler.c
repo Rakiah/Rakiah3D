@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   r3d_defines.h                                      :+:      :+:    :+:   */
+/*   focus_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/13 16:17:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/25 15:17:41 by bkabbas          ###   ########.fr       */
+/*   Created: 2016/01/13 04:52:29 by bkabbas           #+#    #+#             */
+/*   Updated: 2016/01/25 14:08:05 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef R3D_DEFINES_H
-# define R3D_DEFINES_H
+#include "r3d.h"
 
-# define KEYCODES_COUNT 132
-# define MOUSEBUTTON_COUNT 7
-# define INTERPOLANTS_COUNT 4
-# define TRUE 1
-# define FALSE 0
-# define RESOURCES_PATH "resources/resources.r3d"
-
-#endif
+int	internal_focus_in_hook()
+{
+	return (0);
+}

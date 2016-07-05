@@ -6,39 +6,38 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/01/25 13:12:04 by bkabbas          ###   ########.fr        #
+#    Updated: 2016/07/05 17:13:07 by Rakiah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libr3d.a
+
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-PLATFORM = Linux
 OPTIMIZE = yes
 PROF = no
 DEBUG = no
 
 # Paths
-PATH_SDL2 = -I ../SDL2/includes/
-PATH_LIBFT = -I ../libft/includes/
-PATH_RLISTS = -I ../rlists/includes/
-PATH_HEADERS = -I includes/ $(PATH_SDL2) $(PATH_LIBFT) $(PATH_RLISTS)
-PATH_R3D = ./
-PATH_M4F = $(PATH_R3D)m4f/
-PATH_V4F = $(PATH_R3D)v4f/
-PATH_V3F = $(PATH_R3D)v3f/
-PATH_V2F = $(PATH_R3D)v2f/
-PATH_GUI = $(PATH_R3D)gui/
-PATH_QUAT = $(PATH_R3D)quat/
-PATH_INPUT = $(PATH_R3D)input/
-PATH_TRANSFORM = $(PATH_R3D)transform/
-PATH_MESH = $(PATH_R3D)mesh/
-PATH_LOADERS = $(PATH_R3D)loaders/
-PATH_CORECOMPONENT = $(PATH_R3D)core_components/
-PATH_RENDERING = $(PATH_R3D)rendering/
-PATH_LINUX = linux/
-PATH_ELCAPITAN = el_capitan/
-PATH_KEYCODES = $(PATH_INPUT)
+PATH_SDL2 = ../SDL2
+PATH_LIBFT = ../libft
+PATH_RMATH = ../rmath
+PATH_PORNYGONZ = ../pornygonz
+PATH_RCONTAINERS = ../rcontainers
+
+PATH_HEADERS = includes
+PATH_SRC = sources
+PATH_SUB = input transform mesh loaders core_components .
+PATH_OBJ = objects
+
+# Dependencies
+CFLAGS += -I $(PATH_SDL2)/includes
+CFLAGS += -I $(PATH_LIBFT)/includes
+CFLAGS += -I $(PATH_RMATH)/includes
+CFLAGS += -I $(PATH_PORNYGONZ)/includes
+CFLAGS += -I $(PATH_RCONTAINERS)/includes
+
+CFLAGS += -I $(PATH_HEADERS)
 
 # Debug
 ifeq ($(DEBUG), yes)
@@ -55,69 +54,93 @@ ifeq ($(OPTIMIZE), yes)
 	CFLAGS += -O3
 endif
 
-# Platform
-ifeq ($(PLATFORM), Linux)
-	PATH_KEYCODES = $(PATH_INPUT)$(PATH_LINUX)
-else
-	PATH_KEYCODES = $(PATH_INPUT)$(PATH_ELCAPITAN)
-endif
+vpath %.c $(addprefix $(PATH_SRC)/,$(PATH_SUB))
 
 # Sources
-SRC_M4F = $(PATH_M4F)m4f_manipulations.c $(PATH_M4F)m4f_operators.c $(PATH_M4F)m4f_adjugate.c $(PATH_M4F)m4f_initializers.c
-SRC_V4F = $(PATH_V4F)v4f_manipulations.c $(PATH_V4F)v4f_operators.c $(PATH_V4F)v4f_operators_new.c $(PATH_V4F)v4f_utils.c
-SRC_V3F = $(PATH_V3F)v3f_manipulations.c $(PATH_V3F)v3f_operators.c $(PATH_V3F)v3f_operators_new.c $(PATH_V3F)v3f_utils.c
-SRC_V2F = $(PATH_V2F)v2f_manipulations.c $(PATH_V2F)v2f_operators.c $(PATH_V2F)v2f_operators_new.c $(PATH_V2F)v2f_utils.c
-SRC_QUAT = $(PATH_QUAT)quat_manipulations.c $(PATH_QUAT)quat_operators_new.c
-SRC_MESH = $(PATH_MESH)mesh_draw.c $(PATH_MESH)mesh_inits.c
-SRC_GUI = $(PATH_GUI)rects.c $(PATH_GUI)ui_elements.c $(PATH_GUI)buttons.c $(PATH_GUI)gui_handler.c
-SRC_LOADERS = $(PATH_LOADERS)loader.c $(PATH_LOADERS)obj_loader.c $(PATH_LOADERS)obj_model.c $(PATH_LOADERS)rs_loader.c $(PATH_LOADERS)ro_loader.c $(PATH_LOADERS)bmp_loader.c
-SRC_TRANSFORM = $(PATH_TRANSFORM)trs_manipulations.c $(PATH_TRANSFORM)trs_operators_pos.c $(PATH_TRANSFORM)trs_operators_rot.c $(PATH_TRANSFORM)trs_operators_scale.c
-SRC_CORECOMPONENT = $(PATH_CORECOMPONENT)core.c $(PATH_CORECOMPONENT)window.c $(PATH_CORECOMPONENT)internal_behavior.c $(PATH_CORECOMPONENT)error.c
-SRC_RENDERING = $(PATH_RENDERING)renderer.c $(PATH_RENDERING)pixel_handler.c $(PATH_RENDERING)interpolant.c $(PATH_RENDERING)line.c $(PATH_RENDERING)line_drawing.c
-SRC_OTHER = $(PATH_R3D)behaviour.c $(PATH_R3D)texture.c $(PATH_R3D)material.c $(PATH_R3D)vertex.c $(PATH_R3D)object.c $(PATH_R3D)camera.c
-SRC_INPUT = $(PATH_INPUT)mouse_motion.c $(PATH_INPUT)focus_handler.c $(PATH_INPUT)key_down.c $(PATH_INPUT)key_up.c $(PATH_INPUT)mouse_down.c $(PATH_INPUT)mouse_up.c $(PATH_INPUT)mouse_pos.c
-SRC_KEYCODES = $(PATH_KEYCODES)mlx_to_r3d.c $(PATH_KEYCODES)mlx_to_r3d_keypad.c $(PATH_KEYCODES)mlx_to_r3d_alphabet.c $(PATH_KEYCODES)mlx_to_r3d_special.c
-OBJ_M4F = $(SRC_M4F:.c=.o)
-OBJ_V4F = $(SRC_V4F:.c=.o)
-OBJ_V3F = $(SRC_V3F:.c=.o)
-OBJ_V2F = $(SRC_V2F:.c=.o)
-OBJ_QUAT = $(SRC_QUAT:.c=.o)
-OBJ_MESH = $(SRC_MESH:.c=.o)
-OBJ_GUI = $(SRC_GUI:.c=.o)
-OBJ_INPUT = $(SRC_INPUT:.c=.o)
-OBJ_KEYCODES = $(SRC_KEYCODES:.c=.o)
-OBJ_OTHER = $(SRC_OTHER:.c=.o)
-OBJ_LOADERS = $(SRC_LOADERS:.c=.o)
-OBJ_TRANSFORM = $(SRC_TRANSFORM:.c=.o)
-OBJ_RENDERING = $(SRC_RENDERING:.c=.o)
-OBJ_CORECOMPONENT = $(SRC_CORECOMPONENT:.c=.o)
-OBJ =	$(OBJ_M4F)
-OBJ +=	$(OBJ_V4F)
-OBJ +=	$(OBJ_V3F)
-OBJ +=	$(OBJ_V2F)
-OBJ +=	$(OBJ_QUAT)
-OBJ +=	$(OBJ_MESH)
-OBJ +=	$(OBJ_OTHER)
-OBJ +=	$(OBJ_INPUT)
-OBJ +=	$(OBJ_LOADERS)
-OBJ +=	$(OBJ_KEYCODES)
-OBJ +=	$(OBJ_TRANSFORM)
-OBJ +=	$(OBJ_RENDERING)
-OBJ +=	$(OBJ_CORECOMPONENT)
-OBJ +=	$(OBJ_GUI)
+CORE += core.c
+CORE += resources.c
+CORE += internal_behavior.c
+CORE += error.c
+
+LOADERS += loader.c
+LOADERS += obj_loader.c
+LOADERS += obj_model.c
+LOADERS += rs_loader.c
+LOADERS += ro_loader.c
+LOADERS += bmp_loader.c
+
+TRANSFORM += trs_manipulations.c
+TRANSFORM += trs_operators_pos.c
+TRANSFORM += trs_operators_rot.c
+TRANSFORM += trs_operators_scale.c
+
+MESH += mesh_draw.c
+MESH += mesh_inits.c
+
+COMPONENTS += behaviour.c
+COMPONENTS += texture.c
+COMPONENTS += material.c
+COMPONENTS += object.c
+COMPONENTS += camera.c
+
+INPUT += mouse_motion.c
+INPUT += key_down.c
+INPUT += key_up.c
+INPUT += mouse_down.c
+INPUT += mouse_up.c
+INPUT += mouse_pos.c
+
+KEYCODES += keycode_handler.c
+KEYCODES += keycode_keypad.c
+KEYCODES += keycode_alphabet.c
+KEYCODES += keycode_special.c
+
+SOURCES += $(CORE)
+SOURCES += $(MESH)
+SOURCES += $(LOADERS)
+SOURCES += $(TRANSFORM)
+SOURCES += $(COMPONENTS)
+SOURCES += $(INPUT)
+SOURCES += $(KEYCODES)
+
+INCLUDES += r3d.h
+INCLUDES += r3d_structs.h
+INCLUDES += r3d_typedefs.h
+INCLUDES += r3d_defines.h
+INCLUDES += r3d_loader.h
+INCLUDES += r3d_input.h
+INCLUDES += r3d_enums.h
+
+# Headers
+HEADERS += $(addprefix $(PATH_HEADERS)/, $(INCLUDES))
+
+# Objects
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(CORE:%.c=%.o))
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(MESH:%.c=%.o))
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(LOADERS:%.c=%.o))
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(TRANSFORM:%.c=%.o))
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(COMPONENTS:%.c=%.o))
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(INPUT:%.c=%.o))
+OBJECTS += $(addprefix $(PATH_OBJ)/, $(KEYCODES:%.c=%.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@ar rc $(NAME) $(OBJ)
-	@ranlib $(NAME)
+$(NAME): $(OBJECTS)
+	@ar rcs $(NAME) $(OBJ)
 	@echo library correctly linked
+
+$(OBJECTS): $(HEADERS) | $(PATH_OBJ)
+$(OBJECTS): $(PATH_OBJ)/%.o: %.c
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(PATH_OBJ):
+	@-mkdir -p $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(PATH_HEADERS) -o $@ -c $<
 
 clean:
-	@rm -f $(OBJ)
+	@rm -rf $(PATH_OBJ)
 	@echo removed binary files
 
 fclean: clean

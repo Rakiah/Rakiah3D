@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:30:11 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/25 15:19:24 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/03/23 15:59:18 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct			s_obj_model
 	t_list		*pos;
 	t_list		*tex_coords;
 	t_list		*normals;
-	t_list		*index;
+	t_list		*indices;
 };
 struct			s_obj_index
 {
@@ -33,7 +33,7 @@ t_obj_model		*obj_model_new(int fd);
 t_loader		*find_loader(char *ext);
 void			*load_obj(char *path);
 void			*load_ro(char *path);
-void			*load_bitmap(char *path);
+void			*load_image(char *path);
 void			*load_rs(char *path);
 void			*load(char *path);
 
