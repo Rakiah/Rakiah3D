@@ -6,7 +6,7 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/07/05 17:13:07 by Rakiah           ###   ########.fr        #
+#    Updated: 2016/07/05 17:20:00 by Rakiah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DEBUG = no
 PATH_SDL2 = ../SDL2
 PATH_LIBFT = ../libft
 PATH_RMATH = ../rmath
-PATH_PORNYGONZ = ../pornygonz
+PATH_PORNYGONZ = ../../pornygonz
 PATH_RCONTAINERS = ../rcontainers
 
 PATH_HEADERS = includes
@@ -126,7 +126,7 @@ OBJECTS += $(addprefix $(PATH_OBJ)/, $(KEYCODES:%.c=%.o))
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	@ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJECTS)
 	@echo library correctly linked
 
 $(OBJECTS): $(HEADERS) | $(PATH_OBJ)
