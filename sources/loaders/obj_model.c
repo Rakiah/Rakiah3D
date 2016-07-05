@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 15:29:08 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/05 18:08:24 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 static	t_obj_index		*parse_index(char *token)
 {
 	int				i;
-	t_obj_index		*obj_index;
 	char			**sub_tokens;
+	t_obj_index		*obj_index;
 
 	i = 0;
 	obj_index = malloc(sizeof(t_obj_index));
@@ -52,21 +52,17 @@ static void				parse_coord(t_list *p, t_list *t, t_list *n, char **s)
 
 	if (s[0][1] == '\0')
 	{
-		parsed = v3f_new(strtod(s[1], NULL),
-						strtod(s[2], NULL),
-						strtod(s[3], NULL));
+		parsed = v3f_new(ft_atof(s[1]), ft_atof(s[2]), ft_atof(s[3]));
 		list_push_back(p, parsed);
 	}
 	else if (s[0][1] == 't')
 	{
-		parsed = v2f_new(strtod(s[1], NULL), strtod(s[2], NULL));
+		parsed = v2f_new(ft_atof(s[1]), ft_atof(s[2]));
 		list_push_back(t, parsed);
 	}
 	else if (s[0][1] == 'n')
 	{
-		parsed = v3f_new(strtod(s[1], NULL),
-						strtod(s[2], NULL),
-						strtod(s[3], NULL));
+		parsed = v3f_new(ft_atof(s[1]), ft_atof(s[2]), ft_atof(s[3]));
 		list_push_back(n, parsed);
 	}
 }

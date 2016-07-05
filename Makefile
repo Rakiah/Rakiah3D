@@ -6,7 +6,7 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/07/05 17:20:00 by Rakiah           ###   ########.fr        #
+#    Updated: 2016/07/05 18:26:10 by Rakiah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DEBUG = no
 PATH_SDL2 = ../SDL2
 PATH_LIBFT = ../libft
 PATH_RMATH = ../rmath
-PATH_PORNYGONZ = ../../pornygonz
+PATH_PORNYGONZ = ../pornygonz
 PATH_RCONTAINERS = ../rcontainers
 
 PATH_HEADERS = includes
@@ -107,6 +107,15 @@ INCLUDES += r3d.h
 INCLUDES += r3d_structs.h
 INCLUDES += r3d_typedefs.h
 INCLUDES += r3d_defines.h
+INCLUDES += r3d_core.h
+INCLUDES += r3d_camera.h
+INCLUDES += r3d_mesh.h
+INCLUDES += r3d_object.h
+INCLUDES += r3d_material.h
+INCLUDES += r3d_resources.h
+INCLUDES += r3d_texture.h
+INCLUDES += r3d_behaviour.h
+INCLUDES += r3d_transform.h
 INCLUDES += r3d_loader.h
 INCLUDES += r3d_input.h
 INCLUDES += r3d_enums.h

@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 05:27:20 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 15:48:35 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/05 17:59:15 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,25 @@ t_transform	*trs_new_init(void)
 	t_transform *ret;
 
 	ret = (t_transform *)malloc(sizeof(t_transform));
-	v3f_set(&ret->position, 0.0f, 0.0f, 0.0f);
-	v3f_set(&ret->rotation, 0.0f, 0.0f, 0.0f);
-	v3f_set(&ret->scale, 1.0f, 1.0f, 1.0f);
-	ret->childs = list_new();
+	ret->position = V3F_ZERO;
+	ret->rotation = V3F_ZERO;
+	ret->scale = V3F_ONE;
 	ret->parent = NULL;
+	ret->childs = list_new();
 	ret->is_dirty = TRUE;
 	return (ret);
 }
 
-t_transform	*trs_new(t_vector3f *position,
-					t_vector3f *rotation,
-					t_vector3f *scale)
+t_transform	*trs_new(t_vector3f pos, t_vector3f rot, t_vector3f scale)
 {
 	t_transform *ret;
 
 	ret = (t_transform *)malloc(sizeof(t_transform));
-	v3f_set(&ret->position, position->x, position->y, position->z);
-	v3f_set(&ret->rotation, rotation->x, rotation->y, rotation->z);
-	v3f_set(&ret->scale, scale->x, scale->y, scale->z);
-	ret->childs = list_new();
+	ret->position = pos;
+	ret->rotation = rot;
+	ret->scale = scale;
 	ret->parent = NULL;
+	ret->childs = list_new();
 	ret->is_dirty = TRUE;
 	return (ret);
 }
@@ -88,30 +86,12 @@ void		trs_recalculate_matrix(t_transform *trs)
 	trs->is_dirty = FALSE;
 }
 
-t_vector4f	trs_transform_point(t_matrix4f *m, t_vector4f *v)
+t_vector3f	trs_transform_direction(t_transform *trs, t_vector3f v)
 {
-	t_vector4f ret;
-
-	ret.x = m->m[0][0] * v->x + m->m[0][1] *
-	v->y + m->m[0][2] * v->z + m->m[0][3] * v->w;
-	ret.y = m->m[1][0] * v->x + m->m[1][1] *
-	v->y + m->m[1][2] * v->z + m->m[1][3] * v->w;
-	ret.z = m->m[2][0] * v->x + m->m[2][1] *
-	v->y + m->m[2][2] * v->z + m->m[2][3] * v->w;
-	ret.w = m->m[3][0] * v->x + m->m[3][1] *
-	v->y + m->m[3][2] * v->z + m->m[3][3] * v->w;
-	return (ret);
-}
-
-t_vector3f	trs_transform_direction(t_transform *trs, t_vector3f *v)
-{
-	t_vector3f	ret;
-	t_vector4f	temp;
+	t_vector4f	transform;
 	t_matrix4f	rotation_matrix;
 
-	v4f_set(&temp, v->x, v->y, v->z);
 	m4f_rotate(&rotation_matrix, trs->rotation);
-	temp = trs_transform_point(&rotation_matrix, &temp);
-	v3f_set(&ret, temp.x, temp.y, temp.z);
-	return (ret);
+	transform = m4f_mul_vector(&rotation_matrix, V4F_INIT(v.x, v.y, v.z, 1.0f));
+	return (V3F_INIT(transform.x, transform.y, transform.z));
 }

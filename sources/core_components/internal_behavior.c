@@ -6,17 +6,17 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:14:15 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/04/21 15:27:57 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/07/05 18:24:39 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 #include <time.h>
 
-void	internal_render(t_core *core)
+void	internal_render()
 {
 	pornygonz_clear();
-	core_render(core);
+	core_render();
 	pornygonz_swap_buffer();
 }
 
@@ -84,7 +84,7 @@ int		internal_update(t_core *core)
 	if (core->update != NULL)
 		core->update();
 	behaviour_update(core->objects);
-	internal_render(core);
+	internal_render();
 	reset_inputs();
 	calculate_delta_time(core, start);
 	return (0);

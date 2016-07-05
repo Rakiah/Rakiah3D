@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 15:46:49 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/05 18:01:21 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	create_vertex(t_list *vertices, t_obj_model *m, t_obj_index *i)
 	if (i->i[1] >= 0)
 		v->t = *(t_vector2f *)list_get_data_at(m->tex_coords, i->i[1]);
 	else
-		v->t = (t_vector2f) { 0.0f, 0.0f };
+		v->t = V2F_ZERO;
 	if (i->i[2] >= 0)
 		v->n = *(t_vector3f *)list_get_data_at(m->normals, i->i[2]);
 	else
-		v->n = (t_vector3f) { 0.0f, 0.0f, 0.0f };
+		v->n = V3F_ZERO;
 	list_push_back(vertices, v);
 }
 
