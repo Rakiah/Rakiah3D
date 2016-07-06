@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 17:10:14 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 18:30:59 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	*load_obj(char *path)
 	mesh->i_count = lists[1]->count;
 	mesh->vertices = (t_vertex **)list_to_array(lists[0]);
 	mesh->indices = (unsigned int **)list_to_array(lists[1]);
+	obj_model_delete(model);
+	list_delete(lists[0]);
+	list_delete(lists[1]);
 	mesh_update_vertices(mesh);
 	close(fd);
 	return (mesh);

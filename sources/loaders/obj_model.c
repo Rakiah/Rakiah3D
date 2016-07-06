@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 16:19:16 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 18:33:15 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,18 @@ static void				parse_face_line(t_list *index, char **s)
 		list_push_back(index, parse_index(s[i + 1]));
 		i++;
 	}
+	i = 0;
+	while (s[i] != NULL)
+		free(s[i++]);
+	free(s);
 }
 
 static void				parse_coord(t_list *p, t_list *t, t_list *n, char **s)
 {
-	void *parsed;
+	int		i;
+	void	*parsed;
 
+	i = 0;
 	if (s[0][1] == '\0')
 	{
 		parsed = v3f_new(ft_atof(s[1]), ft_atof(s[2]), ft_atof(s[3]));
@@ -65,6 +71,9 @@ static void				parse_coord(t_list *p, t_list *t, t_list *n, char **s)
 		parsed = v3f_new(ft_atof(s[1]), ft_atof(s[2]), ft_atof(s[3]));
 		list_push_back(n, parsed);
 	}
+	while (s[i] != NULL)
+		free(s[i++]);
+	free(s);
 }
 
 static t_obj_model		*obj_model_init(t_list *list[4])
@@ -78,6 +87,15 @@ static t_obj_model		*obj_model_init(t_list *list[4])
 	ret->normals = list[2];
 	ret->indices = list[3];
 	return (ret);
+}
+
+void					obj_model_delete(t_obj_model *m)
+{
+	list_delete_inner(m->pos, list_default_remove_functor);
+	list_delete_inner(m->tex_coords, list_default_remove_functor);
+	list_delete_inner(m->normals, list_default_remove_functor);
+	list_delete_inner(m->indices, list_default_remove_functor);
+	free(m);
 }
 
 t_obj_model				*obj_model_new(int fd)
