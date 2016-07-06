@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:33:01 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 16:18:09 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 17:12:10 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		mesh_update_vertices(t_mesh *mesh)
 	float			*vertex_buffer;
 	unsigned int	*index_buffer;
 
-	vertex_buffer = malloc(mesh->v_count * sizeof(t_vertex));
+	vertex_buffer = (float *)malloc(mesh->v_count * sizeof(t_vertex));
 	index_buffer = malloc(mesh->i_count * 3 * sizeof(unsigned int));
 	create_vertex_buffer(mesh->vertices, vertex_buffer, mesh->v_count);
 	create_index_buffer(mesh->indices, index_buffer, mesh->i_count);

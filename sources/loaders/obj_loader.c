@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 18:01:21 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 17:10:14 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	arrange_vertices_obj(t_obj_model *m, t_list *v, t_list *i)
 	iterator = list_next(m->indices);
 	while (iterator != NULL)
 	{
-		triangle = malloc(sizeof(int) * 3);
+		triangle = malloc(sizeof(unsigned int) * 3);
 		x = -1;
 		while (++x < 3)
 		{
