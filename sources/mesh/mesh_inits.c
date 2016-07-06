@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:33:01 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 15:48:07 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 16:18:09 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	create_index_buffer(unsigned int **indices, unsigned int *buffer, in
 	}
 }
 
-void	mesh_update_vertices(t_mesh *mesh)
+void		mesh_update_vertices(t_mesh *mesh)
 {
 	float			*vertex_buffer;
 	unsigned int	*index_buffer;
