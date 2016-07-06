@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 18:53:46 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 22:59:40 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void		camera_recalculate_matrix(t_camera *camera)
 	t_matrix4f inverted;
 	t_matrix4f projection;
 
-	m4f_cpy(&projection, &camera->projection);
-	m4f_invert(m4f_cpy(&inverted, trs_get_matrix(camera->transform)));
-	m4f_cpy(&camera->projected_view, m4f_mul(&projection, &inverted));
+	projection = camera->projection;
+	inverted = *(trs_get_matrix(camera->transform));
+	m4f_invert(&inverted);
+	camera->projected_view = *(m4f_mul(&projection, &inverted));
 	camera->is_dirty = FALSE;
 }

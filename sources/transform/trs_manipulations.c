@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 05:27:20 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 21:18:30 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/06 22:56:47 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void		trs_recalculate_matrix(t_transform *trs)
 	m4f_mul(&translation_matrix, m4f_mul(&rotation_matrix, &scale_matrix));
 	if (trs->parent != NULL)
 	{
-		m4f_cpy(&parent_matrix, trs_get_matrix(trs->parent));
+		parent_matrix = *(trs_get_matrix(trs->parent));
 		m4f_mul(&parent_matrix, &translation_matrix);
 		translation_matrix = parent_matrix;
 	}
