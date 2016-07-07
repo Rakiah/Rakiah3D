@@ -6,16 +6,16 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 22:59:40 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:30:54 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-t_camera	*camera_new_init()
+t_camera	*camera_new_init(void)
 {
-	t_camera *ret;
-	t_core	*core;
+	t_camera	*ret;
+	t_core		*core;
 
 	core = get_core();
 	ret = (t_camera *)malloc(sizeof(t_camera));
@@ -34,8 +34,8 @@ t_camera	*camera_new_init()
 
 t_camera	*camera_new(t_projection_type project, t_transform *transform)
 {
-	t_camera *ret;
-	t_core	*core;
+	t_camera	*ret;
+	t_core		*core;
 
 	core = get_core();
 	ret = (t_camera *)malloc(sizeof(t_camera));

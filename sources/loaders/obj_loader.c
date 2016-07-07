@@ -6,12 +6,21 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 18:30:59 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:49:17 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 #include <fcntl.h>
+
+void	obj_model_delete(t_obj_model *m)
+{
+	list_delete_inner(m->pos, list_default_remove_functor);
+	list_delete_inner(m->tex_coords, list_default_remove_functor);
+	list_delete_inner(m->normals, list_default_remove_functor);
+	list_delete_inner(m->indices, list_default_remove_functor);
+	free(m);
+}
 
 void	create_vertex(t_list *vertices, t_obj_model *m, t_obj_index *i)
 {
@@ -23,10 +32,6 @@ void	create_vertex(t_list *vertices, t_obj_model *m, t_obj_index *i)
 		v->t = *(t_vector2f *)list_get_data_at(m->tex_coords, i->i[1]);
 	else
 		v->t = V2F_ZERO;
-	if (i->i[2] >= 0)
-		v->n = *(t_vector3f *)list_get_data_at(m->normals, i->i[2]);
-	else
-		v->n = V3F_ZERO;
 	list_push_back(vertices, v);
 }
 
@@ -55,7 +60,6 @@ void	arrange_vertices_obj(t_obj_model *m, t_list *v, t_list *i)
 
 void	*load_obj(char *path)
 {
-	int			fd;
 	t_list		*lists[2];
 	t_mesh		*mesh;
 	t_obj_model	*model;
@@ -63,9 +67,7 @@ void	*load_obj(char *path)
 	mesh = mesh_new_init();
 	lists[0] = list_new();
 	lists[1] = list_new();
-	if ((fd = open(path, O_RDONLY)) < 0)
-		error_exit(ft_strjoin("COULDN'T FIND FILE AT : ", path));
-	model = obj_model_new(fd);
+	model = obj_model_new(path);
 	arrange_vertices_obj(model, lists[0], lists[1]);
 	mesh->v_count = lists[0]->count;
 	mesh->i_count = lists[1]->count;
@@ -75,6 +77,5 @@ void	*load_obj(char *path)
 	list_delete(lists[0]);
 	list_delete(lists[1]);
 	mesh_update_vertices(mesh);
-	close(fd);
 	return (mesh);
 }

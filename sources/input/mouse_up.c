@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:54:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/25 14:09:49 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/07/07 01:16:03 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		mouse_up(int mousebutton, t_input_cmd cmd, t_bool value)
 	static int		last_button = -1;
 
 	if (button == NULL)
-		button = (t_bool *)ft_memalloc(MOUSEBUTTON_COUNT * sizeof(t_bool));
+		button = (t_bool *)rstd_memalloc(MOUSEBUTTON_COUNT * sizeof(t_bool));
 	if (cmd == CMD_SET_ALL)
 	{
 		mousebutton = 0;

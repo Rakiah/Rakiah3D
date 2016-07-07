@@ -6,7 +6,7 @@
 /*   By: Rakiah <bkabbas@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 18:13:01 by Rakiah            #+#    #+#             */
-/*   Updated: 2016/07/05 18:13:40 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:28:32 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,4 @@ t_object	*obj_new(t_mesh *mesh, t_transform *trs);
 void		obj_draw(t_object *obj);
 void		obj_attach_behaviour(t_object *obj, t_behaviour *behav);
 
-# endif
+#endif

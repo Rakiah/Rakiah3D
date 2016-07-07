@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 04:52:29 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/25 14:09:52 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/07/07 01:16:03 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_keycode	key_down(t_keycode code, t_input_cmd cmd, t_bool value)
 	static t_keycode	last_key = NONE;
 
 	if (keys == NULL)
-		keys = (t_bool *)ft_memalloc(KEYCODES_COUNT * sizeof(t_bool));
+		keys = (t_bool *)rstd_memalloc(KEYCODES_COUNT * sizeof(t_bool));
 	if (cmd == CMD_SET_ALL)
 	{
 		code = 1;

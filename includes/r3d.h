@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:10:22 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 18:26:39 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 01:15:38 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define R3D_H
 
 # include <rmath.h>
-# include <libft.h>
+# include <rstd.h>
 # include <rcontainers_lists.h>
 # include <SDL.h>
 # include <SDL_ttf.h>

@@ -6,7 +6,7 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/07/05 18:35:36 by Rakiah           ###   ########.fr        #
+#    Updated: 2016/07/07 19:43:32 by bkabbas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DEBUG = no
 
 # Paths
 PATH_SDL2 = ../SDL2
-PATH_LIBFT = ../libft
+PATH_RSTD = ../rstd
 PATH_RMATH = ../rmath
 PATH_PORNYGONZ = ../../pornygonz
 PATH_RCONTAINERS = ../rcontainers
@@ -32,7 +32,7 @@ PATH_OBJ = objects
 
 # Dependencies
 CFLAGS += -I $(PATH_SDL2)/includes
-CFLAGS += -I $(PATH_LIBFT)/includes
+CFLAGS += -I $(PATH_RSTD)/includes
 CFLAGS += -I $(PATH_RMATH)/includes
 CFLAGS += -I $(PATH_PORNYGONZ)/includes
 CFLAGS += -I $(PATH_RCONTAINERS)/includes
@@ -58,6 +58,7 @@ vpath %.c $(addprefix $(PATH_SRC)/,$(PATH_SUB))
 
 # Sources
 CORE += core.c
+CORE += utilities.c
 CORE += resources.c
 CORE += internal_behavior.c
 CORE += error.c
@@ -73,6 +74,7 @@ TRANSFORM += trs_manipulations.c
 TRANSFORM += trs_operators_pos.c
 TRANSFORM += trs_operators_rot.c
 TRANSFORM += trs_operators_scale.c
+TRANSFORM += trs_hierarchy.c
 
 MESH += mesh_draw.c
 MESH += mesh_inits.c

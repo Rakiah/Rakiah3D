@@ -6,13 +6,13 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 15:48:46 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:29:06 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-t_behaviour *behaviour_new(void (*init)(t_object *, void **),
+t_behaviour	*behaviour_new(void (*init)(t_object *, void **),
 							void (*start)(t_object *, void *),
 							void (*update)(t_object *, void *))
 {
@@ -27,7 +27,7 @@ t_behaviour *behaviour_new(void (*init)(t_object *, void **),
 	return (ret);
 }
 
-void	behaviour_update(t_list *obj)
+void		behaviour_update(t_list *obj)
 {
 	t_object	*iter_obj;
 	t_behaviour	*iter_behav;

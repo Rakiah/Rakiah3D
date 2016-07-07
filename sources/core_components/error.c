@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/01/13 02:33:47 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/07/07 01:16:03 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	error_exit(char *error)
 {
-	ft_putstr("error : ");
-	ft_putendl(error);
+	rstd_putstr("error : ");
+	rstd_putendl(error);
 	exit(0);
 }

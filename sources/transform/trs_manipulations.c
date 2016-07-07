@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 05:27:20 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 22:56:47 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:42:26 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,11 @@ t_transform	*trs_new(t_vector3f pos, t_vector3f rot, t_vector3f scale)
 	return (ret);
 }
 
-void		trs_set_dirty(t_transform *trs)
-{
-	trs->is_dirty = TRUE;
-	list_process_inner(trs->childs, (void (*)(void *))trs_set_dirty);
-}
-
 t_matrix4f	*trs_get_matrix(t_transform *trs)
 {
 	if (trs->is_dirty)
 		trs_recalculate_matrix(trs);
 	return (&trs->model_world_matrix);
-}
-
-void		trs_set_child(t_transform *parent, t_transform *child)
-{
-	list_push_back(parent->childs, child);
-	child->parent = parent;
-	trs_set_dirty(child);
-}
-
-t_transform	*trs_get_child(t_transform *parent, int child_index)
-{
-	return (list_get_data_at(parent->childs, child_index));
 }
 
 void		trs_recalculate_matrix(t_transform *trs)

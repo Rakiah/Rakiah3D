@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:30:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 18:52:10 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 00:34:19 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ struct						s_vertex
 {
 	t_vector3f				p;
 	t_vector2f				t;
-	t_vector3f				n;
 };
 
 struct						s_transform
@@ -83,7 +82,7 @@ struct						s_core
 	t_bool					locked_cursor;
 };
 
-struct					s_mesh
+struct						s_mesh
 {
 	unsigned int		vbo;
 	unsigned int		ibo;
@@ -92,11 +91,10 @@ struct					s_mesh
 	size_t				v_count;
 	size_t				i_count;
 	t_material			*material;
-	t_bool				draw_hypotenuses;
-	t_bool				wireframe_mode;
+	t_bool				wireframe;
 };
 
-struct					s_object
+struct						s_object
 {
 	t_bool				active;
 	t_mesh				*mesh;
@@ -104,7 +102,7 @@ struct					s_object
 	t_transform			*transform;
 };
 
-struct					s_behaviour
+struct						s_behaviour
 {
 	t_bool				active;
 	void				*data;
@@ -113,7 +111,7 @@ struct					s_behaviour
 	void				(*update)(t_object *, void *);
 };
 
-struct					s_loader
+struct						s_loader
 {
 	char				*extension;
 	t_floader			method;
