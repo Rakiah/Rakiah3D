@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:31:50 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/07 00:33:57 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 23:07:28 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ void	mesh_draw(t_mesh *mesh, t_transform *trs)
 	pornygonz_bind_texture(material->texture ? material->texture->tbo : 0);
 	pornygonz_bind_vertex_array(mesh->vbo);
 	pornygonz_bind_index_array(mesh->ibo);
-	pornygonz_draw_elements(mesh->wireframe ?
-							PORNYGONZ_LINES : PORNYGONZ_TRIANGLES,
-							PORNYGONZ_UNSIGNED_INT, 0, mesh->i_count * 3);
+	pornygonz_draw_elements(PORNYGONZ_TRIANGLES, PORNYGONZ_UNSIGNED_INT,
+							0, mesh->i_count * 3);
 	pornygonz_disable_vertex_attribute(PORNYGONZ_TEXTURE_COORDS);
 }
