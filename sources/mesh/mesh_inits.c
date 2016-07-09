@@ -6,13 +6,13 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:33:01 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 17:12:10 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 01:16:05 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-t_mesh	*mesh_new_init(void)
+t_mesh		*mesh_new_init(void)
 {
 	t_mesh	*ret;
 
@@ -23,9 +23,8 @@ t_mesh	*mesh_new_init(void)
 	ret->i_count = 0;
 	ret->vbo = pornygonz_create_vertex_array();
 	ret->ibo = pornygonz_create_index_array();
-	ret->draw_hypotenuses = TRUE;
-	ret->wireframe_mode = FALSE;
-	ret->material = mat_new(NULL, vertex_shader_default, fragment_shader_default);
+	ret->wireframe = FALSE;
+	ret->material = mat_new_init();
 	return (ret);
 }
 
@@ -35,7 +34,7 @@ static void	create_vertex_buffer(t_vertex **vertices, void *buffer, int vertex_c
 
 	i = -1;
 	while (++i < vertex_count)
-		ft_memcpy(buffer + i * sizeof(t_vertex), vertices[i], sizeof(t_vertex));
+		rstd_memcpy(buffer + i * sizeof(t_vertex), vertices[i], sizeof(t_vertex));
 }
 
 static void	create_index_buffer(unsigned int **indices, unsigned int *buffer, int index_count)

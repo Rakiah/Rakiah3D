@@ -6,7 +6,7 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/07/05 18:35:36 by Rakiah           ###   ########.fr        #
+#    Updated: 2016/07/09 19:02:46 by Rakiah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ DEBUG = no
 
 # Paths
 PATH_SDL2 = ../SDL2
-PATH_LIBFT = ../libft
+PATH_RSTD = ../rstd
 PATH_RMATH = ../rmath
 PATH_PORNYGONZ = ../../pornygonz
 PATH_RCONTAINERS = ../rcontainers
@@ -32,7 +32,7 @@ PATH_OBJ = objects
 
 # Dependencies
 CFLAGS += -I $(PATH_SDL2)/includes
-CFLAGS += -I $(PATH_LIBFT)/includes
+CFLAGS += -I $(PATH_RSTD)/includes
 CFLAGS += -I $(PATH_RMATH)/includes
 CFLAGS += -I $(PATH_PORNYGONZ)/includes
 CFLAGS += -I $(PATH_RCONTAINERS)/includes

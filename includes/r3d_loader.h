@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:30:11 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 18:10:36 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 18:14:17 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@ struct			s_obj_index
 	int i[3];
 };
 void			obj_model_delete(t_obj_model *m);
-t_obj_model		*obj_model_new(int fd);
+t_obj_model		*obj_model_new(char *path);
 t_loader		*find_loader(char *ext);
 void			*load_obj(char *path);
 void			*load_ro(char *path);
-void			*load_image(char *path);
+void			*load_bmp(char *path);
+void			*load_3bmp(char *path);
 void			*load_rs(char *path);
 void			*load(char *path);
 

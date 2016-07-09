@@ -6,12 +6,11 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:01:35 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 17:54:19 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 01:24:53 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
-#include <get_next_line.h>
 #include <fcntl.h>
 
 /*static void	parse_scale(t_object *obj, char **split)*/
@@ -20,7 +19,7 @@
 
 	/*if (obj == NULL)*/
 		/*return ;*/
-	/*scale = V3F_INIT(ft_atof(split[1]), ft_atof(split[2]), ft_atof(split[3]));*/
+	/*scale = V3F_INIT(rstd_atof(split[1]), rstd_atof(split[2]), rstd_atof(split[3]));*/
 	/*trs_set_scale(obj->transform, scale);*/
 /*}*/
 
@@ -30,7 +29,7 @@
 
 	/*if (obj == NULL)*/
 		/*return ;*/
-	/*rot = V3F_INIT(ft_atof(split[1]), ft_atof(split[2]), ft_atof(split[3]));*/
+	/*rot = V3F_INIT(rstd_atof(split[1]), rstd_atof(split[2]), rstd_atof(split[3]));*/
 	/*trs_set_rot(obj->transform, rot);*/
 /*}*/
 
@@ -40,7 +39,7 @@
 
 	/*if (obj == NULL)*/
 		/*return ;*/
-	/*pos = V3F_INIT(ft_atof(split[1]), ft_atof(split[2]), ft_atof(split[3]));*/
+	/*pos = V3F_INIT(rstd_atof(split[1]), rstd_atof(split[2]), rstd_atof(split[3]));*/
 	/*trs_set_pos(obj->transform, pos);*/
 /*}*/
 
@@ -49,7 +48,7 @@
 	/*t_object	*object;*/
 	/*char		*tmp;*/
 
-	/*tmp = path_type ? split : ft_strjoin(path, split);*/
+	/*tmp = path_type ? split : rstd_strjoin(path, split);*/
 	/*object = (t_object *)load(tmp);*/
 	/*free(tmp);*/
 	/*return (object);*/
@@ -64,10 +63,10 @@
 	/*t_object	*tmp;*/
 
 	/*i = 1;*/
-	/*splits[0] = ft_strsplit(splitted[2], '/', NULL);*/
-	/*splits[1] = ft_strsplit(splitted[3], '/', NULL);*/
-	/*splits[2] = ft_strsplit(splitted[4], '/', NULL);*/
-	/*while (i < ft_atoi(splitted[1]) + 1)*/
+	/*splits[0] = rstd_strsplit(splitted[2], '/', NULL);*/
+	/*splits[1] = rstd_strsplit(splitted[3], '/', NULL);*/
+	/*splits[2] = rstd_strsplit(splitted[4], '/', NULL);*/
+	/*while (i < rstd_atoi(splitted[1]) + 1)*/
 	/*{*/
 		/*tmp = obj_new_init_mesh(obj->mesh);*/
 		/*j = 0;*/
@@ -98,21 +97,21 @@ void		*load_rs(char *path)
 	/*obj = NULL;*/
 	/*path_type = FALSE;*/
 	/*if ((fd = open(path, O_RDONLY)) < 0)*/
-		/*error_exit(ft_strjoin("COULDN'T FIND FILE AT : ", path));*/
+		/*error_exit(rstd_strjoin("COULDN'T FIND FILE AT : ", path));*/
 	/*while (get_next_line(fd, &line) == 1)*/
 	/*{*/
-		/*splitted = ft_strsplit(line, ' ', NULL);*/
-		/*if (ft_strequ(splitted[0], "paths-type:"))*/
-			/*path_type = ft_strequ(splitted[1], "absolute");*/
-		/*else if (ft_strequ(splitted[0], "path-object:"))*/
+		/*splitted = rstd_strsplit(line, ' ', NULL);*/
+		/*if (rstd_strequ(splitted[0], "paths-type:"))*/
+			/*path_type = rstd_strequ(splitted[1], "absolute");*/
+		/*else if (rstd_strequ(splitted[0], "path-object:"))*/
 			/*obj = parse_item(path, splitted[1], path_type);*/
-		/*else if (ft_strequ(splitted[0], "position:"))*/
+		/*else if (rstd_strequ(splitted[0], "position:"))*/
 			/*parse_position(obj, splitted);*/
-		/*else if (ft_strequ(splitted[0], "rotation:"))*/
+		/*else if (rstd_strequ(splitted[0], "rotation:"))*/
 			/*parse_rotation(obj, splitted);*/
-		/*else if (ft_strequ(splitted[0], "scale:"))*/
+		/*else if (rstd_strequ(splitted[0], "scale:"))*/
 			/*parse_scale(obj, splitted);*/
-		/*else if (ft_strequ(splitted[0], "multiply:"))*/
+		/*else if (rstd_strequ(splitted[0], "multiply:"))*/
 			/*parse_multiply(splitted, obj);*/
 		/*free(line);*/
 	/*}*/

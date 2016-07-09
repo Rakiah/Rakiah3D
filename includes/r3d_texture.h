@@ -6,14 +6,14 @@
 /*   By: Rakiah <bkabbas@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 18:16:25 by Rakiah            #+#    #+#             */
-/*   Updated: 2016/07/05 18:17:48 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 18:11:40 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef R3D_TEXTURE_H
 # define R3D_TEXTURE_H
 
-t_texture	*tex_new(int width, int height);
+t_texture	*tex_new(int width, int height, int bytes_per_pixel);
 t_texture	*tex_new_surface(int width, int height, SDL_Surface *s);
 void		tex_clear(t_texture *tex);
 void		tex_draw_pixel(t_texture *tex, int x, int y, int pixel);

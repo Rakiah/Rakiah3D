@@ -6,11 +6,12 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 18:53:34 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 19:03:18 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
+#include <mlx.h>
 
 
 t_core		*get_core(void)
@@ -34,7 +35,8 @@ void		core_init(void (*update)(), int width, int height, int frame_rate)
 	core->resources = list_new();
 	core_add_loader(load_obj, "obj");
 	core_add_loader(load_ro, "ro");
-	core_add_loader(load_image, "bmp");
+	core_add_loader(load_bmp, "bmp");
+	core_add_loader(load_3bmp, "3bmp");
 	core_add_loader(load_rs, "rs");
 	resources_load();
 	core->width = width;
@@ -42,7 +44,6 @@ void		core_init(void (*update)(), int width, int height, int frame_rate)
 	core->shown_cursor = FALSE;
 	core->locked_cursor = FALSE;
 	core->update = update;
-	core->data = NULL;
 	core->camera = NULL;
 	core->target_framerate = frame_rate;
 	core->delta_time = 1.0f;
@@ -64,7 +65,7 @@ void		core_add_loader(t_floader loader, char *extension)
 	t_loader	*to_push;
 
 	to_push = malloc(sizeof(t_loader));
-	to_push->extension = ft_strdup(extension);
+	to_push->extension = rstd_strdup(extension);
 	to_push->method = loader;
 	list_push_back(get_core()->loaders, to_push);
 }
