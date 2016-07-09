@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:14:15 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/07 19:36:07 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/07/09 21:00:20 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,10 @@ int		internal_update(t_core *core)
 		core->update();
 	behaviour_update(core->objects);
 	internal_render();
+
+	if (core->locked_cursor)
+		SDL_WarpMouseInWindow(pornygonz_get_window(),
+							core->width / 2, core->height / 2);
 	reset_inputs();
 	calculate_delta_time(core, start);
 	return (0);

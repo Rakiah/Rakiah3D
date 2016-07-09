@@ -6,7 +6,7 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/07/09 19:20:37 by Rakiah           ###   ########.fr        #
+#    Updated: 2016/07/09 19:45:20 by Rakiah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DEBUG = no
 PATH_SDL2 = ../SDL2
 PATH_RSTD = ../rstd
 PATH_RMATH = ../rmath
-PATH_PORNYGONZ = ../../pornygonz
+PATH_PORNYGONZ = ../pornygonz
 PATH_RCONTAINERS = ../rcontainers
 
 PATH_HEADERS = includes
