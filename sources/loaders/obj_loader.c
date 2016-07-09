@@ -6,12 +6,21 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/07 01:23:46 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 19:11:43 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 #include <fcntl.h>
+
+void	obj_model_delete(t_obj_model *m)
+{
+	list_delete_inner(m->pos, list_default_remove_functor);
+	list_delete_inner(m->tex_coords, list_default_remove_functor);
+	list_delete_inner(m->normals, list_default_remove_functor);
+	list_delete_inner(m->indices, list_default_remove_functor);
+	free(m);
+}
 
 void	create_vertex(t_list *vertices, t_obj_model *m, t_obj_index *i)
 {

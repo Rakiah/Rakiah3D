@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/09 19:06:52 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 19:11:24 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void						*load_bmp(char *path)
 	int j = 0;
 
 	if ((s = SDL_LoadBMP(path)) == NULL)
-		error_exit(rstd_strjoin(rstd_strjoin("COULDN'T OPEN FILE AT : ", path), SDL_GetError()));
+		error_exit(rstd_strjoin("COULDN'T OPEN FILE AT : ", path));
 	size = s->pitch * s->h;
 	image = tex_new(s->w, s->h, s->format->BytesPerPixel);
 	while (i < size)
@@ -103,6 +103,7 @@ void						*load_bmp(char *path)
 		i += s->format->BytesPerPixel;
 		j += image->bytes_per_pixel;
 	}
+	SDL_FreeSurface(s);
 	pornygonz_bind_texture(image->tbo);
 	pornygonz_add_texture_data(image->pixels, image->size);
 	return (image);

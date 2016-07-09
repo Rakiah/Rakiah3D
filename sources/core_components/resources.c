@@ -6,13 +6,13 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/07 19:20:37 by bkabbas          ###   ########.fr       */
+/*   Updated: 2016/07/09 19:10:16 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-void		resources_load()
+void		resources_load(void)
 {
 	int			i;
 	int			count;
@@ -20,7 +20,7 @@ void		resources_load()
 	char		**split;
 
 	if ((count = rstd_read_lines(RESOURCES_PATH, &lines)) < 0)
-		error_exit(rstd_strjoin("COULDN'T FIND RESOURCE FILE AT : ", RESOURCES_PATH));
+		error_exit(rstd_strjoin("NO RESOURCE FILE AT : ", RESOURCES_PATH));
 	i = 0;
 	while (i < count)
 	{

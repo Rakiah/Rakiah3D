@@ -6,14 +6,14 @@
 /*   By: Rakiah <bkabbas@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/05 17:36:27 by Rakiah            #+#    #+#             */
-/*   Updated: 2016/07/05 17:55:57 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:28:40 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef R3D_TRANSFORM_H
 # define R3D_TRANSFORM_H
 
-#include <r3d.h>
+# include <r3d.h>
 
 t_transform		*trs_new_init();
 t_transform		*trs_new(t_vector3f p, t_vector3f r, t_vector3f s);

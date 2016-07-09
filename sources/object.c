@@ -6,13 +6,13 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/05 15:42:46 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:30:24 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 
-t_object	*obj_new_init()
+t_object	*obj_new_init(void)
 {
 	t_object *ret;
 

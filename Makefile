@@ -6,7 +6,7 @@
 #    By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/18 21:24:52 by bkabbas           #+#    #+#              #
-#    Updated: 2016/07/09 19:02:46 by Rakiah           ###   ########.fr        #
+#    Updated: 2016/07/09 19:08:24 by Rakiah           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ vpath %.c $(addprefix $(PATH_SRC)/,$(PATH_SUB))
 
 # Sources
 CORE += core.c
+CORE += utilities.c
 CORE += resources.c
 CORE += internal_behavior.c
 CORE += error.c
@@ -73,6 +74,7 @@ TRANSFORM += trs_manipulations.c
 TRANSFORM += trs_operators_pos.c
 TRANSFORM += trs_operators_rot.c
 TRANSFORM += trs_operators_scale.c
+TRANSFORM += trs_hierarchy.c
 
 MESH += mesh_draw.c
 MESH += mesh_inits.c

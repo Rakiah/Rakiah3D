@@ -6,14 +6,14 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 06:14:15 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/06 18:54:22 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/07 19:36:07 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
 #include <time.h>
 
-void	internal_render()
+void	internal_render(void)
 {
 	pornygonz_clear();
 	core_render();
@@ -22,31 +22,28 @@ void	internal_render()
 
 void	internal_inputs(void)
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event))
+	SDL_Event e;
+
+	while (SDL_PollEvent(&e))
 	{
-		if (event.type == SDL_QUIT)
+		if (e.type == SDL_QUIT)
 			exit(0);
-		else if (event.type == SDL_KEYDOWN)
-			internal_key_down_hook(event.key.keysym.sym);
-		else if (event.type == SDL_KEYUP)
-			internal_key_up_hook(event.key.keysym.sym);
-		else if (event.type == SDL_MOUSEMOTION)
+		else if (e.type == SDL_KEYDOWN)
+			internal_key_down_hook(e.key.keysym.sym);
+		else if (e.type == SDL_KEYUP)
+			internal_key_up_hook(e.key.keysym.sym);
+		else if (e.type == SDL_MOUSEMOTION)
 		{
-			internal_mouse_pos_hook(event.motion.x, event.motion.y);
-			internal_mouse_motion_hook(event.motion.xrel,
-						event.motion.yrel);
+			internal_mouse_pos_hook(e.motion.x, e.motion.y);
+			internal_mouse_motion_hook(e.motion.xrel, e.motion.yrel);
 		}
-		else if (event.type == SDL_MOUSEBUTTONDOWN)
-			internal_mouse_down_hook(event.button.button,
-						event.button.x,
-						event.button.y);
-		else if (event.type == SDL_MOUSEBUTTONUP)
-			internal_mouse_up_hook(event.button.button,
-						event.button.x,
-						event.button.y);
-		else if (event.type == SDL_WINDOWEVENT)
-			if (event.window.event == SDL_WINDOWEVENT_CLOSE)
+		else if (e.type == SDL_MOUSEBUTTONDOWN)
+			internal_mouse_down_hook(e.button.button,
+									e.button.x, e.button.y);
+		else if (e.type == SDL_MOUSEBUTTONUP)
+			internal_mouse_up_hook(e.button.button, e.button.x, e.button.y);
+		else if (e.type == SDL_WINDOWEVENT)
+			if (e.window.event == SDL_WINDOWEVENT_CLOSE)
 				exit(0);
 	}
 }

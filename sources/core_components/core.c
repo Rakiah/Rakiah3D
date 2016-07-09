@@ -6,13 +6,11 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/09 19:03:18 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/09 19:09:45 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "r3d.h"
-#include <mlx.h>
-
 
 t_core		*get_core(void)
 {
@@ -47,27 +45,6 @@ void		core_init(void (*update)(), int width, int height, int frame_rate)
 	core->camera = NULL;
 	core->target_framerate = frame_rate;
 	core->delta_time = 1.0f;
-}
-
-void		core_show_cursor(t_bool state)
-{
-	get_core()->shown_cursor = state;
-	SDL_ShowCursor(state);
-}
-
-void		core_lock_cursor(t_bool state)
-{
-	get_core()->locked_cursor = state;
-}
-
-void		core_add_loader(t_floader loader, char *extension)
-{
-	t_loader	*to_push;
-
-	to_push = malloc(sizeof(t_loader));
-	to_push->extension = rstd_strdup(extension);
-	to_push->method = loader;
-	list_push_back(get_core()->loaders, to_push);
 }
 
 void		core_start(void)

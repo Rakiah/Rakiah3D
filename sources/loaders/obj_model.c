@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_model.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: Rakiah <bkabbas@student.42.fr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/13 07:04:05 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/07 18:53:37 by bkabbas          ###   ########.fr       */
+/*   Created: 2016/07/09 19:11:57 by Rakiah            #+#    #+#             */
+/*   Updated: 2016/07/09 19:12:42 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,6 @@ static t_obj_model		*obj_model_init(t_list *list[4])
 	ret->normals = list[2];
 	ret->indices = list[3];
 	return (ret);
-}
-
-void					obj_model_delete(t_obj_model *m)
-{
-	list_delete_inner(m->pos, list_default_remove_functor);
-	list_delete_inner(m->tex_coords, list_default_remove_functor);
-	list_delete_inner(m->normals, list_default_remove_functor);
-	list_delete_inner(m->indices, list_default_remove_functor);
-	free(m);
 }
 
 t_obj_model				*obj_model_new(char *file)
