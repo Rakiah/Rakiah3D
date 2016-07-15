@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 02:33:32 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/09 19:11:24 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/15 12:10:13 by bkabbas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,22 @@ static t_texture			*create_image(FILE *file)
 
 void						*load_3bmp(char *path)
 {
-	FILE			*file;
-	unsigned long	size;
-	unsigned long	i;
-	char			*tmp;
 	t_texture		*image;
+	FILE			*file;
+	char			*tmp;
+	int				i;
+	int				j;
 
 	if ((file = fopen(path, "rb")) == NULL)
 		error_exit(rstd_strjoin("COULDN'T FIND FILE AT : ", path));
 	image = create_image(file);
-	size = image->width * image->height * 3;
-	tmp = (char *)malloc(size);
-	if ((i = fread(tmp, size, 1, file)) != 1)
-		error_exit(rstd_strjoin("BITMAP FILE NOT FORMATTED CORRECTLY : ", path));
+	if ((tmp = malloc(image->size)) && (fread(tmp, image->size, 1, file)) != 1)
+		error_exit("BITMAP FILE NOT FORMATTED CORRECTLY");
 	i = 0;
-	int j = 0;
-	while (i < size)
+	j = 0;
+	while (i < image->size)
 	{
-		((unsigned char *)image->pixels)[j] = tmp[i];
+		((unsigned char *)image->pixels)[j + 0] = tmp[i + 0];
 		((unsigned char *)image->pixels)[j + 1] = tmp[i + 1];
 		((unsigned char *)image->pixels)[j + 2] = tmp[i + 2];
 		i += 3;
@@ -87,19 +85,19 @@ void						*load_bmp(char *path)
 {
 	SDL_Surface		*s;
 	t_texture		*image;
-	int size = 0;
-	int i = 0;
-	int j = 0;
+	int				i;
+	int				j;
 
+	i = 0;
+	j = 0;
 	if ((s = SDL_LoadBMP(path)) == NULL)
 		error_exit(rstd_strjoin("COULDN'T OPEN FILE AT : ", path));
-	size = s->pitch * s->h;
 	image = tex_new(s->w, s->h, s->format->BytesPerPixel);
-	while (i < size)
+	while (i < s->pitch * s->h)
 	{
-		((unsigned char *)image->pixels)[j] = ((unsigned char *)s->pixels)[i];
-		((unsigned char *)image->pixels)[j + 1] = ((unsigned char *)s->pixels)[i + 1];
-		((unsigned char *)image->pixels)[j + 2] = ((unsigned char *)s->pixels)[i + 2];
+		((char *)image->pixels)[j + 0] = ((unsigned char *)s->pixels)[i + 0];
+		((char *)image->pixels)[j + 1] = ((unsigned char *)s->pixels)[i + 1];
+		((char *)image->pixels)[j + 2] = ((unsigned char *)s->pixels)[i + 2];
 		i += s->format->BytesPerPixel;
 		j += image->bytes_per_pixel;
 	}
