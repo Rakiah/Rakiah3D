@@ -6,7 +6,7 @@
 /*   By: bkabbas <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/18 17:30:57 by bkabbas           #+#    #+#             */
-/*   Updated: 2016/07/09 19:09:09 by Rakiah           ###   ########.fr       */
+/*   Updated: 2016/07/27 16:02:47 by Rakiah           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ struct						s_material
 struct						s_resource
 {
 	char					*name;
+	char					*path;
 	void					*data;
 };
 
